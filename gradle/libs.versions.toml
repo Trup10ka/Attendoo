@@ -5,6 +5,7 @@ ktor = "3.0.0-rc-2"
 logback = "1.4.14"
 exposed = "0.53.0"
 h2 = "2.1.214"
+hoplite = "2.8.2"
 
 [libraries]
 
@@ -32,6 +33,10 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 h2db = { module = "com.h2database:h2", version.ref = "h2" }
+
+### sk-samuel Hoplite ###
+hoplite-core = { module = "com.sksamuel.hoplite:hoplite-core", version.ref = "hoplite" }
+hoplite-hocon = { module = "com.sksamuel.hoplite:hoplite-hocon", version.ref = "hoplite" }
 
 ### Tests ###
 ktor-test = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }

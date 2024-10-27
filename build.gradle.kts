@@ -36,6 +36,10 @@ dependencies {
     implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.websockets)
 
+    /* ### Config - Hoplite ### */
+    implementation(libs.hoplite.core)
+    implementation(libs.hoplite.hocon)
+
     /* ## Exposed ## */
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
