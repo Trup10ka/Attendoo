@@ -3,6 +3,7 @@ kotlin = "2.0.20"
 kotlinx-serialization = "2.0.20"
 ktor = "3.0.0-rc-2"
 logback = "1.4.14"
+kotlin-logging = "7.0.0"
 exposed = "0.53.0"
 h2 = "2.1.214"
 hoplite = "2.8.2"
@@ -28,6 +29,7 @@ ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jv
 
 ### Logging ###
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlin-logging" }
 
 ### Exposed ###
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
@@ -46,4 +48,3 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor-plugin = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization" }
-

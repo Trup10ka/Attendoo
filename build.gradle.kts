@@ -49,6 +49,7 @@ dependencies {
 
     /* ## Logging ## */
     implementation(libs.logback.classic)
+    implementation(libs.kotlin.logging)
 
     /* ## Testing ## */
     testImplementation(libs.ktor.test)
