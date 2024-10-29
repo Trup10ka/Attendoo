@@ -34,7 +34,7 @@ class UserService(database: Database) {
 
     suspend fun read(id: Int): ExposedUser? {
         return dbQuery {
-            Users.select { Users.id eq id }
+            Users.selectAll().where { Users.id eq id }
                 .map { ExposedUser(it[Users.name], it[Users.age]) }
                 .singleOrNull()
         }
@@ -58,4 +58,3 @@ class UserService(database: Database) {
     private suspend fun <T> dbQuery(block: suspend () -> T): T =
         newSuspendedTransaction(Dispatchers.IO) { block() }
 }
-

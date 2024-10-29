@@ -8,7 +8,8 @@ import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.httpsredirect.*
 import io.ktor.server.response.*
 
-fun Application.configureHTTP() {
+fun Application.configureHTTP()
+{
     install(Compression)
     install(CORS) {
         allowMethod(HttpMethod.Options)

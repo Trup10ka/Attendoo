@@ -4,13 +4,17 @@ import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ExperimentalHoplite
 import com.sksamuel.hoplite.addFileSource
 import com.trup10ka.attendoo.util.copyResourceIfNotExists
+import io.github.oshai.kotlinlogging.KotlinLogging
 import java.io.File
+
+private val logger = KotlinLogging.logger {}
 
 class FileConfigProvider(private val path: String, private val classLoader: ClassLoader) : ConfigProvider
 {
     @OptIn(ExperimentalHoplite::class)
     override fun getConfig(): Config
     {
+        logger.info { "Loading configuration from file '$path'." }
         val configFile = File(path)
 
         copyResourceIfNotExists(
