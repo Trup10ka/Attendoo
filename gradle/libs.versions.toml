@@ -4,7 +4,7 @@ kotlinx-serialization = "2.0.20"
 ktor = "3.0.0-rc-2"
 logback = "1.4.14"
 kotlin-logging = "7.0.0"
-exposed = "0.53.0"
+exposed = "0.56.0"
 h2 = "2.1.214"
 hoplite = "2.8.2"
 
@@ -34,6 +34,7 @@ kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = 
 ### Exposed ###
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
 h2db = { module = "com.h2database:h2", version.ref = "h2" }
 
 ### sk-samuel Hoplite ###

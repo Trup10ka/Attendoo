@@ -29,6 +29,7 @@ dependencies {
     /* ## Exposed ## */
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
+    implementation(libs.exposed.dao)
 
     /* ## DB ## */
     implementation(libs.h2db)
