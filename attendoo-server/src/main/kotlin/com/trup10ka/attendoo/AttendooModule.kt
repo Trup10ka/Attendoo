@@ -10,11 +10,9 @@ import io.ktor.server.application.Application
 
 fun Application.attendooModule()
 {
-
     configureSecurity()
     configureHTTP()
     configureSerialization()
-    //configureDatabases()
     configureSockets()
     configureStatusPage()
     configureRouting()
