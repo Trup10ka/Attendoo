@@ -7,10 +7,10 @@ data class Config(
 )
 {
     data class Database(
-        val host: String,
-        val port: Int,
+        val url: String,
         val name: String,
         val user: String,
         val password: String,
+        val driver: String
     )
 }
