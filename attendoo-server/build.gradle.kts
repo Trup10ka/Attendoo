@@ -42,3 +42,7 @@ dependencies {
     testImplementation(libs.ktor.test)
     testImplementation(libs.kotlin.test.junit)
 }
+
+application {
+    mainClass.set("com.trup10ka.attendoo.MainKt")
+}
