@@ -2,19 +2,23 @@
 
 Attendoo is a web SPA for organizations and their members to manage their attendances.
 
-The predominant goal for this app is to provide information about whether a member is on home office, ill, on vacation, or present in the office. This information is important for the organization to plan their resources and to know who is available for a meeting or a task.
+The predominant goal for this app is to provide information about whether a member is on home office, ill, on vacation, 
+or present in the office.
+This information is important for the organization to plan their resources and to know who is 
+available for a meeting or a task.
 
-App and server are written 100% in [Kotlin](https://kotlinlang.org/), web part is developed using [Kotlin/JS](https://kotlinlang.org/docs/js-overview.html).
+Server is written 100% in [Kotlin](https://kotlinlang.org/),
+web part is developed using [Kotlin/JS](https://kotlinlang.org/docs/js-overview.html) and plain HTML and CSS.
 
 # Features
-- [] Users can request a home office
-- [] Users can request a vacation
-- [] Users can request a sick leave
-- [] Organization group admins can approve or reject requests
-- [] Organization group admins can create accounts for the members of the organization
-- [] Organization group admins can see the status of all members from the organization
-- [] Users get notifications by email when their request is approved or rejected
-- [] Users get notifications by email when any changes to their timetables are made
+- [ ] Users can request a home office
+- [ ] Users can request a vacation
+- [ ] Users can request a sick leave
+- [ ] Organization group admins can approve or reject requests
+- [ ] Organization group admins can create accounts for the members of the organization
+- [ ] Organization group admins can see the status of all members from the organization
+- [ ] Users get notifications by email when their request is approved or rejected
+- [ ] Users get notifications by email when any changes to their timetables are made
 
 # Deployment process
 - Firstly, the app and the database are set up
