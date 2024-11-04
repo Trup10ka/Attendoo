@@ -1,14 +1,15 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kmp)
 }
 
-dependencies {
-    /* ## Logging ## */
-    implementation(libs.logback.classic)
-    implementation(libs.kotlin.logging)
-
-    /* ## Testing ## */
-    testImplementation(libs.ktor.test)
-    testImplementation(libs.kotlin.test.junit)
+kotlin {
+    js(IR) {
+        browser {
+            webpackTask {
+                mainOutputFileName = "attendoo-client.js"
+            }
+        }
+        binaries.executable()
+    }
 }
