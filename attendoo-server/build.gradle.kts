@@ -2,9 +2,14 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.ktor.plugin)
+    application
 }
 
 dependencies {
+
+    /* Shared code */
+    implementation(projects.shared)
+
     /* ## Ktor Core ## */
     implementation(libs.ktor.core)
     implementation(libs.ktor.netty)
@@ -41,6 +46,12 @@ dependencies {
     /* ## Testing ## */
     testImplementation(libs.ktor.test)
     testImplementation(libs.kotlin.test.junit)
+}
+
+ktor {
+    fatJar {
+        archiveFileName.set("Steven-Server-${version}.jar")
+    }
 }
 
 application {

@@ -12,4 +12,10 @@ kotlin {
         }
         binaries.executable()
     }
+
+    sourceSets {
+        jsMain.dependencies {
+            implementation(projects.shared)
+        }
+    }
 }

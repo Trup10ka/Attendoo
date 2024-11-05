@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
@@ -20,3 +22,4 @@ rootProject.name = "Attendoo"
 
 include(":attendoo-server")
 include(":attendoo-client")
+include(":shared")
