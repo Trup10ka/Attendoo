@@ -35,6 +35,7 @@ kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+mysql-driver = { module = "mysql:mysql-connector-java", version = "8.0.33" }
 h2db = { module = "com.h2database:h2", version.ref = "h2" }
 
 ### sk-samuel Hoplite ###
