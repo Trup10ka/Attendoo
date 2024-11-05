@@ -1,8 +1,8 @@
 package com.trup10ka.attendoo.plugins.routing
 
 import com.trup10ka.attendoo.exceptions.MissingImportantDirectoryException
-import com.trup10ka.attendoo.plugins.routing.routes.routeAPICalls
-import com.trup10ka.attendoo.plugins.routing.routes.routePages
+import com.trup10ka.attendoo.plugins.routing.api.routeAPICalls
+import com.trup10ka.attendoo.plugins.routing.page.routePages
 import com.trup10ka.attendoo.util.hasContent
 import com.trup10ka.attendoo.util.isExistingDirectory
 import io.github.oshai.kotlinlogging.KotlinLogging

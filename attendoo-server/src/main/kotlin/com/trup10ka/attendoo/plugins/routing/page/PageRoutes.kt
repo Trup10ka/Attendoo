@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo.plugins.routing.routes
+package com.trup10ka.attendoo.plugins.routing.page
 
 import com.trup10ka.attendoo.util.getFileOrThrow
 import io.ktor.server.response.respondFile
