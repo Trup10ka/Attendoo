@@ -7,6 +7,7 @@ kotlin-logging = "7.0.0"
 exposed = "0.56.0"
 h2 = "2.1.214"
 hoplite = "2.8.2"
+mariadb-driver = "3.3.1"
 
 [libraries]
 
@@ -35,7 +36,7 @@ kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
-mysql-driver = { module = "mysql:mysql-connector-java", version = "8.0.33" }
+mariadb-driver = { module = "org.mariadb.jdbc:mariadb-java-client", version.ref = "mariadb-driver" }
 h2db = { module = "com.h2database:h2", version.ref = "h2" }
 
 ### sk-samuel Hoplite ###
