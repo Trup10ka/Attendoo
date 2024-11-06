@@ -16,10 +16,9 @@ val logger = KotlinLogging.logger {}
 fun Application.configureRouting()
 {
     routing {
-
+        routeStaticFiles()
         routePages()
         routeAPICalls()
-        routeStaticFiles()
     }
 }
 
