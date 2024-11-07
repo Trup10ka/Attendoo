@@ -35,6 +35,8 @@ dependencies {
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
     implementation(libs.exposed.dao)
+    implementation(libs.exposed.crypt)
+    implementation(libs.exposed.java.time)
 
     /* ## DB ## */
     implementation(libs.h2db)
