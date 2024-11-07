@@ -58,11 +58,12 @@ CREATE TABLE IF NOT EXISTS proposal
     FOREIGN KEY (proposed_employee_status_id) REFERENCES employee_status (id)
 );
 
-CREATE TABLE IF NOT EXISTS proposal_tags
+CREATE TABLE IF NOT EXISTS proposal_tag
 (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     proposal_id INT NOT NULL,
     tag_id      INT NOT NULL,
 
     FOREIGN KEY (proposal_id) REFERENCES proposal (id),
-    FOREIGN KEY (tag_id) REFERENCES tags (id)
+    FOREIGN KEY (tag_id) REFERENCES tag (id)
 );
