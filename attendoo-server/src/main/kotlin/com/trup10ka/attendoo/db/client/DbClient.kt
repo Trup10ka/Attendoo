@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo.db.client
 
-import com.trup10ka.attendoo.db.service.UserService
+import com.trup10ka.attendoo.db.services.UserService
 
 abstract class DbClient
 {

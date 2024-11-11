@@ -1,8 +1,7 @@
 package com.trup10ka.attendoo.db.client
 
 import com.trup10ka.attendoo.config.ConfigDistributor.config
-import com.trup10ka.attendoo.db.dao.Role
-import com.trup10ka.attendoo.db.service.ExposedUserService
+import com.trup10ka.attendoo.db.services.ExposedUserService
 import com.trup10ka.attendoo.db.tables.Roles
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.jetbrains.exposed.sql.Database
