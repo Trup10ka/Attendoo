@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.0.20"
 kotlinx-serialization = "2.0.20"
-ktor = "3.0.0-rc-2"
+ktor = "3.0.1"
 logback = "1.4.14"
 kotlin-logging = "7.0.0"
 exposed = "0.56.0"
@@ -11,11 +11,15 @@ mariadb-driver = "3.3.1"
 
 [libraries]
 
-### Ktor ###
+### Ktor server ###
 ktor-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 
-### Ktor Features ###
+### Ktor client ###
+ktor-client-core = { module = "io.ktor:ktor-client-core-jvm", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+
+### Ktor server features ###
 ktor-server-sessions = { module = "io.ktor:ktor-server-sessions-jvm", version.ref = "ktor" }
 ktor-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor" }
 ktor-host-common = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor" }

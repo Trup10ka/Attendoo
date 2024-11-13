@@ -16,6 +16,8 @@ kotlin {
     sourceSets {
         jsMain.dependencies {
             implementation(projects.shared)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
         }
     }
 }
