@@ -1,7 +1,7 @@
 package com.trup10ka.attendoo.db.client
 
 import com.trup10ka.attendoo.config.ConfigDistributor.config
-import com.trup10ka.attendoo.db.services.ExposedUserService
+import com.trup10ka.attendoo.db.services.ExposedEmployeeService
 import com.trup10ka.attendoo.db.tables.Roles
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.jetbrains.exposed.sql.Database
@@ -42,7 +42,7 @@ class ExposedDbClient : DbClient()
 
     private fun initClient()
     {
-        userService = ExposedUserService()
+        userService = ExposedEmployeeService()
     }
 
     private fun initSchema()
