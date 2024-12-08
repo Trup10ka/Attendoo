@@ -2,10 +2,11 @@ package com.trup10ka.attendoo
 
 import kotlinx.browser.document
 import org.w3c.dom.HTMLElement
-import org.w3c.dom.events.Event
 
 fun main()
 {
+    val attendooClient = AttendooClient()
+    attendooClient.init()
     document.querySelector(".hamburger")?.addEventListener("click", { toggleSidebar() })
 }
 
