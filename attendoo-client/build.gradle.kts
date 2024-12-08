@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ktor.plugin)
     alias(libs.plugins.kmp)
 }
 
