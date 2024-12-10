@@ -4,32 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendoo</title>
-    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/public/style/index.css">
 </head>
 <body>
-<div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <button>Add user</button>
-        <button>Add Event</button>
-        <button>Change work state</button>
-        <button>Review reports</button>
+<!-- Sidebar -->
+<div class="sidebar">
+    <button>Dashboard</button>
+    <button>Users</button>
+    <button>Requests</button>
+    <button>Review reports</button>
+</div>
+
+<div class="content">
+    <div class="topbar">
+        <!-- Hamburger menu for mobile -->
+        <div class="hamburger">
+            <img src="/public/image/hamburger.png">
+        </div>
+        <div class="avatar"></div>
     </div>
 
-    <!-- Main Content Area -->
-    <div class="content">
-        <!-- Top Bar -->
-        <div class="topbar">
-            <!-- Hamburger menu for mobile -->
-            <div class="hamburger">
-                <img src="/public/image/hamburger.png">
-            </div>
-            <div class="avatar"></div>
-        </div>
+    <div class="main">
+        <!-- Dashboard container -->
+        <!--<div class="inner-container dashboard-container">
 
-        <!-- Main Content -->
-        <div class="content-body">
-            <p>Content</p>
+        </div>-->
+        <!-- Users container -->
+        <div class="inner-container users-container">
+            <div class="users">
+                <div class="user">
+                    <div class="user-info">
+                        <div class="user-avatar"></div>
+                        <div class="user-name">John Doe</div>
+                    </div>
+                    <div class="user-actions">
+                        <button>View</button>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
