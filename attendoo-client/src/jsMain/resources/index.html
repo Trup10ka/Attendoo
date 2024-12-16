@@ -5,46 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendoo</title>
     <link rel="stylesheet" href="/public/style/index.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=delete,edit,manufacturing,open_in_full"/>
 </head>
 <body>
 <!-- Sidebar -->
 <div class="sidebar">
-    <button>Dashboard</button>
-    <button>Users</button>
-    <button>Requests</button>
-    <button>Review reports</button>
+    <button class="sidebar-button">Dashboard</button>
+    <button class="sidebar-button">Users</button>
+    <button class="sidebar-button">Requests</button>
+    <button class="sidebar-button">Review Requests</button>
 </div>
 
 <div class="content">
     <div class="topbar">
         <!-- Hamburger menu for mobile -->
         <div class="hamburger">
-            <img src="/public/image/hamburger.png">
+            <img src="/public/image/hamburger.png" alt="Menu image">
         </div>
         <div class="avatar"></div>
     </div>
 
-    <div class="main">
+    <div id="main" class="main">
+
+        <!-- Not logged in container -->
+        <div class="inner-container not-logged-in-container">
+            <h1 class="container-header">You must log in first to use this application</h1>
+        </div>
+
         <!-- Dashboard container -->
         <!--<div class="inner-container dashboard-container">
 
         </div>-->
-        <!-- Users container -->
-        <div class="inner-container users-container">
-            <div class="users">
-                <div class="user">
-                    <div class="user-info">
-                        <div class="user-avatar"></div>
-                        <div class="user-name">John Doe</div>
-                    </div>
-                    <div class="user-actions">
-                        <button>View</button>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
+
+        <!-- Requests container -->
+        <!--<div class="inner-container requests-container">
+            <div class="container-tab request">
+                <div class="mini-container-header">
+                    <div class="one-line-container employee-name-container">John Doe</div>
+                    <div class="one-line-container avatar"></div>
+                </div>
+                <div class="request-info">
+                    <div class="one-line-container">Amazon</div>
+                    <div class="one-line-container">Custom note</div>
+                </div>
+                <div class="actions-container">
+                    <span class="material-symbols-outlined icon">open_in_full</span>
+                    <span class="material-symbols-outlined icon">edit</span>
+                    <span class="material-symbols-outlined icon">delete</span>
                 </div>
             </div>
-        </div>
+        </div>-->
+
+        <!-- Create user container -->
+        <!--<div class="inner-container create-user-container">
+            <h1 class="container-header">Create User</h1>
+            <div class="create-user-container-splitter">
+                <form id="create-user-form-credentials" class="create-user-form">
+                    <label class="form-field">
+                        <input type="text" placeholder="First Name (exp. Julia)">
+                    </label>
+                    <label class="form-field">
+                        <input type="text" placeholder="Last Name (exp. Crook)">
+                    </label>
+                    <label class="form-field">
+                        <input type="email" placeholder="Email">
+                    </label>
+                    <label class="form-field">
+                        <input type="tel" placeholder="Tel">
+                    </label>
+                </form>
+                <form id="create-user-form-attributes" class="create-user-form">
+                    <select id="dropdown-group" name="dropdown-group">
+                        <option value="group1">Group 1</option>
+                        <option value="group2">Group 2</option>
+                        <option value="group3">Group 3</option>
+                    </select>
+                    <select id="dropdown-role" name="dropdown-group">
+                        <option value="role1">Role 1</option>
+                        <option value="role2">Role 2</option>
+                        <option value="role3">Role 3</option>
+                    </select>
+
+                    <label class="form-field">
+                        <input type="text" placeholder="Attendoo Username">
+                    </label>
+                    <label class="form-field">
+                        <input type="password" placeholder="Attendoo Password">
+                    </label>
+                </form>
+            </div>
+            <button class="submit-button">
+                Create
+                <span class="material-symbols-outlined icon">manufacturing</span>
+            </button>
+        </div>-->
+
+
+        <!-- Users container -->
+        <!--<div class="inner-container users-container">
+            <div class="container-tab user">
+                <div class="mini-container-header user-credentials">
+                    <div class="one-line-container employee-name-container">John Doe</div>
+                    <div class="one-line-container avatar"></div>
+                </div>
+                <div class="user-info">
+                    <div class="one-line-container">Amazon</div>
+                    <div class="one-line-container">Custom note</div>
+                </div>
+                <div class="actions-container">
+                    <span class="material-symbols-outlined icon">open_in_full</span>
+                    <span class="material-symbols-outlined icon">edit</span>
+                    <span class="material-symbols-outlined icon">delete</span>
+                </div>
+            </div>
+        </div>-->
     </div>
 </div>
 

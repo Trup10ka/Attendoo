@@ -17,11 +17,50 @@ body {
 
 button {
     cursor: pointer;
-    background-color: mediumpurple;
+    background: none;
     border-radius: 8px;
     outline: none;
     padding: 10px 20px;
-    border: purple solid 4px;
+    border: rgba(232, 114, 66, 0.93) solid 4px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    color: rgba(244, 164, 132, 0.93);
+}
+
+button:hover {
+    background-color: rgba(232, 114, 66, 0.93);
+    color: black;
+    border: rgba(232, 114, 66, 0.93) solid 4px;
+}
+
+.selected-button {
+    background-color: rgba(232, 114, 66, 0.93);
+    border: rgba(232, 114, 66, 0.93) solid 4px;
+}
+
+.sidebar-button {
+    width: 13rem;
+    height: 3.3rem;
+    font-size: 1.35rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.submit-button {
+    background-color: rgba(241, 91, 29, 1);
+    color: white;
+    border: transparent;
+    width: 13rem;
+    height: 3.3rem;
+    font-size: 1.35rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.submit-button:hover {
+    background-color: rgba(237, 71, 2, 1);
 }
 
 /* Top bar styling */
@@ -32,6 +71,12 @@ button {
     padding: 10px 20px;
     background-color: #9a5adb52;
     border-radius: 8px;
+}
+
+/* Hamburger menu styling for mobile */
+.hamburger {
+    flex-direction: column;
+    cursor: pointer;
 }
 
 /* Sidebar styling */
@@ -45,8 +90,8 @@ button {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    justify-content: center;
+    gap: 35px;
+    justify-content: flex-start;
     align-content: center;
 }
 
@@ -66,21 +111,59 @@ button {
     background: linear-gradient(#6f37a6, #3a297e, #140840);
 }
 
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+    padding: 10px;
+    border-radius: 8px;
+    outline: none;
+    background-color: #6f37a6;
+    color: aliceblue;
+    border: transparent 2px;
+    font-size: 1.3rem;
+    width: 25rem;
+}
+
+.form-field {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 .inner-container {
     height: 100%;
     width: 100%;
-    background: linear-gradient(#6f37a6, #3a297e, #140840);
     border-radius: 8px;
     padding: 15px;
+    background-color: rgba(177, 102, 255, 0.11);
 }
 
-/* ==== LOGIN / REGISTER container */
+.container-header {
+    color: white;
+    margin-top: 10px;
+}
 
+.container-tab {
+    width: 35rem;
+    height: fit-content;
+    padding: 15px;
+    background-color: rgb(255, 160, 94);
+    border-radius: 8px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
 
-/* ==== DASHBOARD container ==== */
-.dashboard-container {
+.mini-container-header {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.one-line-container {
+    margin: 0.5rem 0;
+}
+
+.employee-name-container {
+    font-size: 1.4rem;
+    margin: 0.5rem 0.8rem;
 }
 
 /* Profile avatar styling */
@@ -89,14 +172,114 @@ button {
     height: 40px;
     background-color: #444;
     border-radius: 50%;
-    margin-left: auto;
+    margin: 0.5rem
 }
 
-/* Hamburger menu styling for mobile */
-.hamburger {
-    flex-direction: column;
+.actions-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    font-size: 2rem !important;
     cursor: pointer;
 }
+
+.icon:hover {
+    color: white;
+}
+
+/* ==== LOGIN / REGISTER container ==== */
+
+
+/* ==== USERS container ====  */
+
+.users-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.user-header {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.user-credentials {
+    font-size: 1.5rem;
+    padding: 0.3rem;
+    background-color: rgba(218, 92, 7, 0.77);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: rgba(232, 113, 31, 0.77);
+    padding: 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.user-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* ==== CREATE USER container ==== */
+
+.create-user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+}
+
+.create-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(255, 160, 94);
+    padding: 30px;
+    border-radius: 15px;
+    gap: 1.2rem;
+    width: 50%;
+}
+
+.create-user-container-splitter {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+/* ==== DASHBOARD container ==== */
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+}
+
+/* ==== NOT LOGGED IN container ==== */
+.not-logged-in-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1.6rem;
+}
+
+/** ================== Media Queries ================== **/
 
 /* Media query for mobile view */
 @media (max-width: 768px) {
@@ -117,4 +300,47 @@ button {
     .hamburger {
         display: flex;
     }
+
+    .container-tab {
+        width: 100%;
+    }
+}
+
+
+/* Style the select element */
+select {
+    width: 25rem;
+    padding: 10px;
+    font-size: 1.3rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: #6f37a6;
+    color: #f0f8ffa1;;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Remove default arrow on some browsers */
+}
+
+/* Change appearance when focused */
+select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5);
+}
+
+/* Style the dropdown arrow (use ::after for custom arrow) */
+select::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+}
+
+/* Style individual options */
+option {
+    padding: 10px;
+    background: #fff;
+    color: #333;
 }
