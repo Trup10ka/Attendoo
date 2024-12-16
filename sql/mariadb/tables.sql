@@ -1,10 +1,12 @@
+USE attendoo;
+
 CREATE TABLE IF NOT EXISTS role
 (
     id   INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS tags
+CREATE TABLE IF NOT EXISTS tag
 (
     id       INT PRIMARY KEY AUTO_INCREMENT,
     tag_name VARCHAR(100) NOT NULL
@@ -21,6 +23,7 @@ CREATE TABLE IF NOT EXISTS employee_department
     id   INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS employee
 (
@@ -40,6 +43,18 @@ CREATE TABLE IF NOT EXISTS employee
     FOREIGN KEY (employee_department_id) REFERENCES employee_department (id),
 
     CHECK (email LIKE '%@%')
+);
+
+CREATE TABLE IF NOT EXISTS employee_attendances
+(
+    id          INT PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT NOT NULL,
+    employee_status_id INT NOT NULL,
+    start_date        DATE NOT NULL,
+    end_date        DATE,
+
+    FOREIGN KEY (employee_id) REFERENCES employee (id),
+    FOREIGN KEY (employee_status_id) REFERENCES employee_status (id)
 );
 
 CREATE TABLE IF NOT EXISTS proposal
