@@ -127,6 +127,8 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
 .form-field {
     display: flex;
     justify-content: space-between;
+    box-shadow: black 0 0 10px;
+    border-radius: 8px;
     gap: 10px;
 }
 
@@ -223,6 +225,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
     padding: 20px;
     background-color: rgb(255, 160, 94);
     border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .login-register-action {
