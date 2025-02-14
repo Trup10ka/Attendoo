@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo.uri
 
-interface AttendooURIHandler
+interface URIHandler
 {
     fun initUriHandler()
     fun getPagePath(): String

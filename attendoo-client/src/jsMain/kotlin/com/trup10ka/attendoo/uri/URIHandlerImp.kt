@@ -1,6 +1,8 @@
 package com.trup10ka.attendoo.uri
 
-class AttendooURIHandlerImp() : AttendooURIHandler
+import kotlinx.browser.window
+
+class URIHandlerImp() : URIHandler
 {
     lateinit var currentPagePath: String
 
@@ -11,16 +13,16 @@ class AttendooURIHandlerImp() : AttendooURIHandler
 
     override fun getPagePath(): String
     {
-        TODO("Not yet implemented")
+        return window.location.pathname.substringAfter(window.location.host)
     }
 
     override fun getFullPath(): String
     {
-        TODO("Not yet implemented")
+        return window.location.pathname
     }
 
     override fun updateURI(pagePath: String)
     {
-        TODO("Not yet implemented")
+        window.history.pushState(null, "", pagePath)
     }
 }

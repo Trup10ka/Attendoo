@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo.pages
 
-interface AttendooPage
+interface Page
 {
     val pageType: PageType
 

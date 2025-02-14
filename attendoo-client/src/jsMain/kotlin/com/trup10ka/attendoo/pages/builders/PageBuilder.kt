@@ -2,7 +2,7 @@ package com.trup10ka.attendoo.pages.builders
 
 import org.w3c.dom.HTMLElement
 
-interface AttendooPageBuilder
+interface PageBuilder
 {
     val currentlyActiveHTMLElements: MutableSet<HTMLElement>
     

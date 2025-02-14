@@ -11,7 +11,7 @@ import io.ktor.http.path
 import io.ktor.util.reflect.typeInfo
 import kotlinx.browser.window
 
-class AttendooKtorHttpClient : AttendooHttpClient
+class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
 {
     private val client = HttpClient(Js)
 
@@ -23,8 +23,9 @@ class AttendooKtorHttpClient : AttendooHttpClient
                 path(path)
             }
             headers {
-                append("Authorization", "Bearer ${window.localStorage.getItem("token")}")
+                append("Authorization", "Bearer ${window.localStorage.getItem("ATTENDOO_TOKEN")}")
             }
+
             method = HttpMethod.Get
         }
     }
@@ -36,12 +37,34 @@ class AttendooKtorHttpClient : AttendooHttpClient
                 host = "localhost"
                 path(path)
             }
+            headers {
+                append("Authorization", "Bearer ${window.localStorage.getItem("ATTENDOO_TOKEN")}")
+            }
+            
             method = HttpMethod.Post
+            
             setBody(
                 body,
                 typeInfo<JSON>()
             )
         }
     }
-
+    
+    override suspend fun postJSONViaUnauthorized(path: String, body: String): Any
+    {
+        return client.request {
+            url {
+                host = "localhost"
+                path(path)
+            }
+            
+            method = HttpMethod.Post
+            
+            setBody(
+                body,
+                typeInfo<JSON>()
+            )
+        }
+    }
+    
 }

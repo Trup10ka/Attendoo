@@ -1,23 +1,19 @@
 package com.trup10ka.attendoo.pages
 
-import com.trup10ka.attendoo.fetch.AttendooKtorHttpClient
-import com.trup10ka.attendoo.util.launchCoroutine
+import com.trup10ka.attendoo.fetch.HttpClient
+import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Parameters
 
-
-class AttendooLoginPage(
+class LoginPage(
     override val pageType: PageType,
-    private val ktorClient: AttendooKtorHttpClient
-) : AttendooPage
+    private val httpClient: HttpClient
+) : Page
 {
-
-
-
     override fun init()
     {
-
     }
 
     override fun show()
@@ -30,11 +26,18 @@ class AttendooLoginPage(
 
     private fun performLogin(username: String, password: String)
     {
-        launchCoroutine {
-            val response = ktorClient.postJSONVia(
+        launchDefaultCoroutine {
+            val response = httpClient.postJSONViaUnauthorized(
                 "login",
                 parseCredentialsToJSON(username, password)
-            )
+            ) as? HttpResponse
+
+            if (response == null)
+            {
+                console.log("Response is null")
+                return@launchDefaultCoroutine
+            }
+
             val responseText = response.body<String>()
 
             console.log(responseText)
