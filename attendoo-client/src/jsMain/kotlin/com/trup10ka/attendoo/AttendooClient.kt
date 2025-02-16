@@ -7,6 +7,9 @@ import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
 import com.trup10ka.attendoo.pages.ElementID.*
 import com.trup10ka.attendoo.pages.PageType.*
+import com.trup10ka.attendoo.pages.builders.CreateUserPageBuilder
+import com.trup10ka.attendoo.pages.builders.CreateUserPageBuilderImp
+import com.trup10ka.attendoo.util.getDivByID
 
 class AttendooClient
 {
@@ -39,14 +42,17 @@ class AttendooClient
         val buttons = arrayOf(
             getButtonByID(DASHBOARD_BUTTON.toString()),
             getButtonByID(USERS_BUTTON.toString()),
-            getButtonByID(REQUEST_BUTTON.toString()),
-            getButtonByID(REVIEW_REQUEST_BUTTON.toString())
+            getButtonByID(REQUESTS_BUTTON.toString()),
+            getButtonByID(REVIEW_REQUESTS_BUTTON.toString())
         )
         
         if (buttons.contains(null))
         {
+            showErrorPage("One or more buttons not found")
             throw IllegalStateException("One or more buttons not found")
         }
+        
+        attendooSidebarButtons.addAll(buttons.map { it!! })
         
         attendooSidebarButtons.forEach { button ->
             button.addEventListener("click", {

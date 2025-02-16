@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo
+package com.trup10ka.attendoo.data
 
 class User
 {

@@ -7,8 +7,8 @@ enum class ElementID
     /* === Sidebar buttons === */
     DASHBOARD_BUTTON,
     USERS_BUTTON,
-    REQUEST_BUTTON,
-    REVIEW_REQUEST_BUTTON,
+    REQUESTS_BUTTON,
+    REVIEW_REQUESTS_BUTTON,
     
     /* === Create user === */
     CREATE_USER_FORM_CREDENTIALS,
