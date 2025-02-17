@@ -22,4 +22,4 @@ rootProject.name = "Attendoo"
 
 include(":attendoo-server")
 include(":attendoo-client")
-include(":shared")
+include(":attendoo-shared")

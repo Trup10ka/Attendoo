@@ -8,7 +8,7 @@ plugins {
 dependencies {
 
     /* Shared code */
-    implementation(projects.shared)
+    implementation(projects.attendooShared)
 
     /* ## Ktor Core ## */
     implementation(libs.ktor.core)
