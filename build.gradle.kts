@@ -13,3 +13,20 @@ allprojects {
         mavenCentral()
     }
 }
+
+tasks.register<Copy>("buildTestPackage") {
+    dependsOn(
+        ":attendoo-client:jsBrowserDevelopmentExecutableDistribution",
+        ":attendoo-server:shadowJar"
+    )
+    
+    project(":attendoo-client")
+    
+    from(project(":attendoo-client").layout.buildDirectory.dir("dist/js/developmentExecutable"))
+    
+    from(project(":attendoo-server").layout.buildDirectory.dir("libs")) {
+        include("*.jar")
+    }
+    
+    into(rootProject.layout.buildDirectory.dir("output"))
+}
