@@ -1,7 +1,7 @@
 package com.trup10ka.attendoo.util
 
 import com.trup10ka.attendoo.data.SelectOption
-import com.trup10ka.attendoo.pages.ElementID
+import com.trup10ka.attendoo.pages.constant.ElementID
 import kotlinx.browser.document
 import kotlinx.dom.addClass
 import org.w3c.dom.HTMLButtonElement
@@ -19,6 +19,8 @@ fun getElementByID(id: String) = document.getElementById(id) as HTMLElement?
 
 fun getButtonByID(id: String) = getElementByID(id) as HTMLButtonElement?
 
+fun getButtonByID(id: ElementID) = getButtonByID(id.toString())
+
 fun getDivByID(id: String) = getElementByID(id) as HTMLDivElement?
 
 /**
@@ -33,18 +35,25 @@ fun getDivByID(id: String) = getElementByID(id) as HTMLDivElement?
  * casts since all the HTML elements are a subclass of HTMLElement.
  */
 @Suppress("UNCHECKED_CAST")
-fun <T> createElement(tag: String, id: ElementID? = null, clazz: Array<String>? = null): T where T : HTMLElement
+fun <T> createElement(tag: String, id: ElementID? = null, clazz: Array<String>? = null, children: Array<out HTMLElement>? = null): T where T : HTMLElement
 {
     val element = document.createElement(tag) as T
     id?.let { element.id = it.toString() }
     clazz?.let { element.addClass(*clazz) }
+    children?.forEach { element.appendChild(it) }
     return element
 }
 
-fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement): HTMLDivElement
+fun createDiv(id: ElementID? = null, clazz: Array<String>?) = createElement<HTMLDivElement>("div", id, clazz)
+
+fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLDivElement>("div", id, clazz, children = children)
+
+fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, child: HTMLElement? = null) = createElement<HTMLDivElement>("div", id, clazz, children = child?.let { arrayOf(it) } )
+
+fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, text: String): HTMLDivElement
 {
     val div = createElement<HTMLDivElement>("div", id, clazz)
-    children.forEach { div.appendChild(it) }
+    div.innerText = text
     return div
 }
 
@@ -55,12 +64,7 @@ fun createSpan(id: ElementID? = null, clazz: Array<String>? = null, text: String
     return span
 }
 
-fun createForm(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement): HTMLFormElement
-{
-    val form = createElement<HTMLFormElement>("form", id, clazz)
-    children.forEach { form.appendChild(it) }
-    return form
-}
+fun createForm(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLFormElement>("form", id, clazz, children = children)
 
 fun createButton(id: ElementID? = null, clazz: Array<String>? = null, text: String): HTMLButtonElement
 {
