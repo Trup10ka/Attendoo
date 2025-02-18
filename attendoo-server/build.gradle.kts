@@ -53,7 +53,7 @@ dependencies {
 
 ktor {
     fatJar {
-        archiveFileName.set("Steven-Server-${version}.jar")
+        archiveFileName.set("attendoo-${version}.jar")
     }
 }
 
