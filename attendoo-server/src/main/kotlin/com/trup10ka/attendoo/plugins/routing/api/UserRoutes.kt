@@ -8,6 +8,6 @@ import io.ktor.server.routing.get
 fun Route.getAllUsers()
 {
     get("/api/v1/users") {
-        call.respondText(User().name)
+        call.respondText(User("").fullName)
     }
 }

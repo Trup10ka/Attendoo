@@ -14,6 +14,7 @@ enum class StyleClass
     ONE_LINE_CONTAINER,
     EMPLOYEE_NAME_CONTAINER,
     AVATAR,
+    ACTIONS_CONTAINER,
 
     /* === Login ===  */
     LOGIN_PANE,
@@ -28,7 +29,11 @@ enum class StyleClass
     /* === Create user === */
     CREATE_USER_CONTAINER,
     CREATE_USER_CONTAINER_SPLITTER,
-    CREATE_USER_FORM;
+    CREATE_USER_FORM,
+    
+    /* === Google icons === */
+    ICON,
+    MATERIAL_SYMBOLS_OUTLINED;
     
     
     override fun toString() = this.name.lowercase().replace('_', '-')
