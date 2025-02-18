@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo.pages
+package com.trup10ka.attendoo.pages.constant
 
 enum class ElementID
 {
@@ -8,7 +8,7 @@ enum class ElementID
     DASHBOARD_BUTTON,
     USERS_BUTTON,
     REQUESTS_BUTTON,
-    REVIEW_REQUESTS_BUTTON,
+    CREATE_USER_BUTTON,
     
     /* === Create user === */
     CREATE_USER_FORM_CREDENTIALS,

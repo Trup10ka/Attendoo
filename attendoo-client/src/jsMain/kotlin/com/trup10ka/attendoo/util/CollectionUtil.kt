@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo.util
 
-import com.trup10ka.attendoo.pages.StyleClass
+import com.trup10ka.attendoo.pages.constant.StyleClass
 
 fun <K, V> MutableMap<K, V>.addAll(vararg pairs: Pair<K, V>)
 {

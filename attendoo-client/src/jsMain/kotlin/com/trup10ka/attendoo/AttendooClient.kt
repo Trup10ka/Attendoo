@@ -5,11 +5,8 @@ import com.trup10ka.attendoo.uri.URIHandler
 import com.trup10ka.attendoo.uri.URIHandlerImp
 import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
-import com.trup10ka.attendoo.pages.ElementID.*
-import com.trup10ka.attendoo.pages.PageType.*
-import com.trup10ka.attendoo.pages.builders.CreateUserPageBuilder
-import com.trup10ka.attendoo.pages.builders.CreateUserPageBuilderImp
-import com.trup10ka.attendoo.util.getDivByID
+import com.trup10ka.attendoo.pages.constant.ElementID.*
+import com.trup10ka.attendoo.pages.constant.PageType.*
 
 class AttendooClient
 {
@@ -40,10 +37,10 @@ class AttendooClient
     private fun initButtonListeners()
     {
         val buttons = arrayOf(
-            getButtonByID(DASHBOARD_BUTTON.toString()),
-            getButtonByID(USERS_BUTTON.toString()),
-            getButtonByID(REQUESTS_BUTTON.toString()),
-            getButtonByID(REVIEW_REQUESTS_BUTTON.toString())
+            getButtonByID(DASHBOARD_BUTTON),
+            getButtonByID(USERS_BUTTON),
+            getButtonByID(REQUESTS_BUTTON),
+            getButtonByID(CREATE_USER_BUTTON)
         )
         
         if (buttons.contains(null))

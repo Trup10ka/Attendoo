@@ -2,8 +2,8 @@ package com.trup10ka.attendoo.pages.builders
 
 import com.trup10ka.attendoo.data.SelectOption
 import org.w3c.dom.HTMLElement
-import com.trup10ka.attendoo.pages.StyleClass.*
-import com.trup10ka.attendoo.pages.ElementID.*
+import com.trup10ka.attendoo.pages.constant.StyleClass.*
+import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.arrayOf
 import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.createDiv

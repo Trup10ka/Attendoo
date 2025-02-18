@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo.pages.builders
 
-import com.trup10ka.attendoo.pages.StyleClass.*
+import com.trup10ka.attendoo.pages.constant.StyleClass.*
 import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.*
 import kotlinx.browser.document

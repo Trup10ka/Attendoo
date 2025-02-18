@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo.pages
+package com.trup10ka.attendoo.pages.constant
 
 enum class StyleClass
 {
@@ -9,12 +9,21 @@ enum class StyleClass
     SUBMIT_BUTTON,
     INNER_CONTAINER,
     CONTAINER_HEADER,
+    CONTAINER_TAB,
+    MINI_CONTAINER_HEADER,
+    ONE_LINE_CONTAINER,
+    EMPLOYEE_NAME_CONTAINER,
+    AVATAR,
 
     /* === Login ===  */
     LOGIN_PANE,
     LOGIN_FORM,
     LOGIN_PANE_HEADER_TEXT,
     LOGIN_REGISTER_ACTION,
+    
+    /* === Request === */
+    REQUEST_CONTAINER,
+    REQUEST,
     
     /* === Create user === */
     CREATE_USER_CONTAINER,

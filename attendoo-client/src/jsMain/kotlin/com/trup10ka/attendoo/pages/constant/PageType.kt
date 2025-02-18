@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo.pages
+package com.trup10ka.attendoo.pages.constant
 
 enum class PageType(val pageRouteName: String)
 {

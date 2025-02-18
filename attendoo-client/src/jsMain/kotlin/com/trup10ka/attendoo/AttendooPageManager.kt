@@ -4,10 +4,10 @@ import com.trup10ka.attendoo.fetch.KtorHttpClient
 import com.trup10ka.attendoo.pages.LoginPage
 import com.trup10ka.attendoo.pages.Page
 import com.trup10ka.attendoo.uri.URIHandler
-import com.trup10ka.attendoo.pages.PageType.LOGIN_PAGE
-import com.trup10ka.attendoo.pages.PageType.DASHBOARD_PAGE
-import com.trup10ka.attendoo.pages.PageType.NOT_FOUND_PAGE
-import com.trup10ka.attendoo.pages.PageType
+import com.trup10ka.attendoo.pages.constant.PageType.LOGIN_PAGE
+import com.trup10ka.attendoo.pages.constant.PageType.DASHBOARD_PAGE
+import com.trup10ka.attendoo.pages.constant.PageType.NOT_FOUND_PAGE
+import com.trup10ka.attendoo.pages.constant.PageType
 import com.trup10ka.attendoo.util.addAll
 
 class AttendooPageManager(
