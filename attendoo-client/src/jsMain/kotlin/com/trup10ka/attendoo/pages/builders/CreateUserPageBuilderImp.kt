@@ -85,7 +85,7 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
     private fun createSubmitButton(): HTMLElement
     {
         val button = createButton(text = "Create", clazz = arrayOf(SUBMIT_BUTTON))
-        button.appendChild(createSpan(text = "manufacturing", clazz = arrayOf("material-symbols-outlined", "icon")))
+        button.appendChild(createSpan(text = "manufacturing", clazz = arrayOf(MATERIAL_SYMBOLS_OUTLINED, ICON)))
         return button
     }
 }
