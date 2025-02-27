@@ -1,12 +1,12 @@
 package com.trup10ka.attendoo
 
 import com.trup10ka.attendoo.fetch.KtorHttpClient
-import com.trup10ka.attendoo.pages.LoginPage
+import com.trup10ka.attendoo.pages.DashboardPage
 import com.trup10ka.attendoo.pages.Page
+import com.trup10ka.attendoo.pages.RequestsPage
+import com.trup10ka.attendoo.pages.UsersPage
 import com.trup10ka.attendoo.uri.URIHandler
-import com.trup10ka.attendoo.pages.constant.PageType.LOGIN_PAGE
-import com.trup10ka.attendoo.pages.constant.PageType.DASHBOARD_PAGE
-import com.trup10ka.attendoo.pages.constant.PageType.NOT_FOUND_PAGE
+import com.trup10ka.attendoo.pages.constant.PageType.*
 import com.trup10ka.attendoo.pages.constant.PageType
 import com.trup10ka.attendoo.util.addAll
 
@@ -30,11 +30,10 @@ class AttendooPageManager(
             currentPage.hide()
         }
         currentPage = page
-        uriHandler.updateURI(page.pageType.getPageRoute())
         currentPage.show()
     }
 
-    fun getPage(): Page
+    fun getCurrentPage(): Page
     {
         val path = uriHandler.getPagePath()
         val page = matchPathToPage(path)
@@ -43,12 +42,16 @@ class AttendooPageManager(
 
     private fun initPageList(ktorClient: KtorHttpClient)
     {
-        val loginPage = LoginPage(LOGIN_PAGE, ktorClient)
-        val dashboardPage = LoginPage(DASHBOARD_PAGE, ktorClient)
+        val loginPage = DashboardPage(LOGIN_PAGE, ktorClient)
+        val dashboardPage = DashboardPage(DASHBOARD_PAGE, ktorClient)
+        val usersPage = UsersPage(USERS_PAGE, ktorClient)
+        val requestsPage = RequestsPage(REQUESTS_PAGE, ktorClient)
 
         pages.addAll(
             loginPage.pageType to loginPage,
-            dashboardPage.pageType to dashboardPage
+            dashboardPage.pageType to dashboardPage,
+            usersPage.pageType to usersPage,
+            requestsPage.pageType to requestsPage
         )
     }
     
@@ -56,9 +59,12 @@ class AttendooPageManager(
     {
         return when (path)
         {
-            LOGIN_PAGE.pageRouteName -> pages[LOGIN_PAGE]!!
-            DASHBOARD_PAGE.pageRouteName -> pages[DASHBOARD_PAGE]!!
-            else -> pages[NOT_FOUND_PAGE]!!
+            ROOT_PAGE.pageRoute      -> pages[LOGIN_PAGE]!!
+            LOGIN_PAGE.pageRoute     -> pages[LOGIN_PAGE]!!
+            DASHBOARD_PAGE.pageRoute -> pages[DASHBOARD_PAGE]!!
+            USERS_PAGE.pageRoute     -> pages[USERS_PAGE]!!
+            REQUESTS_PAGE.pageRoute  -> pages[REQUESTS_PAGE]!!
+            else                     -> pages[NOT_FOUND_PAGE]!!
         }
     }
 }

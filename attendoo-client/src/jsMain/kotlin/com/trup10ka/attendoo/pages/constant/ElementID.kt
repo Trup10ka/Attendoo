@@ -17,4 +17,20 @@ enum class ElementID
     MAIN;
     
     override fun toString() = this.name.lowercase().replace('_', '-')
+    
+    
+    companion object
+    {
+        fun fromID(id: String): ElementID?
+        {
+            return try
+            {
+                valueOf(id.uppercase().replace('-', '_'))
+            }
+            catch (_: Exception)
+            {
+                null
+            }
+        }
+    }
 }

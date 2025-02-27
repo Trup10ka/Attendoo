@@ -1,6 +1,8 @@
 package com.trup10ka.attendoo
 
 import com.trup10ka.attendoo.fetch.KtorHttpClient
+import com.trup10ka.attendoo.pages.PageButtonMapper
+import com.trup10ka.attendoo.pages.constant.ElementID
 import com.trup10ka.attendoo.uri.URIHandler
 import com.trup10ka.attendoo.uri.URIHandlerImp
 import com.trup10ka.attendoo.util.getButtonByID
@@ -30,7 +32,7 @@ class AttendooClient
 
     private fun displayPage()
     {
-        val page = pageManager.getPage()
+        val page = pageManager.getCurrentPage()
         pageManager.switchToPage(page)
     }
     
@@ -53,14 +55,28 @@ class AttendooClient
         
         attendooSidebarButtons.forEach { button ->
             button.addEventListener("click", {
-                val page = pageManager.getPage()
+                updateUriByButton(button)
+                val page = pageManager.getCurrentPage()
                 pageManager.switchToPage(page)
             })
         }
     }
     
+    private fun updateUriByButton(button: HTMLButtonElement)
+    {
+        val pageId = ElementID.fromID(button.id)
+        if (pageId == null)
+            throw IllegalStateException("Button ID not found")
+        
+        val pageType = PageButtonMapper.mapButtonToPage(pageId)
+        if (pageType == null)
+            throw IllegalStateException("Page not found")
+        
+        uriHandler.updateURI(pageType.pageRoute)
+    }
+    
     private fun showErrorPage(errorMessage: String)
     {
-        uriHandler.updateURI(ERROR_PAGE.getPageRoute())
+        uriHandler.updateURI(ERROR_PAGE.pageRoute)
     }
 }
