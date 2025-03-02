@@ -49,16 +49,18 @@ class AttendooPageManager(
     
     private fun initPageList(ktorClient: KtorHttpClient)
     {
-        val loginPage = DashboardPage(LOGIN_PAGE, ktorClient)
+        val loginPage = LoginPage(LOGIN_PAGE, ktorClient)
         val dashboardPage = DashboardPage(DASHBOARD_PAGE, ktorClient)
         val usersPage = UsersPage(USERS_PAGE, ktorClient)
         val requestsPage = RequestsPage(REQUESTS_PAGE, ktorClient)
-
+        val createUserPage = CreateUserPage(CREATE_USER_PAGE, ktorClient)
+        
         pages.addAll(
             loginPage.pageType to loginPage,
             dashboardPage.pageType to dashboardPage,
             usersPage.pageType to usersPage,
-            requestsPage.pageType to requestsPage
+            requestsPage.pageType to requestsPage,
+            createUserPage.pageType to createUserPage
         )
     }
     
@@ -66,7 +68,7 @@ class AttendooPageManager(
     {
         return when (path)
         {
-            ROOT_PAGE.pageRoute      -> pages[LOGIN_PAGE]!!
+            ROOT_PAGE.pageRoute      -> pages[DASHBOARD_PAGE]!!
             LOGIN_PAGE.pageRoute     -> pages[LOGIN_PAGE]!!
             DASHBOARD_PAGE.pageRoute -> pages[DASHBOARD_PAGE]!!
             USERS_PAGE.pageRoute     -> pages[USERS_PAGE]!!
