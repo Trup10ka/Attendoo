@@ -1,6 +1,7 @@
 package com.trup10ka.attendoo.pages
 
 import com.trup10ka.attendoo.fetch.HttpClient
+import com.trup10ka.attendoo.pages.builders.RequestPageBuildImp
 import com.trup10ka.attendoo.pages.constant.PageType
 
 class RequestsPage(
@@ -8,6 +9,8 @@ class RequestsPage(
     private val httpClient: HttpClient
 ) : Page
 {
+    override val pageBuilder = RequestPageBuildImp()
+    
     override fun init()
     {
         TODO("Not yet implemented")

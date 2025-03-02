@@ -1,6 +1,7 @@
 package com.trup10ka.attendoo.pages
 
 import com.trup10ka.attendoo.fetch.HttpClient
+import com.trup10ka.attendoo.pages.builders.LoginPageBuilder
 import com.trup10ka.attendoo.pages.constant.PageType
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import io.ktor.client.call.body
@@ -13,6 +14,8 @@ class LoginPage(
     private val httpClient: HttpClient
 ) : Page
 {
+    override val pageBuilder = LoginPageBuilder()
+    
     override fun init()
     {
     }
