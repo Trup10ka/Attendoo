@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.0.20"
 kotlinx-serialization = "2.0.20"
+kotlinx-kotlin-js-json = "1.8.0"
 ktor = "3.0.3"
 logback = "1.4.14"
 kotlin-logging = "7.0.0"
@@ -18,6 +19,7 @@ ktor-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ### Ktor client ###
 ktor-client-core = { module = "io.ktor:ktor-client-core-js", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+
 
 ### Ktor server features ###
 ktor-server-sessions = { module = "io.ktor:ktor-server-sessions-jvm", version.ref = "ktor" }
@@ -51,7 +53,10 @@ hoplite-hocon = { module = "com.sksamuel.hoplite:hoplite-hocon", version.ref = "
 
 ### Tests ###
 ktor-test = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinx-serialization" }
+
+### Util ###
+kotlinx-json-client = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-kotlin-js-json" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

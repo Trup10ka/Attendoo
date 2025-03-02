@@ -19,6 +19,7 @@ kotlin {
             implementation(projects.attendooShared)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.js)
+            implementation(libs.kotlinx.json.client)
         }
     }
 }
