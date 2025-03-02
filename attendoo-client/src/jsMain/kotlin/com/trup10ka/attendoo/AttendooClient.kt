@@ -1,7 +1,6 @@
 package com.trup10ka.attendoo
 
 import com.trup10ka.attendoo.fetch.KtorHttpClient
-import com.trup10ka.attendoo.pages.PageButtonMapper
 import com.trup10ka.attendoo.pages.constant.ElementID
 import com.trup10ka.attendoo.uri.URIHandler
 import com.trup10ka.attendoo.uri.URIHandlerImp
@@ -9,6 +8,7 @@ import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.pages.constant.PageType.*
+import com.trup10ka.attendoo.util.mapButtonToPage
 
 class AttendooClient
 {
@@ -68,7 +68,7 @@ class AttendooClient
         if (pageId == null)
             throw IllegalStateException("Button ID not found")
         
-        val pageType = PageButtonMapper.mapButtonToPage(pageId)
+        val pageType = mapButtonToPage(pageId)
         if (pageType == null)
             throw IllegalStateException("Page not found")
         
