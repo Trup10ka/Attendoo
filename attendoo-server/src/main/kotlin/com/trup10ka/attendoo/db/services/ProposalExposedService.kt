@@ -1,6 +1,7 @@
 package com.trup10ka.attendoo.db.services
 
 import com.trup10ka.attendoo.db.dao.Proposal
+import com.trup10ka.attendoo.db.tables.Proposals
 import com.trup10ka.attendoo.dto.ProposalDTO
 import com.trup10ka.attendoo.util.convertToKotlinxLocalDateTime
 
@@ -32,21 +33,23 @@ class ProposalExposedService(
     
     override suspend fun deleteProposal(attendooProposalId: Int)
     {
-        TODO("Not yet implemented")
+        val proposalDao = getProposalByAttendooId(attendooProposalId)
+        proposalDao?.delete()
     }
     
-    override suspend fun getProposalByAttendooId(attendooProposalId: Int): ProposalDTO?
+    override suspend fun getProposalByAttendooId(attendooProposalId: Int): Proposal?
     {
-        TODO("Not yet implemented")
+        return Proposal.find { Proposals.attendooProposalId eq attendooProposalId }.singleOrNull()
+        
     }
     
-    override suspend fun getProposalByProposalId(proposalId: Int): ProposalDTO?
+    override suspend fun getProposalByProposalId(proposalId: Int): Proposal?
     {
-        TODO("Not yet implemented")
+        return Proposal.findById(proposalId)
     }
     
-    override suspend fun getAllProposals(): List<ProposalDTO>
+    override suspend fun getAllProposals(): List<Proposal>
     {
-        TODO("Not yet implemented")
+        return Proposal.all().toList()
     }
 }

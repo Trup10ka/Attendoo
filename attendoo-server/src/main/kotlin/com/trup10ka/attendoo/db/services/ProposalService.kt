@@ -7,7 +7,7 @@ interface ProposalService
 {
     suspend fun createProposal(proposalDTO: ProposalDTO): Proposal
     suspend fun deleteProposal(attendooProposalId: Int)
-    suspend fun getProposalByAttendooId(attendooProposalId: Int): ProposalDTO?
-    suspend fun getProposalByProposalId(proposalId: Int): ProposalDTO?
-    suspend fun getAllProposals(): List<ProposalDTO>
+    suspend fun getProposalByAttendooId(attendooProposalId: Int): Proposal?
+    suspend fun getProposalByProposalId(proposalId: Int): Proposal?
+    suspend fun getAllProposals(): List<Proposal>
 }
