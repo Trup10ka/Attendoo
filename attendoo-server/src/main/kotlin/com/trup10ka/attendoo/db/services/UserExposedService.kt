@@ -1,13 +1,10 @@
 package com.trup10ka.attendoo.db.services
 
-import com.trup10ka.attendoo.db.dao.UserDepartment
-import com.trup10ka.attendoo.db.dao.UserStatus
 import com.trup10ka.attendoo.db.dao.User
-import com.trup10ka.attendoo.db.tables.UserDepartments
-import com.trup10ka.attendoo.db.tables.UserStatuses
 import com.trup10ka.attendoo.db.tables.Users
 import com.trup10ka.attendoo.dto.UserDTO
 import com.trup10ka.attendoo.plugins.routing.logger
+import kotlinx.coroutines.runBlocking
 
 class UserExposedService(
     private val roleService: RoleService,
@@ -21,15 +18,11 @@ class UserExposedService(
         
         val roleDao = roleService.getRoleByName(userDTO.role!!) ?: roleService.createRole(userDTO.role!!)
         
-        val defaultStatusDao =
-            UserStatus.find { UserStatuses.name eq userDTO.userStatus!! }.firstOrNull() ?: UserStatus.new {
-                name = userDTO.userStatus!!
-            }
+        val defaultStatusDao = userStatusService.getUserStatusByName(userDTO.userStatus!!)
+            ?: userStatusService.createUserStatus(userDTO.userStatus!!)
         
-        val departmentDao = UserDepartment.find { UserDepartments.name eq userDTO.userDepartment!! }.firstOrNull()
-            ?: UserDepartment.new {
-                name = userDTO.userDepartment!!
-            }
+        val departmentDao = userDepartmentService.getDepartmentByName(userDTO.userDepartment!!)
+            ?: userDepartmentService.createDepartment(userDTO.userDepartment!!)
         
         User.new {
             name = userDTO.firstName!!
@@ -57,7 +50,7 @@ class UserExposedService(
     
     override suspend fun getUserByUsername(username: String): User?
     {
-        val result = User.find { Users.attendooUsername eq username }.singleOrNull()
+        return User.find { Users.attendooUsername eq username }.singleOrNull()
     }
     
     override suspend fun getUserByEmail(email: String): User?
@@ -72,14 +65,35 @@ class UserExposedService(
     
     override suspend fun updateUserByUsername(userDTO: UserDTO): Boolean
     {
-    
+        User.find { Users.attendooUsername eq userDTO.attendooUsername!! }.singleOrNull()?.apply(applyUpdateChanges(userDTO))
+            ?: run {
+                logger.warn { "User with username ${userDTO.attendooUsername} not found" }
+                return false
+            }
+        
+        return true
     }
     
     override suspend fun updateUserById(id: Int, userDTO: UserDTO): Boolean
     {
-        TODO("Not yet implemented")
+        User.findByIdAndUpdate(id, applyUpdateChanges(userDTO))
+            ?: run {
+                logger.warn { "User with id $id not found" }
+                return false
+            }
+        return true
     }
     
+    private fun applyUpdateChanges(userDTO: UserDTO): (User) -> Unit = { userDao ->
+        userDTO.firstName?.let { userDao.name = it }
+        userDTO.lastName?.let { userDao.surname = it }
+        userDTO.attendooUsername?.let { userDao.attendooUsername = it }
+        userDTO.attendooPassword?.let { userDao.attendooPassword = it }
+        userDTO.email?.let { userDao.email = it }
+        userDTO.phoneNumber?.let { userDao.phone = it }
+        userDTO.role?.let { userDao.role = runBlocking { roleService.getRoleByName(it)!! } }
+        userDTO.userStatus?.let { userDao.defaultStatus = runBlocking { userStatusService.getUserStatusByName(it)!! } }
+    }
     
     private suspend fun checkIfCanInsertNewUser(userDTO: UserDTO): Boolean
     {
