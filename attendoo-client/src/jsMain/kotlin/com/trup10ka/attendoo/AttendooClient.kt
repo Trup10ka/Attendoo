@@ -1,6 +1,5 @@
 package com.trup10ka.attendoo
 
-import com.trup10ka.attendoo.auth.AttendooJWTAuth
 import com.trup10ka.attendoo.fetch.KtorHttpClient
 import com.trup10ka.attendoo.pages.constant.ElementID
 import com.trup10ka.attendoo.uri.URIHandler

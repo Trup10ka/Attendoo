@@ -1,10 +1,16 @@
 package com.trup10ka.attendoo.db.services
 
-interface EmployeeService
+import com.trup10ka.attendoo.db.dao.User
+import com.trup10ka.attendoo.dto.UserDTO
+
+interface UserService
 {
-    suspend fun createEmployee(name: String)
-    suspend fun deleteEmployee(name: String)
-    suspend fun getEmployee(name: String)
-    suspend fun getEmployees()
-    suspend fun updateEmployee(name: String)
+    suspend fun createUser(userDTO: UserDTO)
+    suspend fun deleteUserByName(name: String)
+    suspend fun deleteUserById(id: Int)
+    suspend fun getUserByUsername(name: String): User?
+    suspend fun getUserByEmail(email: String): User?
+    suspend fun getUserById(id: Int): User?
+    suspend fun updateUserByUsername(userDTO: UserDTO): Boolean
+    suspend fun updateUserById(id: Int, userDTO: UserDTO): Boolean
 }
