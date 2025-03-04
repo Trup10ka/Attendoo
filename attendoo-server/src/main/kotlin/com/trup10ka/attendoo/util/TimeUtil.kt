@@ -14,3 +14,16 @@ fun convertToKotlinxLocalDateTime(dateTime: kotlinx.datetime.LocalDateTime): Loc
         dateTime.nanosecond
     )
 }
+
+fun convertToJavaLocalDateTime(dateTime: LocalDateTime): kotlinx.datetime.LocalDateTime
+{
+    return kotlinx.datetime.LocalDateTime(
+        dateTime.year,
+        dateTime.monthValue,
+        dateTime.dayOfMonth,
+        dateTime.hour,
+        dateTime.minute,
+        dateTime.second,
+        dateTime.nano
+    )
+}
