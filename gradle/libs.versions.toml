@@ -1,6 +1,6 @@
 [versions]
-kotlin = "2.0.20"
-kotlinx-serialization = "2.0.20"
+kotlin = "2.1.0"
+kotlinx-serialization = "2.1.0"
 kotlinx-kotlin-js-json = "1.8.0"
 ktor = "3.0.3"
 logback = "1.4.14"
