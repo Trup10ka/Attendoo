@@ -1,4 +1,4 @@
-package com.trup10ka.attendoo.data
+package com.trup10ka.attendoo
 
 const val CLIENT_HOST_VAL = "localhost"
 

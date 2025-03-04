@@ -1,10 +1,9 @@
 package com.trup10ka.attendoo.auth
 
-import com.trup10ka.attendoo.data.LOGIN_ENDPOINT
-import com.trup10ka.attendoo.data.STATUS_NAME
-import com.trup10ka.attendoo.data.TOKEN_NAME
+import com.trup10ka.attendoo.LOGIN_ENDPOINT
+import com.trup10ka.attendoo.STATUS_NAME
+import com.trup10ka.attendoo.TOKEN_NAME
 import com.trup10ka.attendoo.fetch.HttpClient
-import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.headers
 import kotlinx.browser.window

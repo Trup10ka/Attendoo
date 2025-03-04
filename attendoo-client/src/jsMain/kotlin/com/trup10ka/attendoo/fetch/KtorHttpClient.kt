@@ -1,10 +1,8 @@
 package com.trup10ka.attendoo.fetch
 
-import com.trup10ka.attendoo.data.CLIENT_HOST_VAL
+import com.trup10ka.attendoo.CLIENT_HOST_VAL
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.engine.js.Js
-import io.ktor.client.fetch.Response
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
