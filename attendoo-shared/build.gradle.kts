@@ -11,4 +11,10 @@ kotlin {
         browser()
         binaries.executable()
     }
+    
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.datetime)
+        }
+    }
 }
