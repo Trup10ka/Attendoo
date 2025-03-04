@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS proposal
     name                      VARCHAR(255) NOT NULL,
     attendoo_proposal_id      INT          NOT NULL,
     description               TEXT,
-    created_at                DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at                DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     resolved_at               DATETIME,
     current_employee_status_id  INT          NOT NULL,
     proposed_employee_status_id INT          NOT NULL,
