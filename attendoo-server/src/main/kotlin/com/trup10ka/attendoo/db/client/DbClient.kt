@@ -1,10 +1,10 @@
 package com.trup10ka.attendoo.db.client
 
-import com.trup10ka.attendoo.db.services.EmployeeService
+import com.trup10ka.attendoo.db.services.UserService
 
 abstract class DbClient
 {
-    lateinit var userService: EmployeeService
+    lateinit var userService: UserService
 
     abstract fun connect()
 

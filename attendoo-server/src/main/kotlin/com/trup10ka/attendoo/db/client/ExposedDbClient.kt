@@ -1,12 +1,11 @@
 package com.trup10ka.attendoo.db.client
 
 import com.trup10ka.attendoo.config.ConfigDistributor.config
-import com.trup10ka.attendoo.db.dao.ProposalTag
-import com.trup10ka.attendoo.db.services.ExposedEmployeeService
-import com.trup10ka.attendoo.db.tables.EmployeeAttendances
-import com.trup10ka.attendoo.db.tables.EmployeeDepartments
-import com.trup10ka.attendoo.db.tables.EmployeeStatuses
-import com.trup10ka.attendoo.db.tables.Employees
+import com.trup10ka.attendoo.db.services.UserExposedService
+import com.trup10ka.attendoo.db.tables.UserAttendances
+import com.trup10ka.attendoo.db.tables.UserDepartments
+import com.trup10ka.attendoo.db.tables.UserStatuses
+import com.trup10ka.attendoo.db.tables.Users
 import com.trup10ka.attendoo.db.tables.ProposalTags
 import com.trup10ka.attendoo.db.tables.Proposals
 import com.trup10ka.attendoo.db.tables.Roles
@@ -50,7 +49,7 @@ class ExposedDbClient : DbClient()
 
     private fun initClient()
     {
-        userService = ExposedEmployeeService()
+        //userService = UserExposedService()
     }
 
     private fun initSchema()
@@ -59,10 +58,10 @@ class ExposedDbClient : DbClient()
             SchemaUtils.create(
                 Roles,
                 Tags,
-                EmployeeStatuses,
-                EmployeeDepartments,
-                Employees,
-                EmployeeAttendances,
+                UserStatuses,
+                UserDepartments,
+                Users,
+                UserAttendances,
                 Proposals,
                 ProposalTags
             )

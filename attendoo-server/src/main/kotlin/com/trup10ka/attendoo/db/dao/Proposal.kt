@@ -14,6 +14,6 @@ class Proposal(id: EntityID<Int>) : IntEntity(id)
     var attendooProposalId by Proposals.attendooProposalId
     var createdAt by Proposals.createdAt
     var resolvedAt by Proposals.resolvedAt
-    var currentEmployeeStatus by EmployeeStatus referencedOn Proposals.currentEmployeeStatus
-    var proposedEmployeeStatus by EmployeeStatus referencedOn Proposals.proposedEmployeeStatus
+    var currentUserStatus by UserStatus referencedOn Proposals.currentEmployeeStatus
+    var proposedUserStatus by UserStatus referencedOn Proposals.proposedEmployeeStatus
 }
