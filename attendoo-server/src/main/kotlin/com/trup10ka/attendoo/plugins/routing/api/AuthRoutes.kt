@@ -30,15 +30,15 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
             params["password"]
         )
         
-        if (authCredentials.username == null || password == null)
+        if (authCredentials.username == null || authCredentials.password == null)
         {
             call.respond(mapOf("error" to "Missing username or password"))
             return@post
         }
         
         launchIOCoroutine {
-            val user = dbClient.userService.getUserByUsername(username)
-            if (user == null || user.attendooPassword != password)
+            val user = dbClient.userService.getUserByUsername(authCredentials.username!!)
+            if (user == null || user.attendooPassword != passwordEncryptor.encrypt(authCredentials.password!!))
             {
                 call.respond(mapOf("error" to "Invalid username or password"))
             }
@@ -58,15 +58,16 @@ fun  Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncrypto
         val params = call.receiveParameters()
         val firstName = params["first-name"]
         val lastName = params["last-name"]
-        
         val username = params["username"]
-        val password = params["password"]
+        var password = params["password"]
         
         if (username == null || password == null)
         {
             call.respond(mapOf("error" to "Missing username or password"))
             return@post
         }
+        
+        password = passwordEncryptor.encrypt(password)
         
         launchIOCoroutine {
             val wasCreated = dbClient.userService.createUser(UserDTO(firstName, lastName, username, password, ))
