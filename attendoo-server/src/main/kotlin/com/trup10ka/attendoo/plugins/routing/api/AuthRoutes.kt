@@ -1,7 +1,10 @@
 package com.trup10ka.attendoo.plugins.routing.api
 
+import com.trup10ka.attendoo.data.AuthCredentials
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.dto.UserDTO
+import com.trup10ka.attendoo.security.PasswordEncryptor
+import com.trup10ka.attendoo.security.Sha384PasswordEncryptor
 import com.trup10ka.attendoo.util.launchIOCoroutine
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
@@ -11,20 +14,23 @@ import io.ktor.server.routing.route
 
 fun Route.routeAuth(dbClient: DbClient)
 {
+    val passwordEncryptor: PasswordEncryptor = Sha384PasswordEncryptor()
     route("/auth") {
-        routeLogin(dbClient)
-        routeRegister(dbClient)
+        routeLogin(dbClient, passwordEncryptor)
+        routeRegister(dbClient, passwordEncryptor)
     }
 }
 
-fun Route.routeLogin(dbClient: DbClient)
+fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
 {
     post("/login") {
         val params = call.receiveParameters()
-        val username = params["username"]
-        val password = params["password"]
+        val authCredentials = AuthCredentials(
+            params["username"],
+            params["password"]
+        )
         
-        if (username == null || password == null)
+        if (authCredentials.username == null || password == null)
         {
             call.respond(mapOf("error" to "Missing username or password"))
             return@post
@@ -46,7 +52,7 @@ fun Route.routeLogin(dbClient: DbClient)
 }
 
 // TODO: Implement encrypting password
-fun  Route.routeRegister(dbClient: DbClient)
+fun  Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
 {
     post("/register") {
         val params = call.receiveParameters()
