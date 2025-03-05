@@ -16,6 +16,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.coroutines)
+            implementation(libs.kotlinx.serializable.json)
         }
     }
 }

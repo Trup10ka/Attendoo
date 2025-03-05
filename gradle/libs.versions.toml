@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.1.0"
 kotlinx-serialization = "2.1.0"
-kotlinx-kotlin-js-json = "1.8.0"
+kotlinx-serialization-json = "1.8.0"
 kotlinx-datetime = "0.6.2"
 kotlinx-coroutines = "1.10.1"
 ktor = "3.0.3"
@@ -13,9 +13,6 @@ hoplite = "2.8.2"
 mariadb-driver = "3.3.1"
 
 [libraries]
-
-### Kotlin client ###
-kotlinx-json-client = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-kotlin-js-json" }
 
 ### Ktor server ###
 ktor-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
@@ -41,6 +38,7 @@ ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jv
 ### Shared libraries ###
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serializable-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 ### Logging ###
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
