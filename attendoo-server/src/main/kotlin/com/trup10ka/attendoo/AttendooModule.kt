@@ -20,5 +20,5 @@ fun Application.attendooModule()
     configureSerialization()
     configureSockets()
     configureStatusPage()
-    configureRouting()
+    configureRouting(dbClient)
 }

@@ -5,7 +5,7 @@ import com.trup10ka.attendoo.dto.UserDTO
 
 interface UserService
 {
-    suspend fun createUser(userDTO: UserDTO)
+    suspend fun createUser(userDTO: UserDTO): Boolean
     suspend fun deleteUserByName(name: String)
     suspend fun deleteUserById(id: Int)
     suspend fun getUserByUsername(name: String): User?

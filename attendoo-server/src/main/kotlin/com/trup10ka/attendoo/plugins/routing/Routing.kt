@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.plugins.routing
 
+import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.exceptions.MissingImportantDirectoryException
 import com.trup10ka.attendoo.plugins.routing.api.routeAPICalls
 import com.trup10ka.attendoo.util.hasContent
@@ -12,12 +13,13 @@ import java.io.File
 
 val logger = KotlinLogging.logger {}
 
-fun Application.configureRouting()
+fun Application.configureRouting(dbClient: DbClient)
 {
     routing {
         routeStaticFiles()
         routePages()
-        routeAPICalls()
+        
+        route("/api") { routeAPICalls(dbClient) }
     }
 }
 
