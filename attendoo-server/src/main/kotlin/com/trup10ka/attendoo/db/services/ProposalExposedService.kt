@@ -40,7 +40,6 @@ class ProposalExposedService(
     override suspend fun getProposalByAttendooId(attendooProposalId: Int): Proposal?
     {
         return Proposal.find { Proposals.attendooProposalId eq attendooProposalId }.singleOrNull()
-        
     }
     
     override suspend fun getProposalByProposalId(proposalId: Int): Proposal?

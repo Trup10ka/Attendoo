@@ -12,9 +12,10 @@ class UserExposedService(
     private val userDepartmentService: UserDepartmentService
 ) : UserService
 {
-    override suspend fun createUser(userDTO: UserDTO)
+    override suspend fun createUser(userDTO: UserDTO): Boolean
     {
-        checkIfCanInsertNewUser(userDTO)
+        if (checkIfCanInsertNewUser(userDTO))
+            return false
         
         val roleDao = roleService.getRoleByName(userDTO.role!!) ?: roleService.createRole(userDTO.role!!)
         
@@ -36,6 +37,7 @@ class UserExposedService(
             department = departmentDao
         }
         
+        return true
     }
     
     override suspend fun deleteUserByName(name: String)
