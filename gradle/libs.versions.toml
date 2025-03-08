@@ -27,7 +27,8 @@ ktor-server-sessions = { module = "io.ktor:ktor-server-sessions-jvm", version.re
 ktor-websockets = { module = "io.ktor:ktor-server-websockets-jvm", version.ref = "ktor" }
 ktor-host-common = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor" }
 ktor-status-pages = { module = "io.ktor:ktor-server-status-pages-jvm", version.ref = "ktor" }
-ktor-auth = { module = "io.ktor:ktor-server-auth-jvm", version.ref = "ktor" }
+ktor-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
+ktor-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
 ktor-compression = { module = "io.ktor:ktor-server-compression-jvm", version.ref = "ktor" }
 ktor-cors = { module = "io.ktor:ktor-server-cors-jvm", version.ref = "ktor" }
 ktor-default-headers = { module = "io.ktor:ktor-server-default-headers-jvm", version.ref = "ktor" }

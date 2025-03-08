@@ -3,8 +3,9 @@ package com.trup10ka.attendoo.config
 data class Config(
     val port: Int,
     val host: String,
+    val isSecureConnection: Boolean,
     val database: Database,
-    val isSecureConnection: Boolean
+    val jwt: JWT
 )
 {
     data class Database(
@@ -13,5 +14,12 @@ data class Config(
         val user: String,
         val password: String,
         val driver: String
+    )
+    
+    data class JWT(
+        val secret: String,
+        val issuer: String,
+        val audience: String,
+        val realm: String
     )
 }

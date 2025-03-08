@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.ktor.host.common)
     implementation(libs.ktor.status.pages)
     implementation(libs.ktor.auth)
+    implementation(libs.ktor.auth.jwt)
     implementation(libs.ktor.compression)
     implementation(libs.ktor.cors)
     implementation(libs.ktor.default.headers)
