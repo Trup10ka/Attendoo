@@ -1,5 +1,9 @@
 package com.trup10ka.attendoo.dto
 
+import kotlinx.serialization.Serializable
+
+
+@Serializable
 data class UserDTO(
     val firstName: String? = null,
     val lastName: String? = null,
@@ -23,5 +27,20 @@ data class UserDTO(
                 role != null &&
                 userStatus != null &&
                 userDepartment != null
+    }
+    
+    fun convertToDTOWithEncryptedPassword(encryptedPassword: String): UserDTO
+    {
+        return UserDTO(
+            this.firstName,
+            this.lastName,
+            this.attendooUsername,
+            encryptedPassword,
+            this.email,
+            this.phoneNumber,
+            this.role,
+            this.userStatus,
+            this.userDepartment
+        )
     }
 }

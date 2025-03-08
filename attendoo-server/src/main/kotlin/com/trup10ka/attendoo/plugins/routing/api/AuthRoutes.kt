@@ -2,15 +2,21 @@ package com.trup10ka.attendoo.plugins.routing.api
 
 import com.trup10ka.attendoo.data.AuthCredentials
 import com.trup10ka.attendoo.db.client.DbClient
+import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.dto.UserDTO
 import com.trup10ka.attendoo.security.PasswordEncryptor
 import com.trup10ka.attendoo.security.Sha384PasswordEncryptor
 import com.trup10ka.attendoo.util.launchIOCoroutine
-import io.ktor.server.request.receiveParameters
+import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.plugins.origin
+import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+
+val logger = KotlinLogging.logger { }
 
 fun Route.routeAuth(dbClient: DbClient)
 {
@@ -24,11 +30,9 @@ fun Route.routeAuth(dbClient: DbClient)
 fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
 {
     post("/login") {
-        val params = call.receiveParameters()
-        val authCredentials = AuthCredentials(
-            params["username"],
-            params["password"]
-        )
+        logger.info { "Received request for LOGIN from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+        
+        val authCredentials = call.receive<AuthCredentials>()
         
         if (authCredentials.username == null || authCredentials.password == null)
         {
@@ -37,7 +41,8 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         }
         
         launchIOCoroutine {
-            val user = dbClient.userService.getUserByUsername(authCredentials.username!!)
+            val user = dbQuery { dbClient.userService.getUserByUsername(authCredentials.username!!) }
+            
             if (user == null || user.attendooPassword != passwordEncryptor.encrypt(authCredentials.password!!))
             {
                 call.respond(mapOf("error" to "Invalid username or password"))
@@ -51,26 +56,36 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
     }
 }
 
-// TODO: Implement encrypting password
-fun  Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
+fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
 {
     post("/register") {
-        val params = call.receiveParameters()
-        val firstName = params["first-name"]
-        val lastName = params["last-name"]
-        val username = params["username"]
-        var password = params["password"]
+        logger.info { "Received request for REQUEST from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
         
-        if (username == null || password == null)
+        val userDTO = call.receive<UserDTO>()
+        
+        if (userDTO.attendooUsername == null || userDTO.attendooPassword == null)
         {
             call.respond(mapOf("error" to "Missing username or password"))
+            logger.warn {  "Received invalid username or password from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-        
-        password = passwordEncryptor.encrypt(password)
+        val encryptedPassword = passwordEncryptor.encrypt(userDTO.attendooPassword!!)
         
         launchIOCoroutine {
-            val wasCreated = dbClient.userService.createUser(UserDTO(firstName, lastName, username, password, ))
+            val wasCreated =
+                dbQuery { dbClient.userService.createUser(userDTO.convertToDTOWithEncryptedPassword(encryptedPassword)) }
+            
+            if (wasCreated)
+            {
+                call.respond(HttpStatusCode.Created, mapOf("success" to "User created"))
+                logger.info { "Successfully created user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+            }
+            else
+            {
+                call.respond(HttpStatusCode.Conflict, mapOf("error" to "User already exists"))
+                logger.warn { "Failed to create user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+            }
         }
+        call.respond(HttpStatusCode.Processing)
     }
 }
