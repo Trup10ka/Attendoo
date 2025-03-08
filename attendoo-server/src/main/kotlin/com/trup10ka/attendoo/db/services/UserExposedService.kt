@@ -3,8 +3,11 @@ package com.trup10ka.attendoo.db.services
 import com.trup10ka.attendoo.db.dao.User
 import com.trup10ka.attendoo.db.tables.Users
 import com.trup10ka.attendoo.dto.UserDTO
-import com.trup10ka.attendoo.plugins.routing.logger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.runBlocking
+import kotlin.math.log
+
+val logger = KotlinLogging.logger {  }
 
 class UserExposedService(
     private val roleService: RoleService,
@@ -14,8 +17,11 @@ class UserExposedService(
 {
     override suspend fun createUser(userDTO: UserDTO): Boolean
     {
-        if (checkIfCanInsertNewUser(userDTO))
+        if (!checkIfCanInsertNewUser(userDTO))
+        {
+            logger.warn { "UserDTO is not valid for user creation: $userDTO" }
             return false
+        }
         
         val roleDao = roleService.getRoleByName(userDTO.role!!) ?: roleService.createRole(userDTO.role!!)
         
