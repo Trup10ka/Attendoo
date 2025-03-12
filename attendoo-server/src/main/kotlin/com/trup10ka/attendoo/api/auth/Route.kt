@@ -10,7 +10,9 @@ fun Route.routeAuth(dbClient: DbClient)
 {
     val passwordEncryptor: PasswordEncryptor = Sha384PasswordEncryptor()
     route("/auth") {
+        
         routeLogin(dbClient, passwordEncryptor)
+        
         routeRegister(dbClient, passwordEncryptor)
     }
 }

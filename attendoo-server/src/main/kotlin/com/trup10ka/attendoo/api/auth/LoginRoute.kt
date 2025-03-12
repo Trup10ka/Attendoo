@@ -14,6 +14,7 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
+import java.util.Date
 
 fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
 {
@@ -38,10 +39,13 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
             else
             {
                 call.respond(mapOf(TOKEN_NAME to JWT.create()
-                    .withAudience(config.jwt.audience)
-                    .withIssuer(config.jwt.issuer)
-                    .sign(Algorithm.HMAC512(config.jwt.secret))
-                )
+                        .withAudience(config.jwt.audience)
+                        .withIssuer(config.jwt.issuer)
+                        .withClaim("attendooUsername", authCredentials.username!!)
+                        .withClaim("attendooRole", user.role.name)
+                        .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                        .sign(Algorithm.HMAC512(config.jwt.secret))
+                    )
                 )
             }
         }
