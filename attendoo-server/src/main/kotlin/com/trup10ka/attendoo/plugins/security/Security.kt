@@ -5,12 +5,9 @@ import io.ktor.server.application.Application
 
 fun Application.configureSecurity()
 {
-    fun Application.configureSecurity()
+    if (config.isSecureConnection)
     {
-        if (config.isSecureConnection)
-        {
-            configureSessionCookie()
-        }
-        configureJWT()
+        configureSessionCookie()
     }
+    configureJWT()
 }
