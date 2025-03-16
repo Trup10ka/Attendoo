@@ -92,6 +92,12 @@ class UserExposedService(
         return true
     }
     
+    override suspend fun getAllUsersFromDepartment(department: String): List<User>
+    {
+        val userDepartment = userDepartmentService.getDepartmentByName(department) ?: return emptyList()
+        return User.find { Users.userDepartment eq userDepartment.id }.toList()
+    }
+    
     private fun applyUpdateChanges(userDTO: UserDTO): (User) -> Unit = { userDao ->
         userDTO.firstName?.let { userDao.name = it }
         userDTO.lastName?.let { userDao.surname = it }

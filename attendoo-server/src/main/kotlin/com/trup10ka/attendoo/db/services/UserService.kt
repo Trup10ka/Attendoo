@@ -13,4 +13,5 @@ interface UserService
     suspend fun getUserById(id: Int): User?
     suspend fun updateUserByUsername(userDTO: UserDTO): Boolean
     suspend fun updateUserById(id: Int, userDTO: UserDTO): Boolean
+    suspend fun getAllUsersFromDepartment(department: String): List<User>
 }
