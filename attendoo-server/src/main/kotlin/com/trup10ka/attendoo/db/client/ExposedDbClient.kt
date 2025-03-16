@@ -29,7 +29,7 @@ class ExposedDbClient : DbClient()
     override fun connect()
     {
         Database.connect(
-            url = "${config.database.url}/${config.database.name}",
+            url = "${config.database.url}:${config.database.port}/${config.database.name}",
             driver = config.database.driver,
             user = config.database.user,
             password = config.database.password,
