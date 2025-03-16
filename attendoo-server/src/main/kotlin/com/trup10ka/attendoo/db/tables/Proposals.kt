@@ -10,6 +10,6 @@ object Proposals : IntIdTable("proposal")
     val attendooProposalId = integer("attendoo_proposal_id")
     val createdAt = datetime("created_at")
     val resolvedAt = datetime("resolved_at").nullable()
-    val currentEmployeeStatus = reference("current_employee_status_id", UserStatuses)
-    val proposedEmployeeStatus = reference("proposed_employee_status_id", UserStatuses)
+    val currentUserStatus = reference("current_user_status_id", UserStatuses)
+    val proposedUserStatus = reference("proposed_user_status_id", UserStatuses)
 }

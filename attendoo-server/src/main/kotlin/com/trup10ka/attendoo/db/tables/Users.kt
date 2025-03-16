@@ -2,7 +2,7 @@ package com.trup10ka.attendoo.db.tables
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 
-object Users : IntIdTable("employee")
+object Users : IntIdTable("user")
 {
     val name = varchar("first_name", 255)
     val surname = varchar("last_name", 255)
@@ -11,6 +11,6 @@ object Users : IntIdTable("employee")
     val email = varchar("email", 255)
     val phone = varchar("phone_number", 255)
     val role = reference("role_id", Roles)
-    val defaultStatusId = reference("default_employee_status_id", UserStatuses)
-    val employeeDepartment = reference("employee_department_id", UserDepartments)
+    val defaultStatusId = reference("default_user_status_id", UserStatuses)
+    val userDepartment = reference("user_department_id", UserDepartments)
 }

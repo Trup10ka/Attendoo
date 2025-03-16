@@ -9,8 +9,8 @@ class UserAttendance(id: EntityID<Int>) : IntEntity(id)
 {
     companion object : IntEntityClass<UserAttendance>(UserAttendances)
 
-    var userId by User referencedOn UserAttendances.employeeId
-    var userStatusId by UserStatus referencedOn UserAttendances.employeeStatusId
+    var userId by User referencedOn UserAttendances.userId
+    var userStatusId by UserStatus referencedOn UserAttendances.userStatusId
     var startDate by UserAttendances.startDate
     var endDate by UserAttendances.endDate
 }

@@ -17,5 +17,5 @@ class User(id: EntityID<Int>) : IntEntity(id)
     var phone by Users.phone
     var role by Role referencedOn Users.role
     var defaultStatus by UserStatus referencedOn Users.defaultStatusId
-    var department by UserDepartment referencedOn Users.employeeDepartment
+    var department by UserDepartment referencedOn Users.userDepartment
 }
