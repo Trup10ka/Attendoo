@@ -42,6 +42,7 @@ dependencies {
     /* ## DB ## */
     implementation(libs.h2db)
     implementation(libs.mariadb.driver)
+    implementation(libs.mysql.driver)
 
     /* ## Logging ## */
     implementation(libs.logback.classic)
