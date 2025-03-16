@@ -2,6 +2,9 @@ package com.trup10ka.attendoo
 
 const val CLIENT_HOST_VAL = "localhost"
 
+const val SUCCESS_JSON_FIELD_NAME = "success"
+const val ERROR_JSON_FIELD_NAME = "error"
+
 /* === Auth Endpoints === */
 const val LOGIN_ENDPOINT = "/api/auth/login"
 const val REGISTER_ENDPOINT = "/api/auth/register"
