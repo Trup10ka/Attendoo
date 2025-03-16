@@ -3,7 +3,7 @@ package com.trup10ka.attendoo.db.services
 import com.trup10ka.attendoo.db.dao.Proposal
 import com.trup10ka.attendoo.db.tables.Proposals
 import com.trup10ka.attendoo.dto.ProposalDTO
-import com.trup10ka.attendoo.util.convertToKotlinxLocalDateTime
+import com.trup10ka.attendoo.util.convertToJavaDateTime
 
 class ProposalExposedService(
     private val userStatusService: UserStatusService
@@ -24,8 +24,8 @@ class ProposalExposedService(
             attendooProposalId = proposalDTO.attendooProposalId
             name = proposalDTO.name
             description = proposalDTO.description
-            createdAt = convertToKotlinxLocalDateTime(proposalDTO.createdAt)
-            resolvedAt = proposalDTO.resolvedAt?.let { convertToKotlinxLocalDateTime(it) }
+            createdAt = proposalDTO.createdAt.convertToJavaDateTime()
+            resolvedAt = proposalDTO.resolvedAt?.convertToJavaDateTime()
             currentUserStatus = currentUserStatusDao
             proposedUserStatus = proposedUserStatusDao
         }
