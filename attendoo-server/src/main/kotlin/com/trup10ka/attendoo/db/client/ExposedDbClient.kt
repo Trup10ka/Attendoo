@@ -4,6 +4,7 @@ import com.trup10ka.attendoo.config.ConfigDistributor.config
 import com.trup10ka.attendoo.db.services.ProposalExposedService
 import com.trup10ka.attendoo.db.services.RoleExposedService
 import com.trup10ka.attendoo.db.services.TagExposedService
+import com.trup10ka.attendoo.db.services.UserAttendanceExposedService
 import com.trup10ka.attendoo.db.services.UserDepartmentExposedService
 import com.trup10ka.attendoo.db.services.UserExposedService
 import com.trup10ka.attendoo.db.services.UserStatusExposedService
@@ -60,6 +61,7 @@ class ExposedDbClient : DbClient()
         roleService = RoleExposedService()
         proposalService = ProposalExposedService(userStatusService)
         userService = UserExposedService(roleService, userStatusService, userDepartmentService)
+        attendanceService = UserAttendanceExposedService(userStatusService, userService)
         
         checkIfAllServicesInitialized()
     }

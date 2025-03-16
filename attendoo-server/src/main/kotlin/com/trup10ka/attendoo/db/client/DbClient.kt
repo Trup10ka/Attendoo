@@ -10,6 +10,7 @@ abstract class DbClient
     lateinit var userDepartmentService: UserDepartmentService
     lateinit var userService: UserService
     lateinit var userStatusService: UserStatusService
+    lateinit var attendanceService: UserAttendanceService
     
     abstract fun connect()
 
@@ -40,6 +41,10 @@ abstract class DbClient
         if (!::userStatusService.isInitialized)
         {
             throw IllegalStateException("User status service is not initialized")
+        }
+        if (!::attendanceService.isInitialized)
+        {
+            throw IllegalStateException("Attendance service is not initialized")
         }
     }
 }
