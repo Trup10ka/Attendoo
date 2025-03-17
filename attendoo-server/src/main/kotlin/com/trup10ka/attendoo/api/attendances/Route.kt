@@ -10,6 +10,6 @@ fun Route.routeAttendances(userAttendanceService: UserAttendanceService, userSer
 {
     route("/attendances") {
         routeGetAllAttendances(userAttendanceService, userService)
-        routeGetUserAttendances(userAttendanceService)
+        routeGetUserAttendances(userAttendanceService, userService)
     }
 }
