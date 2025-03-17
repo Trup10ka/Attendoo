@@ -2,6 +2,8 @@ package com.trup10ka.attendoo.api.users
 
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.db.services.UserService
+import com.trup10ka.attendoo.db.toDTO
+import com.trup10ka.attendoo.dto.UserDTO
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
@@ -18,7 +20,9 @@ fun Route.routeGetAllUsersFromDepartment(userService: UserService)
         val principal = call.principal<JWTPrincipal>()
         val department = call.receive<String>()
         
-        val users = dbQuery { userService.getAllUsersFromDepartment(department) }
+        val users = dbQuery {
+            userService.getAllUsersFromDepartment(department).map {  it.toDTO<UserDTO>() }
+        }
         
         call.respond(HttpStatusCode.OK, users)
     }
