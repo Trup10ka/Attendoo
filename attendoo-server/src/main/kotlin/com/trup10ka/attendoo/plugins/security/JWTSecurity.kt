@@ -10,10 +10,17 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.jwt.JWTCredential
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
 import io.ktor.server.plugins.origin
 import io.ktor.server.response.respond
+
+val JWTCredential.attendooUsername: String?
+    get() = payload.getClaim("attendooUsername").asString()
+
+val JWTCredential.attendooRole: String?
+    get() = payload.getClaim("attendooRole").asString()
 
 fun Application.configureJWT()
 {
@@ -28,21 +35,18 @@ fun Application.configureJWT()
         jwt {
             verifier(jwtVerifier)
             
-            validate {  credential ->
-                if (credential.payload.getClaim("attendooUsername").asString() != null && credential.payload.getClaim("attendooRole").asString() != null)
-                {
+            validate { credential ->
+                if (credential.attendooUsername != null && credential.attendooRole != null)
                     JWTPrincipal(credential.payload)
-                }
                 else
-                {
                     null
-                }
             }
             challenge { _, _ ->
-                logger.warn {  "Authentication failed for ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+                logger.warn { "Authentication failed for ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
                 val token = call.request.headers["Authorization"]?.removePrefix("Bearer ")
                 
-                if (token == null) {
+                if (token == null)
+                {
                     call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "No token provided"))
                     return@challenge
                 }
