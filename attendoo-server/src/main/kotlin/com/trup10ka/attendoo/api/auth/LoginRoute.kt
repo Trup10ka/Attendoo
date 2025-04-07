@@ -2,6 +2,7 @@ package com.trup10ka.attendoo.api.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
 import com.trup10ka.attendoo.JWT_ROLE_FIELD
 import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.TOKEN_NAME
@@ -26,7 +27,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         
         if (authCredentials.username == null || authCredentials.password == null)
         {
-            call.respond(mapOf("error" to "Missing username or password"))
+            call.respond(mapOf(ERROR_JSON_FIELD_NAME to "Missing username or password"))
             return@post
         }
         
@@ -35,7 +36,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         
         if (user == null || user.attendooPassword != passwordEncryptor.encrypt(authCredentials.password!!))
         {
-            call.respond(mapOf("error" to "Invalid username or password"))
+            call.respond(mapOf(ERROR_JSON_FIELD_NAME to "Invalid username or password"))
         }
         else
         {

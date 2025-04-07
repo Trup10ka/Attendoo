@@ -1,5 +1,7 @@
 package com.trup10ka.attendoo.api.auth
 
+import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
+import com.trup10ka.attendoo.SUCCESS_JSON_FIELD_NAME
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.dto.UserDTO
@@ -24,7 +26,7 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
         
         if (userDTO.attendooUsername == null || userDTO.attendooPassword == null)
         {
-            call.respond(mapOf("error" to "Missing username or password"))
+            call.respond(mapOf(ERROR_JSON_FIELD_NAME to "Missing username or password"))
             logger.warn { "Received invalid username or password from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
@@ -35,12 +37,12 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
         
         if (wasCreated)
         {
-            call.respond(HttpStatusCode.Created, mapOf("success" to true))
+            call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
             logger.info { "Successfully created user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
         }
         else
         {
-            call.respond(HttpStatusCode.Conflict, mapOf("error" to "User already exists"))
+            call.respond(HttpStatusCode.Conflict, mapOf(ERROR_JSON_FIELD_NAME to "User already exists"))
             logger.warn { "Failed to create user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
         }
         

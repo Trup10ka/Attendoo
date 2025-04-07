@@ -4,6 +4,9 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
+import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
+import com.trup10ka.attendoo.JWT_ROLE_FIELD
+import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.api.users.logger
 import com.trup10ka.attendoo.config.ConfigDistributor.config
 import io.ktor.http.HttpStatusCode
@@ -17,10 +20,10 @@ import io.ktor.server.plugins.origin
 import io.ktor.server.response.respond
 
 val JWTCredential.attendooUsername: String?
-    get() = payload.getClaim("attendooUsername").asString()
+    get() = payload.getClaim(JWT_USERNAME_FIELD).asString()
 
 val JWTCredential.attendooRole: String?
-    get() = payload.getClaim("attendooRole").asString()
+    get() = payload.getClaim(JWT_ROLE_FIELD).asString()
 
 fun Application.configureJWT()
 {
@@ -47,7 +50,7 @@ fun Application.configureJWT()
                 
                 if (token == null)
                 {
-                    call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "No token provided"))
+                    call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "No token provided"))
                     return@challenge
                 }
                 
@@ -58,11 +61,11 @@ fun Application.configureJWT()
                 }
                 catch (_: TokenExpiredException)
                 {
-                    call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Token expired"))
+                    call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "Token expired"))
                 }
                 catch (_: JWTVerificationException)
                 {
-                    call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Invalid token"))
+                    call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "Invalid token"))
                 }
             }
         }

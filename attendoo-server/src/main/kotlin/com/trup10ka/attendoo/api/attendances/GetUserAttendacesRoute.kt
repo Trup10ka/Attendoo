@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.api.attendances
 
+import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
 import com.trup10ka.attendoo.api.attendooUsername
 import com.trup10ka.attendoo.db.services.UserAttendanceService
 import com.trup10ka.attendoo.db.services.UserService
@@ -18,14 +19,14 @@ fun Route.routeGetUserAttendances(userAttendanceService: UserAttendanceService, 
         
         if (principal == null)
         {
-            call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "No token provided"))
+            call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "No token provided"))
             return@get
         }
         
         val user = userService.getUserByUsername(principal.attendooUsername)
         if (user == null)
         {
-            call.respond(HttpStatusCode.NotFound, mapOf("error" to "User not found"))
+            call.respond(HttpStatusCode.NotFound, mapOf(ERROR_JSON_FIELD_NAME to "User not found"))
             return@get
         }
         
