@@ -37,7 +37,7 @@ class RequestPageBuildImp : RequestPageBuilder
             children = arrayOf(
                 createDiv(
                     clazz = arrayOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
-                    text = user.fullName
+                    text = "${user.firstName} ${user.lastName}"
                 ),
                 createDiv(
                     clazz = arrayOf(ONE_LINE_CONTAINER, AVATAR),
