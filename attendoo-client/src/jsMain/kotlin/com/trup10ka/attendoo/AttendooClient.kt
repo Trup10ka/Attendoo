@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo
 
+import com.trup10ka.attendoo.auth.AttendooJWTAuth
 import com.trup10ka.attendoo.fetch.KtorHttpClient
 import com.trup10ka.attendoo.pages.constant.ElementID
 import com.trup10ka.attendoo.uri.URIHandler
@@ -8,6 +9,7 @@ import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.pages.constant.PageType.*
+import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.util.mapButtonToPage
 
 class AttendooClient
@@ -15,6 +17,8 @@ class AttendooClient
     private val uriHandler: URIHandler = URIHandlerImp()
 
     private val ktorClient = KtorHttpClient()
+    
+    private val jwtAuthenticator = AttendooJWTAuth(ktorClient)
     
     private val pageManager = AttendooPageManager(uriHandler, ktorClient)
     
@@ -25,9 +29,14 @@ class AttendooClient
         pageManager.initPageManager(ktorClient)
         uriHandler.initUriHandler()
         
-        initButtonListeners()
-        
-        displayPage()
+        launchDefaultCoroutine {
+            if (!jwtAuthenticator.isAuthenticated())
+                pageManager.showLoginPage()
+            
+            initButtonListeners()
+            
+            displayPage()
+        }
     }
 
     private fun displayPage()
