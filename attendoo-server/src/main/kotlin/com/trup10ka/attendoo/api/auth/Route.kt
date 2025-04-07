@@ -14,6 +14,9 @@ fun Route.routeAuth(dbClient: DbClient)
         
         routeLogin(dbClient, passwordEncryptor)
         
-        authenticate { routeRegister(dbClient, passwordEncryptor) }
+        authenticate {
+            routeRegister(dbClient, passwordEncryptor)
+            routeVerify()
+        }
     }
 }

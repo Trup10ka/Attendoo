@@ -8,6 +8,7 @@ const val ERROR_JSON_FIELD_NAME = "error"
 /* === Auth Endpoints === */
 const val LOGIN_ENDPOINT = "/api/auth/login"
 const val REGISTER_ENDPOINT = "/api/auth/register"
+const val VERIFY_ENDPOINT = "/api/auth/verify"
 
 /* === JWT field names */
 const val JWT_USERNAME_FIELD = "attendooUsername"
