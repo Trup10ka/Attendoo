@@ -16,6 +16,7 @@ allprojects {
 
 tasks.register<Copy>("buildTestPackage") {
     dependsOn(
+        ":kotlinUpgradeYarnLock",
         ":attendoo-client:jsBrowserDevelopmentExecutableDistribution",
         ":attendoo-server:shadowJar"
     )
