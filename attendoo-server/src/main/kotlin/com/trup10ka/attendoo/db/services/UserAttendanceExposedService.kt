@@ -9,6 +9,7 @@ import org.jetbrains.exposed.sql.and
 
 class UserAttendanceExposedService(
     private val userStatusService: UserStatusService,
+    private val userDepartmentService: UserDepartmentService,
     private val userService: UserService
 ) : UserAttendanceService
 {
@@ -72,6 +73,13 @@ class UserAttendanceExposedService(
     override suspend fun getAttendanceByDate(date: LocalDate): List<UserAttendance>
     {
         return UserAttendance.find { UserAttendances.startDate eq date.convertToJavaDate() }.toList()
+    }
+    
+    override suspend fun getAllAttendancesInDepartment(departmentId: Int): List<UserAttendance>
+    {
+        val department = userDepartmentService.getDepartmentById(departmentId) ?: return emptyList()
+        val usersInDepartment = userService.getAllUsersFromDepartment(department.name)
+        return UserAttendance.find { UserAttendances.userId inList usersInDepartment.map { it.id } }.toList()
     }
     
     override suspend fun getAllAttendance(): List<UserAttendance>

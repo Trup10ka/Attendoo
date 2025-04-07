@@ -14,5 +14,6 @@ interface UserAttendanceService
     suspend fun getAttendanceByUserId(userId: Int): List<UserAttendance>
     suspend fun getAttendanceByUserStatusId(userStatusId: Int): List<UserAttendance>
     suspend fun getAttendanceByDate(date: LocalDate): List<UserAttendance>
+    suspend fun getAllAttendancesInDepartment(departmentId: Int): List<UserAttendance>
     suspend fun getAllAttendance(): List<UserAttendance>
 }
