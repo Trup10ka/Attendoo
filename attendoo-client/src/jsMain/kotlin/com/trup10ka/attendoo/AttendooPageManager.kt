@@ -40,6 +40,12 @@ class AttendooPageManager(
         currentPage.show()
     }
     
+    fun showLoginPage()
+    {
+        val loginPage = pages[LOGIN_PAGE]!!
+        switchToPage(loginPage)
+    }
+    
     fun getCurrentPage(): Page
     {
         val path = uriHandler.getPagePath()
