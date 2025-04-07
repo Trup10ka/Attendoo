@@ -2,6 +2,8 @@ package com.trup10ka.attendoo.api.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.trup10ka.attendoo.JWT_ROLE_FIELD
+import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.TOKEN_NAME
 import com.trup10ka.attendoo.config.ConfigDistributor.config
 import com.trup10ka.attendoo.data.AuthCredentials
@@ -42,8 +44,8 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
                     TOKEN_NAME to JWT.create()
                         .withAudience(config.jwt.audience)
                         .withIssuer(config.jwt.issuer)
-                        .withClaim("attendooUsername", authCredentials.username!!)
-                        .withClaim("attendooRole", user.role.name)
+                        .withClaim(JWT_USERNAME_FIELD, authCredentials.username!!)
+                        .withClaim(JWT_ROLE_FIELD, user.role.name)
                         .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                         .sign(Algorithm.HMAC512(config.jwt.secret))
                 )
