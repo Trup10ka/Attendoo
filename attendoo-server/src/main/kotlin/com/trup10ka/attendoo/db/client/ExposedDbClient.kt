@@ -61,7 +61,7 @@ class ExposedDbClient : DbClient()
         roleService = RoleExposedService()
         proposalService = ProposalExposedService(userStatusService)
         userService = UserExposedService(roleService, userStatusService, userDepartmentService)
-        attendanceService = UserAttendanceExposedService(userStatusService, userService)
+        attendanceService = UserAttendanceExposedService(userStatusService, userDepartmentService, userService)
         
         checkIfAllServicesInitialized()
     }
