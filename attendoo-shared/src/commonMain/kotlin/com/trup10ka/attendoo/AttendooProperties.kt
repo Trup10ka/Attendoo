@@ -11,8 +11,8 @@ const val REGISTER_ENDPOINT = "/api/auth/register"
 const val VERIFY_ENDPOINT = "/api/auth/verify"
 
 /* === JWT field names */
-const val JWT_USERNAME_FIELD = "attendooUsername"
-const val JWT_ROLE_FIELD = "attendooRole"
+const val JWT_USERNAME_FIELD = "attendoo-username"
+const val JWT_ROLE_FIELD = "attendoo-role"
 const val JWT_DEPARTMENT_FIELD = "attendooDepartment"
 
 /* === Storage keys === */
