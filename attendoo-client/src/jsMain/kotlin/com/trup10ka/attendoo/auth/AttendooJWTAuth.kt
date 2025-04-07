@@ -60,7 +60,16 @@ class AttendooJWTAuth(
     
     override suspend fun isAuthenticated(): Boolean
     {
-        return false
+        window.localStorage.getItem(TOKEN_NAME) ?: return false
+        return try
+        {
+            val response = ktorClient.getVia(VERIFY_ENDPOINT) as HttpResponse
+            return response.status.value == 200
+        }
+        catch (e: Exception)
+        {
+            false
+        }
     }
     
     override fun addAuthMethodToRequest(request: Any)
