@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.auth
 
+import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
 import com.trup10ka.attendoo.LOGIN_ENDPOINT
 import com.trup10ka.attendoo.STATUS_NAME
 import com.trup10ka.attendoo.TOKEN_NAME
@@ -25,21 +26,11 @@ class AttendooJWTAuth(
     {
         try
         {
-            val body = mapOf(
-                "username" to username,
-                "password" to password
-            )
-            val jsonBody = Json.encodeToString(body)
+            val jsonBody = encodeJsonBody(username, password)
             
             val response = ktorClient.postJSONViaUnauthorized(LOGIN_ENDPOINT, jsonBody) as JsonElement
-            val token = response.jsonObject[TOKEN_NAME]
-            val status = response.jsonObject[STATUS_NAME]?.jsonPrimitive?.content?.toInt()
-            if (token == null || status != 200)
-            {
-                return false
-            }
-            setToken(token.toString())
-            return true
+            
+            return handleTokenResponse(response)
         }
         catch (e: Exception)
         {
@@ -66,7 +57,7 @@ class AttendooJWTAuth(
             val response = ktorClient.getVia(VERIFY_ENDPOINT) as HttpResponse
             return response.status.value == 200
         }
-        catch (e: Exception)
+        catch (_: Exception)
         {
             false
         }
@@ -91,6 +82,34 @@ class AttendooJWTAuth(
                 append("Authorization", "Bearer $token")
             }
         }
+    }
+    
+    private fun encodeJsonBody(username: String, password: String): String
+    {
+        val body = mapOf(
+            "username" to username,
+            "password" to password
+        )
+        return Json.encodeToString(body)
+    }
+    
+    private fun handleTokenResponse(response: JsonElement): Boolean
+    {
+        val keys = response.jsonObject.keys
+        if (keys.contains(ERROR_JSON_FIELD_NAME))
+        {
+            val error = response.jsonObject[ERROR_JSON_FIELD_NAME]?.jsonPrimitive?.content
+            window.alert("Error logging in: $error")
+            return false
+        }
+        
+        val token = response.jsonObject[TOKEN_NAME]
+        val status = response.jsonObject[STATUS_NAME]?.jsonPrimitive?.content?.toInt()
+        if (token == null || status != 200)
+            return false
+        
+        setToken(token.toString())
+        return true
     }
     
     private fun setToken(token: String) = window.localStorage.setItem(TOKEN_NAME, token)
