@@ -5,11 +5,14 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
 import com.trup10ka.attendoo.JWT_ROLE_FIELD
 import com.trup10ka.attendoo.JWT_USERNAME_FIELD
+import com.trup10ka.attendoo.STATUS_NAME
 import com.trup10ka.attendoo.TOKEN_NAME
 import com.trup10ka.attendoo.config.ConfigDistributor.config
 import com.trup10ka.attendoo.data.AuthCredentials
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
+import com.trup10ka.attendoo.db.toDTO
+import com.trup10ka.attendoo.dto.UserDTO
 import com.trup10ka.attendoo.security.PasswordEncryptor
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.origin
@@ -33,7 +36,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         }
         
         
-        val user = dbQuery { dbClient.userService.getUserByUsername(authCredentials.username!!) }
+        val user = dbQuery { dbClient.userService.getUserByUsername(authCredentials.username!!)?.toDTO() }
         
         if (user == null || user.attendooPassword != passwordEncryptor.encrypt(authCredentials.password!!))
         {
@@ -47,9 +50,10 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
                         .withAudience(config.jwt.audience)
                         .withIssuer(config.jwt.issuer)
                         .withClaim(JWT_USERNAME_FIELD, authCredentials.username!!)
-                        .withClaim(JWT_ROLE_FIELD, user.role.name)
+                        .withClaim(JWT_ROLE_FIELD, user.role)
                         .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                        .sign(Algorithm.HMAC512(config.jwt.secret))
+                        .sign(Algorithm.HMAC512(config.jwt.secret)),
+                    STATUS_NAME to user.userStatus
                 )
             )
         }
