@@ -43,6 +43,7 @@ class AttendooPageManager(
     fun showLoginPage()
     {
         val loginPage = pages[LOGIN_PAGE]!!
+        uriHandler.updateURI(LOGIN_PAGE.pageRoute)
         switchToPage(loginPage)
     }
     

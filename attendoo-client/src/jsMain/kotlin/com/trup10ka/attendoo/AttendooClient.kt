@@ -30,8 +30,12 @@ class AttendooClient
         uriHandler.initUriHandler()
         
         launchDefaultCoroutine {
+            
             if (!jwtAuthenticator.isAuthenticated())
+            {
                 pageManager.showLoginPage()
+                return@launchDefaultCoroutine
+            }
             
             initButtonListeners()
             
