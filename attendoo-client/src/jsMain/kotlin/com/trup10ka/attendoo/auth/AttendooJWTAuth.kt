@@ -103,9 +103,10 @@ class AttendooJWTAuth(
             return false
         }
         
-        val token = response.jsonObject[TOKEN_NAME]
-        val status = response.jsonObject[STATUS_NAME]?.jsonPrimitive?.content?.toInt()
-        if (token == null || status != 200)
+        val token = response.jsonObject[TOKEN_NAME]?.jsonPrimitive?.content
+        val status = response.jsonObject[STATUS_NAME]?.jsonPrimitive?.content
+        
+        if (token == null || status == null)
             return false
         
         setToken(token.toString())
