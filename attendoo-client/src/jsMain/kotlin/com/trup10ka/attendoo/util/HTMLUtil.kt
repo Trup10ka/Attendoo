@@ -25,6 +25,10 @@ fun getDivByID(id: String) = getElementByID(id) as HTMLDivElement?
 
 fun getDivByID(id: ElementID) = getDivByID(id.toString())
 
+fun getInputByID(id: String) = getElementByID(id) as HTMLInputElement?
+
+fun getInputByID(id: ElementID) = getInputByID(id.toString())
+
 /**
  * Creates an element of the given type with the given ID and class.
  *
