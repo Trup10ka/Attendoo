@@ -21,7 +21,7 @@ class AttendooPageManager(
 {
     lateinit var currentPage: Page
     
-    private val auth: Authenticator = AttendooJWTAuth(ktorClient)
+    private val jwtAuthenticator: Authenticator = AttendooJWTAuth(ktorClient)
     
     private val pages = mutableMapOf<PageType, Page>()
     
@@ -56,7 +56,7 @@ class AttendooPageManager(
     
     private fun initPageList(ktorClient: KtorHttpClient)
     {
-        val loginPage = LoginPage(LOGIN_PAGE, ktorClient)
+        val loginPage = LoginPage(LOGIN_PAGE, jwtAuthenticator)
         val dashboardPage = DashboardPage(DASHBOARD_PAGE, ktorClient)
         val usersPage = UsersPage(USERS_PAGE, ktorClient)
         val requestsPage = RequestsPage(REQUESTS_PAGE, ktorClient)

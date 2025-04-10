@@ -1,23 +1,16 @@
 package com.trup10ka.attendoo.pages
 
-import com.trup10ka.attendoo.LOGIN_ENDPOINT
-import com.trup10ka.attendoo.fetch.HttpClient
+import com.trup10ka.attendoo.auth.Authenticator
 import com.trup10ka.attendoo.pages.builders.LoginPageBuilder
 import com.trup10ka.attendoo.pages.constant.PageType
-import com.trup10ka.attendoo.util.getDivByID
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.getButtonByID
 import com.trup10ka.attendoo.util.getInputByID
-import io.ktor.client.call.body
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
-import kotlinx.serialization.json.Json
 
 class LoginPage(
     override val pageType: PageType,
-    private val httpClient: HttpClient
+    private val jwtAuthenticator: Authenticator
 ) : Page
 {
     override val pageBuilder = LoginPageBuilder()
