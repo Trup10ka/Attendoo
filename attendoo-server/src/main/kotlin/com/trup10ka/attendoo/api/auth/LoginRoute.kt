@@ -51,7 +51,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
                         .withIssuer(config.jwt.issuer)
                         .withClaim(JWT_USERNAME_FIELD, authCredentials.username!!)
                         .withClaim(JWT_ROLE_FIELD, user.role)
-                        .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                        .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60))
                         .sign(Algorithm.HMAC512(config.jwt.secret)),
                     STATUS_NAME to user.userStatus
                 )
