@@ -50,16 +50,19 @@ class LoginPageBuilder : PageBuilder
                             text = "Login"
                         ),
                         createWrappedInput(
+                            id = USERNAME_INPUT_FIELD,
                             clazz = arrayOf(FORM_FIELD),
                             type = "text",
                             placeholder = "Username"
                         ),
                         createWrappedInput(
+                            id = PASSWORD_INPUT_FIELD,
                             clazz = arrayOf(FORM_FIELD),
                             type = "password",
                             placeholder = "Password"
                         ),
                         createButton(
+                            id = LOGIN_SUBMIT_BUTTON,
                             clazz = arrayOf(SUBMIT_BUTTON),
                             text = "Login"
                         )
