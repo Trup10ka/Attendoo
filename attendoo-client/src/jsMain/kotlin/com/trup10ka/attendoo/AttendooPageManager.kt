@@ -15,7 +15,7 @@ import com.trup10ka.attendoo.pages.constant.PageType
 import com.trup10ka.attendoo.util.addAll
 
 class AttendooPageManager(
-    private val uriHandler: URIHandler,
+    val uriHandler: URIHandler,
     ktorClient: KtorHttpClient,
 )
 {
