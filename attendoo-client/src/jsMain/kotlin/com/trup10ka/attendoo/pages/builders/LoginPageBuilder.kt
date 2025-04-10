@@ -1,6 +1,7 @@
 package com.trup10ka.attendoo.pages.builders
 
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
+import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.*
 import kotlinx.browser.document
@@ -51,7 +52,7 @@ class LoginPageBuilder : PageBuilder
                         createWrappedInput(
                             clazz = arrayOf(FORM_FIELD),
                             type = "text",
-                            placeholder = "Email"
+                            placeholder = "Username"
                         ),
                         createWrappedInput(
                             clazz = arrayOf(FORM_FIELD),
