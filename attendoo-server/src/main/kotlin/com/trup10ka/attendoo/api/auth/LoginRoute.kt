@@ -11,6 +11,7 @@ import com.trup10ka.attendoo.data.AuthCredentials
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.security.PasswordEncryptor
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.origin
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -27,7 +28,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         
         if (authCredentials.username == null || authCredentials.password == null)
         {
-            call.respond(mapOf(ERROR_JSON_FIELD_NAME to "Missing username or password"))
+            call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "Missing username or password"))
             return@post
         }
         
@@ -36,7 +37,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
         
         if (user == null || user.attendooPassword != passwordEncryptor.encrypt(authCredentials.password!!))
         {
-            call.respond(mapOf(ERROR_JSON_FIELD_NAME to "Invalid username or password"))
+            call.respond(HttpStatusCode.Unauthorized, mapOf(ERROR_JSON_FIELD_NAME to "Invalid username or password"))
         }
         else
         {
