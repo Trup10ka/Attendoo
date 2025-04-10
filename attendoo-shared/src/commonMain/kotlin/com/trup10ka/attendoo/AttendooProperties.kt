@@ -1,6 +1,6 @@
 package com.trup10ka.attendoo
 
-const val CLIENT_HOST_VAL = "localhost"
+const val CLIENT_HOST_VAL = "localhost:65525"
 
 /* === JSON field names */
 const val SUCCESS_JSON_FIELD_NAME = "success"

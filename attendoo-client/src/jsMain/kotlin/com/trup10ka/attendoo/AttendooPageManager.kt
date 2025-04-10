@@ -56,11 +56,11 @@ class AttendooPageManager(
     
     private fun initPageList(ktorClient: KtorHttpClient)
     {
-        val loginPage = LoginPage(LOGIN_PAGE, jwtAuthenticator)
-        val dashboardPage = DashboardPage(DASHBOARD_PAGE, ktorClient)
-        val usersPage = UsersPage(USERS_PAGE, ktorClient)
-        val requestsPage = RequestsPage(REQUESTS_PAGE, ktorClient)
-        val createUserPage = CreateUserPage(CREATE_USER_PAGE, ktorClient)
+        val loginPage = LoginPage(LOGIN_PAGE, this, jwtAuthenticator)
+        val dashboardPage = DashboardPage(DASHBOARD_PAGE, this, ktorClient)
+        val usersPage = UsersPage(USERS_PAGE, this, ktorClient)
+        val requestsPage = RequestsPage(REQUESTS_PAGE, this, ktorClient)
+        val createUserPage = CreateUserPage(CREATE_USER_PAGE, this, ktorClient)
         
         pages.addAll(
             loginPage.pageType to loginPage,

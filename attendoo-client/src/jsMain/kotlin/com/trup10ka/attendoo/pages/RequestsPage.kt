@@ -1,11 +1,13 @@
 package com.trup10ka.attendoo.pages
 
+import com.trup10ka.attendoo.AttendooPageManager
 import com.trup10ka.attendoo.fetch.HttpClient
 import com.trup10ka.attendoo.pages.builders.RequestPageBuildImp
 import com.trup10ka.attendoo.pages.constant.PageType
 
 class RequestsPage(
     override val pageType: PageType,
+    override val pageManager: AttendooPageManager,
     private val httpClient: HttpClient
 ) : Page
 {

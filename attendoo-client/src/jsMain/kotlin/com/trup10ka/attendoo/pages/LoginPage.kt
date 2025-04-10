@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.pages
 
+import com.trup10ka.attendoo.AttendooPageManager
 import com.trup10ka.attendoo.auth.Authenticator
 import com.trup10ka.attendoo.pages.builders.LoginPageBuilder
 import com.trup10ka.attendoo.pages.constant.PageType
@@ -10,6 +11,7 @@ import com.trup10ka.attendoo.util.getInputByID
 
 class LoginPage(
     override val pageType: PageType,
+    override val pageManager: AttendooPageManager,
     private val jwtAuthenticator: Authenticator
 ) : Page
 {
