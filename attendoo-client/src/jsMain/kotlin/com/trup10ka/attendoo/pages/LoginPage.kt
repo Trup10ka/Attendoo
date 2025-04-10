@@ -8,6 +8,7 @@ import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.getButtonByID
 import com.trup10ka.attendoo.util.getInputByID
+import kotlinx.browser.window
 
 class LoginPage(
     override val pageType: PageType,
@@ -35,7 +36,16 @@ class LoginPage(
                 return@addEventListener
             }
             launchDefaultCoroutine {
-                jwtAuthenticator.login(username, password)
+                val isSuccessful = jwtAuthenticator.login(username, password)
+                if (isSuccessful)
+                {
+                    pageManager.uriHandler.updateURI(PageType.DASHBOARD_PAGE.pageRoute)
+                    pageManager.switchToPage(pageManager.getCurrentPage())
+                }
+                else
+                {
+                    window.alert("Login failed. Please check your credentials and try again.")
+                }
             }
         })
     }
