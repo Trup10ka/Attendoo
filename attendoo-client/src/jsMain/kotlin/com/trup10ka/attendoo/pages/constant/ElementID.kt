@@ -16,6 +16,11 @@ enum class ElementID
     CREATE_USER_FORM_CREDENTIALS,
     CREATE_USER_FORM_ATTRIBUTES,
     
+    /* === Login page === */
+    LOGIN_SUBMIT_BUTTON,
+    USERNAME_INPUT_FIELD,
+    PASSWORD_INPUT_FIELD,
+    
     MAIN;
     
     override fun toString() = this.name.lowercase().replace('_', '-')
