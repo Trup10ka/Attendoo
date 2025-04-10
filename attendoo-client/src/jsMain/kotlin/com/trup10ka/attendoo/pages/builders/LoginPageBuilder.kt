@@ -64,7 +64,8 @@ class LoginPageBuilder : PageBuilder
                         createButton(
                             id = LOGIN_SUBMIT_BUTTON,
                             clazz = arrayOf(SUBMIT_BUTTON),
-                            text = "Login"
+                            text = "Login",
+                            type = "button"
                         )
                     )
                 )
