@@ -3,8 +3,10 @@ package com.trup10ka.attendoo.pages.constant
 enum class ElementID
 {
     ATTENDOO,
+    BURGER_BUTTON,
     
     /* === Sidebar buttons === */
+    SIDEBAR_CONTAINER,
     DASHBOARD_BUTTON,
     USERS_BUTTON,
     REQUESTS_BUTTON,

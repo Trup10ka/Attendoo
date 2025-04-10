@@ -23,6 +23,8 @@ fun getButtonByID(id: ElementID) = getButtonByID(id.toString())
 
 fun getDivByID(id: String) = getElementByID(id) as HTMLDivElement?
 
+fun getDivByID(id: ElementID) = getDivByID(id.toString())
+
 /**
  * Creates an element of the given type with the given ID and class.
  *

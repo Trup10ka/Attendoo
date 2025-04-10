@@ -89,6 +89,15 @@ button:hover {
     align-items: center;
     gap: 20px;
     height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.sidebar-container.hidden {
+    transform: translateX(-100%); /* Slide to the right */
+}
+
+.sidebar-container.display-none {
+    display: none;
 }
 
 .sidebar {

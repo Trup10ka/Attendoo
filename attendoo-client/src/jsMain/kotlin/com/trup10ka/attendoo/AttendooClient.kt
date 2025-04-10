@@ -9,8 +9,10 @@ import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.pages.constant.PageType.*
+import com.trup10ka.attendoo.util.getDivByID
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.util.mapButtonToPage
+import kotlinx.browser.window
 
 class AttendooClient
 {
@@ -23,11 +25,15 @@ class AttendooClient
     private val pageManager = AttendooPageManager(uriHandler, ktorClient)
     
     private val attendooSidebarButtons = mutableListOf<HTMLButtonElement>()
+    
+    private var isSidebarToggled = true
 
     fun init()
     {
         pageManager.initPageManager(ktorClient)
         uriHandler.initUriHandler()
+        
+        initBurgerButtonListener()
         
         launchDefaultCoroutine {
             
@@ -73,6 +79,43 @@ class AttendooClient
                 pageManager.switchToPage(page)
             })
         }
+    }
+    
+    private fun initBurgerButtonListener()
+    {
+        val burgerButton = getDivByID(BURGER_BUTTON)
+        val sidebarContainer = getDivByID(SIDEBAR_CONTAINER)
+        
+        if (burgerButton == null)
+        {
+            showErrorPage("Burger button not found")
+            throw IllegalStateException("Burger button not found")
+        }
+        
+        if (sidebarContainer == null)
+        {
+            showErrorPage("Sidebar container not found")
+            throw IllegalStateException("Sidebar container not found")
+        }
+        
+        burgerButton.addEventListener("click", {
+            if (isSidebarToggled)
+            {
+                sidebarContainer.classList.add("hidden")
+                window.setTimeout(
+                    { sidebarContainer.classList.add("display-none") },
+                    500
+                )
+            }
+            else
+            {
+                sidebarContainer.classList.remove("display-none")
+                window.requestAnimationFrame {
+                    sidebarContainer.classList.remove("hidden")
+                }
+            }
+            isSidebarToggled = !isSidebarToggled
+        })
     }
     
     private fun updateUriByButton(button: HTMLButtonElement)
