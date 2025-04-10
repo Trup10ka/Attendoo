@@ -115,7 +115,7 @@ button:hover {
     display: flex;
     width: 100%;
     height: 100vh;
-    padding: 20px;
+    padding: 10px;
     background: linear-gradient(#6f37a6, #3a297e, #140840);
 }
 
