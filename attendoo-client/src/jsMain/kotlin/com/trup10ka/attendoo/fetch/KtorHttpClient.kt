@@ -1,13 +1,16 @@
 package com.trup10ka.attendoo.fetch
 
 import com.trup10ka.attendoo.CLIENT_HOST_VAL
+import com.trup10ka.attendoo.TOKEN_NAME
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.js.Js
+import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
 import io.ktor.http.headers
@@ -28,8 +31,9 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
                 host = CLIENT_HOST_VAL
                 path(path)
             }
+
             headers {
-                append("Authorization", "Bearer ${window.localStorage.getItem("ATTENDOO_TOKEN")}")
+                header(HttpHeaders.Authorization, "Bearer ${window.localStorage.getItem(TOKEN_NAME)}")
             }
             
             method = HttpMethod.Get
@@ -44,7 +48,7 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
                 path(path)
             }
             headers {
-                append("Authorization", "Bearer ${window.localStorage.getItem("ATTENDOO_TOKEN")}")
+                header(HttpHeaders.Authorization, "Bearer ${window.localStorage.getItem(TOKEN_NAME)}")
             }
             
             method = HttpMethod.Post
@@ -74,5 +78,4 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
         
         return Json.decodeFromString(response)
     }
-    
 }
