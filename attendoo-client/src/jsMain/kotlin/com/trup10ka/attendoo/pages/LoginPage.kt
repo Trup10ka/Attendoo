@@ -33,7 +33,7 @@ class LoginPage(
                 return@addEventListener
             }
             launchDefaultCoroutine {
-                performLogin(username, password)
+                jwtAuthenticator.login(username, password)
             }
         })
     }
@@ -47,33 +47,5 @@ class LoginPage(
     override fun hide()
     {
         pageBuilder.eraseDynamicElement()
-    }
-    
-    private suspend fun performLogin(username: String, password: String)
-    {
-        val response = httpClient.postJSONViaUnauthorized(
-            LOGIN_ENDPOINT,
-            parseCredentialsToJSON(username, password)
-        ) as? HttpResponse
-        
-        if (response == null)
-        {
-            console.log("Response is null")
-            return
-        }
-        
-        val responseText = response.body<String>()
-        
-        console.log(responseText)
-    }
-    
-    private fun parseCredentialsToJSON(username: String, password: String): String
-    {
-        return Json.encodeToString(
-            mapOf(
-                "username" to username,
-                "password" to password
-            )
-        )
     }
 }
