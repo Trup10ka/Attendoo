@@ -72,10 +72,11 @@ fun createSpan(id: ElementID? = null, clazz: Array<String>? = null, text: String
 
 fun createForm(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLFormElement>("form", id, clazz, children = children)
 
-fun createButton(id: ElementID? = null, clazz: Array<String>? = null, text: String): HTMLButtonElement
+fun createButton(id: ElementID? = null, clazz: Array<String>? = null, text: String, type: String = "button"): HTMLButtonElement
 {
     val button = createElement<HTMLButtonElement>("button", id, clazz)
     button.textContent = text
+    button.type = type
     return button
 }
 
