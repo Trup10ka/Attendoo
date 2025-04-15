@@ -60,6 +60,8 @@ fun createDiv(id: ElementID? = null, clazz: Array<String>?) = createElement<HTML
 
 fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLDivElement>("div", id, clazz, children = children)
 
+fun createDiv(id: String? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLDivElement>("div", id, clazz, children = children)
+
 fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, child: HTMLElement? = null) = createElement<HTMLDivElement>("div", id, clazz, children = child?.let { arrayOf(it) } )
 
 fun createDiv(id: String? = null, clazz: Array<String>? = null, child: HTMLElement? = null) = createElement<HTMLDivElement>("div", id, clazz, children = child?.let { arrayOf(it) } )
