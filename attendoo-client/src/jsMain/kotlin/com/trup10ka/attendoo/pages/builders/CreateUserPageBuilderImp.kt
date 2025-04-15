@@ -36,7 +36,7 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
                 )
         )
         
-        appender?.appendChild(createUserPane)
+        appender!!.appendChild(createUserPane)
         currentlyActiveHTMLElements.add(createUserPane)
     }
     
