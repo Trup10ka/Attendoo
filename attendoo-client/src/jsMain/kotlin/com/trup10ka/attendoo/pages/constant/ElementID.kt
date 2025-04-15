@@ -13,6 +13,7 @@ enum class ElementID
     CREATE_USER_BUTTON,
     
     /* === Create user === */
+    CREATE_USER_PANE,
     CREATE_USER_FORM_CREDENTIALS,
     CREATE_USER_FORM_ATTRIBUTES,
     
@@ -20,6 +21,11 @@ enum class ElementID
     LOGIN_SUBMIT_BUTTON,
     USERNAME_INPUT_FIELD,
     PASSWORD_INPUT_FIELD,
+    
+    /* === Dashboard page === */
+    
+    /* === Users page === */
+    MAIN_USERS_CONTAINER,
     
     MAIN;
     

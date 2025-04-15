@@ -16,13 +16,15 @@ class RequestPageBuildImp : RequestPageBuilder
     override fun buildRequestContainer(appender: HTMLElement?, request: Request)
     {
         val requestsContainer = createDiv(
+            id = "${request.user.attendooUsername}-request",
             clazz = stylesOf(INNER_CONTAINER, REQUEST_CONTAINER),
             child = createDiv(
+                id = request.user.attendooUsername,
                 clazz = stylesOf(CONTAINER_TAB, REQUEST),
                 children = arrayOf(
                     createContainerHeader(request.user),
                     createInfoContainer(request),
-                    createActionsContainer()
+                    createActionsContainer(request)
                 )
             )
         )
@@ -33,6 +35,7 @@ class RequestPageBuildImp : RequestPageBuilder
     private fun createContainerHeader(user: User): HTMLDivElement
     {
         return createDiv(
+            id = "${user.attendooUsername}-header",
             clazz = stylesOf(MINI_CONTAINER_HEADER),
             children = arrayOf(
                 createDiv(
@@ -50,6 +53,7 @@ class RequestPageBuildImp : RequestPageBuilder
     private fun createInfoContainer(request: Request): HTMLDivElement
     {
         return createDiv(
+            id = "${request.user.attendooUsername}-info",
             clazz = arrayOf("request-info"),
             children = arrayOf(
                 createDiv(clazz = stylesOf(ONE_LINE_CONTAINER), text = request.company),
@@ -58,9 +62,10 @@ class RequestPageBuildImp : RequestPageBuilder
         )
     }
     
-    private fun createActionsContainer(): HTMLDivElement
+    private fun createActionsContainer(request: Request): HTMLDivElement
     {
         return createDiv(
+            id = "${request.user.attendooUsername}-actions",
             clazz = stylesOf(ACTIONS_CONTAINER),
             children = arrayOf(
                 createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "open_in_full"),

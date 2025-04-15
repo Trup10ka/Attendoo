@@ -20,13 +20,14 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
     override fun buildDynamicContent(appender: HTMLElement?, groupOptions: Array<String>, roleOptions: Array<String>)
     {
         val createUserPane = createDiv(
+                id = CREATE_USER_PANE,
                 clazz = stylesOf(
                     INNER_CONTAINER,
                     CREATE_USER_CONTAINER
                 ),
-                children = stylesOf(
+                children = arrayOf(
                     createHeader(text = "Create user", clazz = stylesOf(CONTAINER_HEADER)),
-                    createDiv(clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
+                    createDiv(id = "", clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
                         children = arrayOf(
                             createCredentialsForm(),
                             createUserAttributesForm(groupOptions, roleOptions),
