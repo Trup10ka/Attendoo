@@ -27,6 +27,7 @@ const val FULL_VERIFY_ENDPOINT = "$API_ROOT_ENDPOINT$AUTH_ENDPOINT$VERIFY_ENDPOI
 /* === Users Endpoints === */
 const val EDIT_USER_ENDPOINT = "/edit-user"
 const val GET_ALL_USERS_ENDPOINT = "/all"
+const val FULL_ALL_USERS_ENDPOINT = "$API_ROOT_ENDPOINT$USERS_ENDPOINT$GET_ALL_USERS_ENDPOINT"
 
 /* === Attendances Endpoints === */
 const val ALL_ATTENDANCE_ENDPOINT = "/all"
