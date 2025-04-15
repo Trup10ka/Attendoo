@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.api.roles
 
+import com.trup10ka.attendoo.ALL_ROLES_ENDPOINT
 import com.trup10ka.attendoo.data.Role
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
@@ -12,7 +13,7 @@ import io.ktor.server.routing.get
 
 fun Route.routeGetRoles(dbClient: DbClient)
 {
-    get("/all")
+    get(ALL_ROLES_ENDPOINT)
     {
         val roles = dbQuery {
             dbClient.roleService.getAllRoles().map { it.toDTO<Role>() }

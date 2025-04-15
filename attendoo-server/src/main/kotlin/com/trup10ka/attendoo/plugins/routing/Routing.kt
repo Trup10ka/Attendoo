@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.plugins.routing
 
+import com.trup10ka.attendoo.API_ROOT_ENDPOINT
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.exceptions.MissingImportantDirectoryException
 import com.trup10ka.attendoo.util.hasContent
@@ -18,7 +19,7 @@ fun Application.configureRouting(dbClient: DbClient)
         routeStaticFiles()
         routePages()
         
-        route("/api") { routeAPICalls(dbClient) }
+        route(API_ROOT_ENDPOINT) { routeAPICalls(dbClient) }
     }
 }
 

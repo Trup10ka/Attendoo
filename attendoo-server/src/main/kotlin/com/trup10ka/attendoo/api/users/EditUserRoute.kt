@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.api.users
 
+import com.trup10ka.attendoo.EDIT_USER_ENDPOINT
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
 import com.trup10ka.attendoo.SUCCESS_JSON_FIELD_NAME
 import com.trup10ka.attendoo.db.services.UserService
@@ -19,7 +20,7 @@ val logger = KotlinLogging.logger {}
 fun Route.routeEditUser(userService: UserService)
 {
     //TODO: Implement only for admin
-    get("/edit-user")
+    get(EDIT_USER_ENDPOINT)
     {
         logger.info { "Received request for EDIT USER from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
         

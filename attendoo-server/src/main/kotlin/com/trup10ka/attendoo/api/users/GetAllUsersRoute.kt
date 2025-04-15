@@ -1,5 +1,6 @@
 package com.trup10ka.attendoo.api.users
 
+import com.trup10ka.attendoo.GET_ALL_USERS_ENDPOINT
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.db.services.UserService
 import com.trup10ka.attendoo.db.toDTO
@@ -14,7 +15,7 @@ import io.ktor.server.routing.get
 
 fun Route.routeGetAllUsersFromDepartment(userService: UserService)
 {
-    get("/all-users")
+    get(GET_ALL_USERS_ENDPOINT)
     {
         // TODO: Add returning only if authorized as ADMIN
         val principal = call.principal<JWTPrincipal>()
