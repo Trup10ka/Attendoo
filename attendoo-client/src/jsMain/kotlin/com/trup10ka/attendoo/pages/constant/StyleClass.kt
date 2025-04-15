@@ -31,6 +31,14 @@ enum class StyleClass
     CREATE_USER_CONTAINER_SPLITTER,
     CREATE_USER_FORM,
     
+    /* === Dashboard === */
+    
+    /* === Users === */
+    USERS_CONTAINER,
+    USER,
+    USER_INFO,
+    USER_CREDENTIALS,
+    
     /* === Google icons === */
     ICON,
     MATERIAL_SYMBOLS_OUTLINED;
