@@ -10,6 +10,15 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 suspend fun <T> dbQuery(database: Database? = null, transaction: suspend Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, db = database, statement = transaction)
 
+/**
+ * General toDTO function for converting IntEntity to DTO.
+ *
+ * Note that this only works on IntEntities that are not referenced by other entities or are referring to other entities.
+ *
+ * @return DTO object of type `T` with parsed values from DAO
+ *
+ * Object of type `T` with `null` values
+ */
 inline fun <reified T : Any> IntEntity.toDTO(): T
 {
     val constructor = T::class.primaryConstructor
