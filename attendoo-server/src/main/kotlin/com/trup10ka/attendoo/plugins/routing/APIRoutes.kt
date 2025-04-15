@@ -3,6 +3,7 @@ package com.trup10ka.attendoo.plugins.routing
 import com.trup10ka.attendoo.api.attendances.routeAttendances
 import com.trup10ka.attendoo.api.auth.routeAuth
 import com.trup10ka.attendoo.api.requests.routeRequests
+import com.trup10ka.attendoo.api.roles.routeRoles
 import com.trup10ka.attendoo.api.users.routeUsers
 import com.trup10ka.attendoo.db.client.DbClient
 import io.ktor.server.auth.authenticate
@@ -17,5 +18,6 @@ fun Route.routeAPICalls(dbClient: DbClient)
         routeUsers(dbClient.userService)
         routeAttendances(dbClient.attendanceService, dbClient.userService)
         routeRequests(dbClient)
+        routeRoles(dbClient)
     }
 }
