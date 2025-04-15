@@ -32,7 +32,7 @@ class LoginPage(
             
             if (username.isEmpty() || password.isEmpty())
             {
-                console.log("Username or password is empty")
+                window.alert("Username or password is empty")
                 return@addEventListener
             }
             launchDefaultCoroutine {
