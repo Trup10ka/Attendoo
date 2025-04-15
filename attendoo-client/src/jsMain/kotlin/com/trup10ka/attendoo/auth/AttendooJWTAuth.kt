@@ -1,10 +1,10 @@
 package com.trup10ka.attendoo.auth
 
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
-import com.trup10ka.attendoo.LOGIN_ENDPOINT
+import com.trup10ka.attendoo.FULL_LOGIN_ENDPOINT
+import com.trup10ka.attendoo.FULL_VERIFY_ENDPOINT
 import com.trup10ka.attendoo.STATUS_NAME
 import com.trup10ka.attendoo.TOKEN_NAME
-import com.trup10ka.attendoo.VERIFY_ENDPOINT
 import com.trup10ka.attendoo.fetch.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.headers
@@ -28,7 +28,7 @@ class AttendooJWTAuth(
         {
             val jsonBody = encodeJsonBody(username, password)
             
-            val response = ktorClient.postJSONViaUnauthorized(LOGIN_ENDPOINT, jsonBody) as JsonElement
+            val response = ktorClient.postJSONViaUnauthorized(FULL_LOGIN_ENDPOINT, jsonBody) as JsonElement
             
             return handleTokenResponse(response)
         }
@@ -54,7 +54,7 @@ class AttendooJWTAuth(
         window.localStorage.getItem(TOKEN_NAME) ?: return false
         return try
         {
-            val response = ktorClient.getVia(VERIFY_ENDPOINT) as HttpResponse
+            val response = ktorClient.getVia(FULL_VERIFY_ENDPOINT) as HttpResponse
             return response.status.value == 200
         }
         catch (_: Exception)
