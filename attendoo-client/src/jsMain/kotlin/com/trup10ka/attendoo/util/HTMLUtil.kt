@@ -43,6 +43,12 @@ fun getInputByID(id: ElementID) = getInputByID(id.toString())
 @Suppress("UNCHECKED_CAST")
 fun <T> createElement(tag: String, id: ElementID? = null, clazz: Array<String>? = null, children: Array<out HTMLElement>? = null): T where T : HTMLElement
 {
+    return createElement(tag, id?.toString(), clazz, children) as T
+}
+
+@Suppress("UNCHECKED_CAST")
+fun <T> createElement(tag: String, id: String? = null, clazz: Array<String>? = null, children: Array<out HTMLElement>? = null): T where T : HTMLElement
+{
     val element = document.createElement(tag) as T
     id?.let { element.id = it.toString() }
     clazz?.let { element.addClass(*clazz) }
@@ -55,6 +61,8 @@ fun createDiv(id: ElementID? = null, clazz: Array<String>?) = createElement<HTML
 fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, vararg children: HTMLElement) = createElement<HTMLDivElement>("div", id, clazz, children = children)
 
 fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, child: HTMLElement? = null) = createElement<HTMLDivElement>("div", id, clazz, children = child?.let { arrayOf(it) } )
+
+fun createDiv(id: String? = null, clazz: Array<String>? = null, child: HTMLElement? = null) = createElement<HTMLDivElement>("div", id, clazz, children = child?.let { arrayOf(it) } )
 
 fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, text: String): HTMLDivElement
 {
@@ -89,7 +97,7 @@ fun createHeader(id: ElementID? = null, clazz: Array<String>? = null, text: Stri
 
 fun createWrappedInput(id: ElementID? = null, clazz: Array<String>? = null, type: String, placeholder: String? = null): HTMLLabelElement
 {
-    val wrappingLabel = createElement<HTMLLabelElement>("label", clazz = clazz)
+    val wrappingLabel = createElement<HTMLLabelElement>("label", id=id, clazz = clazz)
     val input = createElement<HTMLInputElement>("input", id)
     input.type = type
     placeholder?.let { input.setAttribute("placeholder", it) }
@@ -101,7 +109,7 @@ fun createSelectWithOptions(id: ElementID? = null, clazz: Array<String>, options
 {
     val select = createElement<HTMLSelectElement>("select", id, clazz)
     options.forEach {
-        val option = createElement<HTMLOptionElement>("option")
+        val option = createElement<HTMLOptionElement>("option", id = it.value)
         option.value = it.value
         option.textContent = it.label
         select.appendChild(option)
