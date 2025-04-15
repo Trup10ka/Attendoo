@@ -4,7 +4,7 @@ import com.trup10ka.attendoo.data.SelectOption
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
 import com.trup10ka.attendoo.pages.constant.ElementID.*
-import com.trup10ka.attendoo.util.arrayOf
+import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.createDiv
 import com.trup10ka.attendoo.util.createForm
@@ -20,13 +20,13 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
     override fun buildDynamicContent(appender: HTMLElement?, groupOptions: Array<String>, roleOptions: Array<String>)
     {
         val createUserPane = createDiv(
-                clazz = arrayOf(
+                clazz = stylesOf(
                     INNER_CONTAINER,
                     CREATE_USER_CONTAINER
                 ),
-                children = arrayOf(
-                    createHeader(text = "Create user", clazz = arrayOf(CONTAINER_HEADER)),
-                    createDiv(clazz = arrayOf(CREATE_USER_CONTAINER_SPLITTER),
+                children = stylesOf(
+                    createHeader(text = "Create user", clazz = stylesOf(CONTAINER_HEADER)),
+                    createDiv(clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
                         children = arrayOf(
                             createCredentialsForm(),
                             createUserAttributesForm(groupOptions, roleOptions),
@@ -52,12 +52,12 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
     {
         return createForm(
             id = CREATE_USER_FORM_CREDENTIALS,
-            clazz = arrayOf(CREATE_USER_FORM),
+            clazz = stylesOf(CREATE_USER_FORM),
             children = arrayOf(
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "text", placeholder = "First Name (exp. Julia)"),
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "text", placeholder = "Last Name (exp. Crook)"),
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "email", placeholder = "Email"),
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "tel", placeholder = "Tel")
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "First Name (exp. Julia)"),
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Last Name (exp. Crook)"),
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "email", placeholder = "Email"),
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "tel", placeholder = "Tel")
             )
         )
     }
@@ -66,26 +66,26 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
     {
         return createForm(
             id = CREATE_USER_FORM_ATTRIBUTES,
-            clazz = arrayOf(CREATE_USER_FORM),
+            clazz = stylesOf(CREATE_USER_FORM),
             children = arrayOf(
                 createSelectWithOptions(
-                    clazz = arrayOf(FORM_FIELD),
+                    clazz = stylesOf(FORM_FIELD),
                     options = groupOptions.map { SelectOption(it, it) }.toTypedArray()
                 ),
                 createSelectWithOptions(
-                    clazz = arrayOf(FORM_FIELD),
+                    clazz = stylesOf(FORM_FIELD),
                     options = roleOptions.map { SelectOption(it, it) }.toTypedArray()
                 ),
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "text", placeholder = "Attendoo Username"),
-                createWrappedInput(clazz = arrayOf(FORM_FIELD), type = "password", placeholder = "Attendoo Password")
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Attendoo Username"),
+                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "password", placeholder = "Attendoo Password")
             )
         )
     }
     
     private fun createSubmitButton(): HTMLElement
     {
-        val button = createButton(text = "Create", clazz = arrayOf(SUBMIT_BUTTON))
-        button.appendChild(createSpan(text = "manufacturing", clazz = arrayOf(MATERIAL_SYMBOLS_OUTLINED, ICON)))
+        val button = createButton(text = "Create", clazz = stylesOf(SUBMIT_BUTTON))
+        button.appendChild(createSpan(text = "manufacturing", clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON)))
         return button
     }
 }

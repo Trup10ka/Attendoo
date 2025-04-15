@@ -2,7 +2,7 @@ package com.trup10ka.attendoo.pages.builders
 
 import com.trup10ka.attendoo.data.Request
 import com.trup10ka.attendoo.data.User
-import com.trup10ka.attendoo.util.arrayOf
+import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createDiv
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
@@ -16,9 +16,9 @@ class RequestPageBuildImp : RequestPageBuilder
     override fun buildRequestContainer(appender: HTMLElement?, request: Request)
     {
         val requestsContainer = createDiv(
-            clazz = arrayOf(INNER_CONTAINER, REQUEST_CONTAINER),
+            clazz = stylesOf(INNER_CONTAINER, REQUEST_CONTAINER),
             child = createDiv(
-                clazz = arrayOf(CONTAINER_TAB, REQUEST),
+                clazz = stylesOf(CONTAINER_TAB, REQUEST),
                 children = arrayOf(
                     createContainerHeader(request.user),
                     createInfoContainer(request),
@@ -33,14 +33,14 @@ class RequestPageBuildImp : RequestPageBuilder
     private fun createContainerHeader(user: User): HTMLDivElement
     {
         return createDiv(
-            clazz = arrayOf(MINI_CONTAINER_HEADER),
+            clazz = stylesOf(MINI_CONTAINER_HEADER),
             children = arrayOf(
                 createDiv(
-                    clazz = arrayOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
+                    clazz = stylesOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
                     text = "${user.firstName} ${user.lastName}"
                 ),
                 createDiv(
-                    clazz = arrayOf(ONE_LINE_CONTAINER, AVATAR),
+                    clazz = stylesOf(ONE_LINE_CONTAINER, AVATAR),
                     // add avatar somehow
                 )
             )
@@ -52,8 +52,8 @@ class RequestPageBuildImp : RequestPageBuilder
         return createDiv(
             clazz = arrayOf("request-info"),
             children = arrayOf(
-                createDiv(clazz = arrayOf(ONE_LINE_CONTAINER), text = request.company),
-                createDiv(clazz = arrayOf(ONE_LINE_CONTAINER), text = request.note)
+                createDiv(clazz = stylesOf(ONE_LINE_CONTAINER), text = request.company),
+                createDiv(clazz = stylesOf(ONE_LINE_CONTAINER), text = request.note)
             )
         )
     }
@@ -61,11 +61,11 @@ class RequestPageBuildImp : RequestPageBuilder
     private fun createActionsContainer(): HTMLDivElement
     {
         return createDiv(
-            clazz = arrayOf(ACTIONS_CONTAINER),
+            clazz = stylesOf(ACTIONS_CONTAINER),
             children = arrayOf(
-                createSpan(clazz = arrayOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "open_in_full"),
-                createSpan(clazz = arrayOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "edit"),
-                createSpan(clazz = arrayOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "delete")
+                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "open_in_full"),
+                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "edit"),
+                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "delete")
             )
         )
     }

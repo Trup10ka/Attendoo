@@ -10,7 +10,7 @@ fun <K, V> MutableMap<K, V>.addAll(vararg pairs: Pair<K, V>)
     }
 }
 
-fun arrayOf(vararg styleClasses: StyleClass): Array<String>
+fun stylesOf(vararg styleClasses: StyleClass): Array<String>
 {
     val styleClassNames = mutableListOf<String>()
     styleClasses.forEach {

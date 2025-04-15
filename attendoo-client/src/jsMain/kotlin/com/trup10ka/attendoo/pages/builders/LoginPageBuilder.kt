@@ -14,9 +14,9 @@ class LoginPageBuilder : PageBuilder
     
     override fun buildDynamicElement(appender: HTMLElement?)
     {
-        val loginPaneDiv = createDiv(clazz = arrayOf(LOGIN_PANE))
+        val loginPaneDiv = createDiv(clazz = stylesOf(LOGIN_PANE))
         val registerSpan = createSpan(
-            clazz = arrayOf(LOGIN_REGISTER_ACTION),
+            clazz = stylesOf(LOGIN_REGISTER_ACTION),
             text = "Register?"
         )
         
@@ -43,27 +43,27 @@ class LoginPageBuilder : PageBuilder
         override fun buildDynamicElement(appender: HTMLElement?)
         {
             appender?.let {
-                val loginForm = createForm(clazz = arrayOf(LOGIN_FORM),
+                val loginForm = createForm(clazz = stylesOf(LOGIN_FORM),
                     children = arrayOf(
                         createHeader(
-                            clazz = arrayOf(LOGIN_PANE_HEADER_TEXT),
+                            clazz = stylesOf(LOGIN_PANE_HEADER_TEXT),
                             text = "Login"
                         ),
                         createWrappedInput(
                             id = USERNAME_INPUT_FIELD,
-                            clazz = arrayOf(FORM_FIELD),
+                            clazz = stylesOf(FORM_FIELD),
                             type = "text",
                             placeholder = "Username"
                         ),
                         createWrappedInput(
                             id = PASSWORD_INPUT_FIELD,
-                            clazz = arrayOf(FORM_FIELD),
+                            clazz = stylesOf(FORM_FIELD),
                             type = "password",
                             placeholder = "Password"
                         ),
                         createButton(
                             id = LOGIN_SUBMIT_BUTTON,
-                            clazz = arrayOf(SUBMIT_BUTTON),
+                            clazz = stylesOf(SUBMIT_BUTTON),
                             text = "Login",
                             type = "button"
                         )
