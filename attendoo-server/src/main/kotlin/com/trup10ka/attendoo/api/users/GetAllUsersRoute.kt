@@ -30,7 +30,7 @@ fun Route.routeGetAllUsersFromDepartment(userService: UserService)
         val department = principal.attendooDepartment
         
         val users = dbQuery {
-            userService.getAllUsersFromDepartment(department).map {  it.toDTO<UserDTO>() }
+            userService.getAllUsersFromDepartment(department).map {  it.toDTO() }
         }
         
         call.respond(HttpStatusCode.OK, users)
