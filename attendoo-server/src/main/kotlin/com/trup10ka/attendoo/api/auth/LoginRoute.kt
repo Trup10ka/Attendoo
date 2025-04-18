@@ -3,6 +3,7 @@ package com.trup10ka.attendoo.api.auth
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
+import com.trup10ka.attendoo.JWT_DEPARTMENT_FIELD
 import com.trup10ka.attendoo.JWT_ROLE_FIELD
 import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.STATUS_NAME
@@ -51,6 +52,7 @@ fun Route.routeLogin(dbClient: DbClient, passwordEncryptor: PasswordEncryptor)
                         .withIssuer(config.jwt.issuer)
                         .withClaim(JWT_USERNAME_FIELD, authCredentials.username!!)
                         .withClaim(JWT_ROLE_FIELD, user.role)
+                        .withClaim(JWT_DEPARTMENT_FIELD, user.userDepartment)
                         .withExpiresAt(Date(System.currentTimeMillis() + 1000 * 60 * 60))
                         .sign(Algorithm.HMAC512(config.jwt.secret)),
                     STATUS_NAME to user.userStatus

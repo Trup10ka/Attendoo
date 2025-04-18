@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
+import com.trup10ka.attendoo.JWT_DEPARTMENT_FIELD
 import com.trup10ka.attendoo.JWT_ROLE_FIELD
 import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.api.users.logger
@@ -25,6 +26,9 @@ val JWTCredential.attendooUsername: String?
 val JWTCredential.attendooRole: String?
     get() = payload.getClaim(JWT_ROLE_FIELD).asString()
 
+val JWTCredential.attendooDepartment: String?
+    get() = payload.getClaim(JWT_DEPARTMENT_FIELD).asString()
+
 fun Application.configureJWT()
 {
     install(Authentication)
@@ -39,7 +43,7 @@ fun Application.configureJWT()
             verifier(jwtVerifier)
             
             validate { credential ->
-                if (credential.attendooUsername != null && credential.attendooRole != null)
+                if (credential.attendooUsername != null && credential.attendooRole != null && credential.attendooDepartment != null)
                     JWTPrincipal(credential.payload)
                 else
                     null
