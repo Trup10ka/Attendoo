@@ -8,3 +8,6 @@ val JWTPrincipal.attendooUsername: String
 
 val JWTPrincipal.attendooRole: String
     get() = payload.getClaim("attendooRole").asString()
+
+val JWTPrincipal.attendooDepartment: String
+    get() = payload.getClaim("attendooDepartment").asString()
