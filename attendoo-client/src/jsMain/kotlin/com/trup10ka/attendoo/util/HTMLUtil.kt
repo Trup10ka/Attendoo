@@ -99,7 +99,7 @@ fun createHeader(id: ElementID? = null, clazz: Array<String>? = null, text: Stri
 
 fun createWrappedInput(id: ElementID? = null, clazz: Array<String>? = null, type: String, placeholder: String? = null): HTMLLabelElement
 {
-    val wrappingLabel = createElement<HTMLLabelElement>("label", id=id, clazz = clazz)
+    val wrappingLabel = createElement<HTMLLabelElement>("label", id="$id-label", clazz = clazz)
     val input = createElement<HTMLInputElement>("input", id)
     input.type = type
     placeholder?.let { input.setAttribute("placeholder", it) }
