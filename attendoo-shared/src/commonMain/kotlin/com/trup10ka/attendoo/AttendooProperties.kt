@@ -42,7 +42,7 @@ const val ALL_ROLES_ENDPOINT = "/all"
 /* === JWT field names */
 const val JWT_USERNAME_FIELD = "attendoo-username"
 const val JWT_ROLE_FIELD = "attendoo-role"
-const val JWT_DEPARTMENT_FIELD = "attendooDepartment"
+const val JWT_DEPARTMENT_FIELD = "attendoo-department"
 
 /* === Storage keys === */
 const val TOKEN_NAME = "ATTENDOO_TOKEN"
