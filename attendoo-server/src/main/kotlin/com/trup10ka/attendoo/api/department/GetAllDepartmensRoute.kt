@@ -7,12 +7,15 @@ import com.trup10ka.attendoo.db.dao.User
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.db.tables.Users
 import com.trup10ka.attendoo.dto.DepartmentDTO
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
+
+private val logger = KotlinLogging.logger { }
 
 fun Route.routeGetAllDepartments()
 {
