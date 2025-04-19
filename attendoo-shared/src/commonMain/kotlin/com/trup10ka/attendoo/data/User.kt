@@ -13,5 +13,6 @@ data class User(
     val phoneNumber: String,
     val role: String,
     val userStatus: String,
-    val userDepartment: String
+    val userDepartment: String,
+    val userDepartments: List<String>? = null
 )

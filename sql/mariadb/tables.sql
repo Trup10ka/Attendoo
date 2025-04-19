@@ -35,14 +35,24 @@ CREATE TABLE IF NOT EXISTS user
     email                    VARCHAR(255) NOT NULL,
     phone_number             VARCHAR(255) NOT NULL,
     role_id                  INT          NOT NULL,
-    default_user_status_id INT          NOT NULL,
-    user_department_id     INT          NOT NULL,
+    default_user_status_id   INT          NOT NULL,
+    user_department_id       INT          NOT NULL,
 
     FOREIGN KEY (role_id) REFERENCES role (id),
     FOREIGN KEY (default_user_status_id) REFERENCES user_status (id),
     FOREIGN KEY (user_department_id) REFERENCES user_department (id),
 
     CHECK (email LIKE '%@%')
+);
+
+CREATE TABLE IF NOT EXISTS user_department_mapping
+(
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    user_id           INT NOT NULL,
+    user_department_id INT NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (user_department_id) REFERENCES user_department (id)
 );
 
 CREATE TABLE IF NOT EXISTS user_attendances

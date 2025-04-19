@@ -16,6 +16,7 @@ import com.trup10ka.attendoo.db.tables.ProposalTags
 import com.trup10ka.attendoo.db.tables.Proposals
 import com.trup10ka.attendoo.db.tables.Roles
 import com.trup10ka.attendoo.db.tables.Tags
+import com.trup10ka.attendoo.db.tables.UserDepartmentMappings
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -76,6 +77,7 @@ class ExposedDbClient : DbClient()
                 UserDepartments,
                 Users,
                 UserAttendances,
+                UserDepartmentMappings,
                 Proposals,
                 ProposalTags
             )

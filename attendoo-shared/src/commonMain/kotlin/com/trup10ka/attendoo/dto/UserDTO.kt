@@ -13,7 +13,8 @@ data class UserDTO(
     val phoneNumber: String? = null,
     val role: String? = null,
     val userStatus: String? = null,
-    val userDepartment: String? = null
+    val userDepartment: String? = null,
+    val userDepartments: List<String>? = null
 )
 {
     fun checkIfValidForUserCreation(): Boolean
@@ -40,7 +41,29 @@ data class UserDTO(
             this.phoneNumber,
             this.role,
             this.userStatus,
-            this.userDepartment
+            this.userDepartment,
+            this.userDepartments
         )
+    }
+    
+    fun isAdmin(): Boolean
+    {
+        return role?.equals("admin", ignoreCase = true) ?: false
+    }
+    
+    fun getAllDepartments(): List<String>
+    {
+        return if (isAdmin() && userDepartments != null)
+        {
+            userDepartments
+        }
+        else if (userDepartment != null)
+        {
+            listOf(userDepartment)
+        }
+        else
+        {
+            emptyList()
+        }
     }
 }
