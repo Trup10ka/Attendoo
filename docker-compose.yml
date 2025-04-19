@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: "attendoo_app"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    volumes:
+      - ./dist/application.conf:/attendoo/application.conf:ro
+    restart: unless-stopped
+
+  db:
+    image: mariadb:latest
+    container_name: "attendoo_db"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=attendoo
+      - MYSQL_USER=attendoo_user
+      - MYSQL_PASSWORD=attendoo_password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
