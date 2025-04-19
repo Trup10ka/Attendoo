@@ -68,15 +68,29 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
             id = CREATE_USER_FORM_ATTRIBUTES,
             clazz = stylesOf(CREATE_USER_FORM),
             children = arrayOf(
-                createSelectWithOptions(
-                    id = CREATE_USER_DEPARTMENT,
-                    clazz = stylesOf(FORM_FIELD),
-                    options = groupOptions.map { SelectOption(it, it) }.toTypedArray()
+                createDiv(
+                    id = CREATE_USER_NEW_DEPARTMENT_DIV,
+                    clazz = stylesOf(FORM_FIELD_GROUP),
+                    children = arrayOf(
+                        createSelectWithOptions(
+                            id = CREATE_USER_DEPARTMENT,
+                            clazz = stylesOf(FORM_FIELD),
+                            options = groupOptions.map { SelectOption(it, it) }.toTypedArray()
+                        ),
+                        createWrappedInput(id = CREATE_USER_NEW_DEPARTMENT, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Or create new department")
+                    )
                 ),
-                createSelectWithOptions(
-                    id = CREATE_USER_ROLE,
-                    clazz = stylesOf(FORM_FIELD),
-                    options = roleOptions.map { SelectOption(it, it) }.toTypedArray()
+                createDiv(
+                    id = CREATE_USER_NEW_ROLE_DIV,
+                    clazz = stylesOf(FORM_FIELD_GROUP),
+                    children = arrayOf(
+                        createSelectWithOptions(
+                            id = CREATE_USER_ROLE,
+                            clazz = stylesOf(FORM_FIELD),
+                            options = roleOptions.map { SelectOption(it, it) }.toTypedArray()
+                        ),
+                        createWrappedInput(id = CREATE_USER_NEW_ROLE, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Or create new role")
+                    )
                 ),
                 createWrappedInput(id = CREATE_USER_USERNAME, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Attendoo Username"),
                 createWrappedInput(id = CREATE_USER_PASSWORD, clazz = stylesOf(FORM_FIELD), type = "password", placeholder = "Attendoo Password")

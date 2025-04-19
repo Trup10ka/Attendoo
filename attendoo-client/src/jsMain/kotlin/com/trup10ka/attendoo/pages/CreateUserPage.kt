@@ -56,13 +56,16 @@ class CreateUserPage(
             val phoneInput = getInputByID(CREATE_USER_PHONE)
 
             val departmentSelect = getSelectById(CREATE_USER_DEPARTMENT)
+            val newDepartmentInput = getInputByID(CREATE_USER_NEW_DEPARTMENT)
             val roleSelect = getSelectById(CREATE_USER_ROLE)
+            val newRoleInput = getInputByID(CREATE_USER_NEW_ROLE)
 
             val usernameInput = getInputByID(CREATE_USER_USERNAME)
             val passwordInput = getInputByID(CREATE_USER_PASSWORD)
 
             if (firstNameInput == null || lastNameInput == null || emailInput == null || phoneInput == null ||
-                departmentSelect == null || roleSelect == null || usernameInput == null || passwordInput == null
+                departmentSelect == null || newDepartmentInput == null || roleSelect == null || newRoleInput == null ||
+                usernameInput == null || passwordInput == null
             )
             {
                 window.alert("Could not find all form fields")
@@ -73,16 +76,21 @@ class CreateUserPage(
             val lastName = lastNameInput.value.trim()
             val email = emailInput.value.trim()
             val phone = phoneInput.value.trim()
-            val department = departmentSelect.value
-            val role = roleSelect.value
+            val departmentFromSelect = departmentSelect.value
+            val newDepartment = newDepartmentInput.value.trim()
+            val roleFromSelect = roleSelect.value
+            val newRole = newRoleInput.value.trim()
             val username = usernameInput.value.trim()
             val password = passwordInput.value.trim()
+
+            val department = newDepartment.ifEmpty { departmentFromSelect }
+            val role = newRole.ifEmpty { roleFromSelect }
 
             if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() ||
                 department.isEmpty() || role.isEmpty() || username.isEmpty() || password.isEmpty()
             )
             {
-                window.alert("Please fill in all fields")
+                window.alert("Please fill in all required fields")
                 return@addEventListener
             }
 
@@ -115,6 +123,8 @@ class CreateUserPage(
                         phoneInput.value = ""
                         usernameInput.value = ""
                         passwordInput.value = ""
+                        newDepartmentInput.value = ""
+                        newRoleInput.value = ""
                     }
                     else
                     {
