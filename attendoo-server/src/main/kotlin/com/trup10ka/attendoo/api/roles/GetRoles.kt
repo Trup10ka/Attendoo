@@ -1,7 +1,7 @@
 package com.trup10ka.attendoo.api.roles
 
 import com.trup10ka.attendoo.ALL_ROLES_ENDPOINT
-import com.trup10ka.attendoo.data.Role
+import com.trup10ka.attendoo.dto.RoleDTO
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.db.toDTO
@@ -16,9 +16,9 @@ fun Route.routeGetRoles(dbClient: DbClient)
     get(ALL_ROLES_ENDPOINT)
     {
         val roles = dbQuery {
-            dbClient.roleService.getAllRoles().map { it.toDTO<Role>() }
+            dbClient.roleService.getAllRoles().map { it.toDTO() }
         }
-        
+
         if (roles.isNotEmpty())
         {
             call.respond(HttpStatusCode.OK, roles)
