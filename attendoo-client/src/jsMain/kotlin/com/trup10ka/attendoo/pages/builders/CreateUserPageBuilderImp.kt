@@ -16,7 +16,7 @@ import com.trup10ka.attendoo.util.createWrappedInput
 class CreateUserPageBuilderImp : CreateUserPageBuilder
 {
     override val currentlyActiveHTMLElements = mutableSetOf<HTMLElement>()
-    
+
     override fun buildDynamicContent(appender: HTMLElement?, groupOptions: Array<String>, roleOptions: Array<String>)
     {
         val createUserPane = createDiv(
@@ -27,7 +27,7 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
                 ),
                 children = arrayOf(
                     createHeader(text = "Create user", clazz = stylesOf(CONTAINER_HEADER)),
-                    createDiv(id = "", clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
+                    createDiv(id = "create-user-container-splitter", clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
                         children = arrayOf(
                             createCredentialsForm(),
                             createUserAttributesForm(groupOptions, roleOptions),
@@ -36,11 +36,10 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
                     createSubmitButton()
                 )
         )
-        
         appender!!.appendChild(createUserPane)
         currentlyActiveHTMLElements.add(createUserPane)
     }
-    
+
     override fun eraseDynamicElement()
     {
         currentlyActiveHTMLElements.forEach {
@@ -48,21 +47,21 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
         }
         currentlyActiveHTMLElements.clear()
     }
-    
+
     private fun createCredentialsForm(): HTMLElement
     {
         return createForm(
             id = CREATE_USER_FORM_CREDENTIALS,
             clazz = stylesOf(CREATE_USER_FORM),
             children = arrayOf(
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "First Name (exp. Julia)"),
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Last Name (exp. Crook)"),
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "email", placeholder = "Email"),
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "tel", placeholder = "Tel")
+                createWrappedInput(id = CREATE_USER_FIRST_NAME, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "First Name (exp. Julia)"),
+                createWrappedInput(id = CREATE_USER_LAST_NAME, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Last Name (exp. Crook)"),
+                createWrappedInput(id = CREATE_USER_EMAIL, clazz = stylesOf(FORM_FIELD), type = "email", placeholder = "Email"),
+                createWrappedInput(id = CREATE_USER_PHONE, clazz = stylesOf(FORM_FIELD), type = "tel", placeholder = "Tel")
             )
         )
     }
-    
+
     private fun createUserAttributesForm(groupOptions: Array<String>, roleOptions: Array<String>): HTMLElement
     {
         return createForm(
@@ -70,22 +69,24 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
             clazz = stylesOf(CREATE_USER_FORM),
             children = arrayOf(
                 createSelectWithOptions(
+                    id = CREATE_USER_DEPARTMENT,
                     clazz = stylesOf(FORM_FIELD),
                     options = groupOptions.map { SelectOption(it, it) }.toTypedArray()
                 ),
                 createSelectWithOptions(
+                    id = CREATE_USER_ROLE,
                     clazz = stylesOf(FORM_FIELD),
                     options = roleOptions.map { SelectOption(it, it) }.toTypedArray()
                 ),
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Attendoo Username"),
-                createWrappedInput(clazz = stylesOf(FORM_FIELD), type = "password", placeholder = "Attendoo Password")
+                createWrappedInput(id = CREATE_USER_USERNAME, clazz = stylesOf(FORM_FIELD), type = "text", placeholder = "Attendoo Username"),
+                createWrappedInput(id = CREATE_USER_PASSWORD, clazz = stylesOf(FORM_FIELD), type = "password", placeholder = "Attendoo Password")
             )
         )
     }
-    
+
     private fun createSubmitButton(): HTMLElement
     {
-        val button = createButton(text = "Create", clazz = stylesOf(SUBMIT_BUTTON))
+        val button = createButton(id = CREATE_USER_SUBMIT, text = "Create", clazz = stylesOf(SUBMIT_BUTTON))
         button.appendChild(createSpan(text = "manufacturing", clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON)))
         return button
     }
