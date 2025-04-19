@@ -5,6 +5,6 @@ interface Authenticator
     suspend fun login(username: String, password: String): Boolean
     suspend fun logout(): String
     suspend fun register(): String
-    suspend fun isAuthenticated(): Boolean
+    suspend fun isAuthenticated(): AuthenticationStatus
     fun addAuthMethodToRequest(request: Any)
 }

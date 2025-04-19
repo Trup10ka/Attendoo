@@ -9,6 +9,7 @@ import com.trup10ka.attendoo.fetch.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import kotlinx.browser.window
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -49,17 +50,42 @@ class AttendooJWTAuth(
         return "Success"
     }
     
-    override suspend fun isAuthenticated(): Boolean
+    override suspend fun isAuthenticated(): AuthenticationStatus
     {
-        window.localStorage.getItem(TOKEN_NAME) ?: return false
+        window.localStorage.getItem(TOKEN_NAME) ?: return AuthenticationStatus.NOT_AUTHENTICATED
         return try
         {
             val response = ktorClient.getVia(FULL_VERIFY_ENDPOINT) as HttpResponse
-            return response.status.value == 200
+            if (response.status.value == 200)
+            {
+                try
+                {
+                    val responseBody = response.bodyAsText()
+                    val jsonElement = Json.parseToJsonElement(responseBody)
+                    val role = jsonElement.jsonObject["role"]?.jsonPrimitive?.content
+                    
+                    if (role?.equals("admin", ignoreCase = true) == true)
+                    {
+                        AuthenticationStatus.AUTHENTICATED_ADMIN
+                    }
+                    else
+                    {
+                        AuthenticationStatus.AUTHENTICATED
+                    }
+                }
+                catch (_: Exception)
+                {
+                    AuthenticationStatus.AUTHENTICATED
+                }
+            }
+            else
+            {
+                AuthenticationStatus.NOT_AUTHENTICATED
+            }
         }
         catch (_: Exception)
         {
-            false
+            AuthenticationStatus.NOT_AUTHENTICATED
         }
     }
     
@@ -109,7 +135,7 @@ class AttendooJWTAuth(
         if (token == null || status == null)
             return false
         
-        setToken(token.toString())
+        setToken(token)
         return true
     }
     
