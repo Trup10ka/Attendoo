@@ -38,9 +38,11 @@ const val USER_ATTENDANCE_ENDPOINT = "/user"
 
 /* === Roles Endpoints === */
 const val ALL_ROLES_ENDPOINT = "/all"
+const val FULL_ALL_ROLES_ENDPOINT = "$API_ROOT_ENDPOINT$ROLES_ENDPOINT$ALL_ROLES_ENDPOINT"
 
 /* === Departments Endpoints === */
 const val ALL_DEPARTMENTS_ENDPOINT = "/all"
+const val FULL_ALL_DEPARTMENTS_ENDPOINT = "$API_ROOT_ENDPOINT$DEPARTMENTS_ENDPOINT$ALL_DEPARTMENTS_ENDPOINT"
 
 /* === JWT field names */
 const val JWT_USERNAME_FIELD = "attendoo-username"
