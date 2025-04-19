@@ -29,7 +29,7 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
 {
     post("/register") {
         logger.info { "Received request for REGISTER from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
-        
+
         val principal = call.principal<JWTPrincipal>()
         if (principal == null)
         {
@@ -37,7 +37,7 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
             logger.warn { "Unauthenticated user tried to register a new user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-        
+
         val adminRole = principal.attendooRole
         if (!adminRole.equals("admin", ignoreCase = true))
         {
@@ -45,12 +45,12 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
             logger.warn { "Non-admin user tried to register a new user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-        
+
         val adminUsername = principal.attendooUsername
         val adminDepartment = principal.attendooDepartment
-        
+
         val userDTO = call.receive<UserDTO>()
-        
+
         if (userDTO.attendooUsername == null || userDTO.attendooPassword == null || userDTO.userDepartment == null)
         {
             call.respond(
@@ -60,22 +60,24 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
             logger.warn { "Received invalid user data from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-        
+
         val userDepartment = userDTO.userDepartment!!
-        
+        val userRole = userDTO.role
+
+        // Handle department creation/validation
         if (!userDepartment.equals(adminDepartment, ignoreCase = true))
         {
             val departmentExists = dbQuery {
                 dbClient.userDepartmentService.getDepartmentByName(userDepartment) != null
             }
-            
+
             if (!departmentExists)
             {
                 dbQuery {
                     val newDepartment = dbClient.userDepartmentService.createDepartment(userDepartment)
-                    
+
                     val adminUser = dbClient.userService.getUserByUsername(adminUsername)
-                    
+
                     if (adminUser != null)
                     {
                         dbClient.userDepartmentService.assignDepartmentToUser(
@@ -91,7 +93,7 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
                     val adminUser = dbClient.userService.getUserByUsername(adminUsername)
                     adminUser?.getAllDepartments()?.any { it.name.equals(userDepartment, ignoreCase = true) } ?: false
                 }
-                
+
                 if (!hasAccess)
                 {
                     call.respond(
@@ -103,12 +105,26 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
                 }
             }
         }
-        
+
+        // Handle role creation/validation
+        if (userRole != null) {
+            val roleExists = dbQuery {
+                dbClient.roleService.getRoleByName(userRole) != null
+            }
+
+            if (!roleExists) {
+                dbQuery {
+                    dbClient.roleService.createRole(userRole)
+                }
+                logger.info { "Created new role: $userRole from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+            }
+        }
+
         val encryptedPassword = passwordEncryptor.encrypt(userDTO.attendooPassword!!)
-        
+
         val wasCreated =
             dbQuery { dbClient.userService.createUser(userDTO.convertToDTOWithEncryptedPassword(encryptedPassword)) }
-        
+
         if (wasCreated)
         {
             call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
