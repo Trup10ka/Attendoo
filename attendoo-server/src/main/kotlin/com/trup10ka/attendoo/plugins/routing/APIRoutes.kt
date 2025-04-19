@@ -2,6 +2,7 @@ package com.trup10ka.attendoo.plugins.routing
 
 import com.trup10ka.attendoo.api.attendances.routeAttendances
 import com.trup10ka.attendoo.api.auth.routeAuth
+import com.trup10ka.attendoo.api.department.routeDepartments
 import com.trup10ka.attendoo.api.requests.routeRequests
 import com.trup10ka.attendoo.api.roles.routeRoles
 import com.trup10ka.attendoo.api.users.routeUsers
@@ -19,5 +20,6 @@ fun Route.routeAPICalls(dbClient: DbClient)
         routeAttendances(dbClient.attendanceService, dbClient.userService)
         routeRequests(dbClient)
         routeRoles(dbClient)
+        routeDepartments(dbClient.userDepartmentService)
     }
 }

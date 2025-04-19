@@ -15,6 +15,7 @@ const val USERS_ENDPOINT = "/users"
 const val REQUESTS_ENDPOINT = "/requests"
 const val ROLES_ENDPOINT = "/roles"
 const val AUTH_ENDPOINT = "/auth"
+const val DEPARTMENTS_ENDPOINT = "/departments"
 
 /* === Auth Endpoints === */
 const val LOGIN_ENDPOINT = "/login"
@@ -38,6 +39,8 @@ const val USER_ATTENDANCE_ENDPOINT = "/user"
 /* === Roles Endpoints === */
 const val ALL_ROLES_ENDPOINT = "/all"
 
+/* === Departments Endpoints === */
+const val ALL_DEPARTMENTS_ENDPOINT = "/all"
 
 /* === JWT field names */
 const val JWT_USERNAME_FIELD = "attendoo-username"
