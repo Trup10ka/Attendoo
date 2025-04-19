@@ -17,17 +17,20 @@ import com.trup10ka.attendoo.util.addAll
 
 class AttendooPageManager(
     val uriHandler: URIHandler,
-    ktorClient: KtorHttpClient,
+    ktorClient: KtorHttpClient
 )
 {
     lateinit var currentPage: Page
+    
+    private lateinit var attendooClient: AttendooClient
     
     private val jwtAuthenticator: Authenticator = AttendooJWTAuth(ktorClient)
     
     private val pages = mutableMapOf<PageType, Page>()
     
-    fun initPageManager(ktorClient: KtorHttpClient)
+    fun initPageManager(ktorClient: KtorHttpClient, attendooClient: AttendooClient)
     {
+        this.attendooClient = attendooClient
         initPageList(ktorClient)
     }
     
@@ -57,7 +60,7 @@ class AttendooPageManager(
     
     private fun initPageList(ktorClient: KtorHttpClient)
     {
-        val loginPage = LoginPage(LOGIN_PAGE, this, jwtAuthenticator)
+        val loginPage = LoginPage(LOGIN_PAGE, this, jwtAuthenticator, attendooClient)
         val dashboardPage = DashboardPage(DASHBOARD_PAGE, this, ktorClient)
         val usersPage = UsersPage(USERS_PAGE, this, ktorClient)
         val requestsPage = RequestsPage(REQUESTS_PAGE, this, ktorClient)

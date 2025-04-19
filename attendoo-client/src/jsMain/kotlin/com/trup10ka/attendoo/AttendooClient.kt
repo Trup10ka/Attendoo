@@ -1,6 +1,7 @@
 package com.trup10ka.attendoo
 
 import com.trup10ka.attendoo.auth.AttendooJWTAuth
+import com.trup10ka.attendoo.auth.AuthenticationStatus
 import com.trup10ka.attendoo.fetch.KtorHttpClient
 import com.trup10ka.attendoo.pages.constant.ElementID
 import com.trup10ka.attendoo.uri.URIHandler
@@ -9,15 +10,19 @@ import com.trup10ka.attendoo.util.getButtonByID
 import org.w3c.dom.HTMLButtonElement
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.pages.constant.PageType.*
+import com.trup10ka.attendoo.pages.constant.StyleClass
+import com.trup10ka.attendoo.pages.constant.StyleClass.*
+import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.getDivByID
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.util.mapButtonToPage
+import com.trup10ka.attendoo.util.stylesOf
 import kotlinx.browser.window
 
 class AttendooClient
 {
     private val uriHandler: URIHandler = URIHandlerImp()
-
+    
     private val ktorClient = KtorHttpClient()
     
     private val jwtAuthenticator = AttendooJWTAuth(ktorClient)
@@ -27,50 +32,70 @@ class AttendooClient
     private val attendooSidebarButtons = mutableListOf<HTMLButtonElement>()
     
     private var isSidebarToggled = true
-
+    
     fun init()
     {
-        pageManager.initPageManager(ktorClient)
+        pageManager.initPageManager(ktorClient, this)
         uriHandler.initUriHandler()
         
         initBurgerButtonListener()
         
         launchDefaultCoroutine {
+            val authStatus = jwtAuthenticator.isAuthenticated()
             
-            if (!jwtAuthenticator.isAuthenticated())
+            if (authStatus == AuthenticationStatus.NOT_AUTHENTICATED)
             {
                 pageManager.showLoginPage()
                 return@launchDefaultCoroutine
             }
             
-            initButtonListeners()
+            createAndInitButtons(authStatus)
             
             displayPage()
         }
     }
-
+    
     private fun displayPage()
     {
         val page = pageManager.getCurrentPage()
         pageManager.switchToPage(page)
     }
     
-    private fun initButtonListeners()
+    fun createAndInitButtons(authStatus: AuthenticationStatus)
     {
-        val buttons = arrayOf(
-            getButtonByID(DASHBOARD_BUTTON),
-            getButtonByID(USERS_BUTTON),
-            getButtonByID(REQUESTS_BUTTON),
-            getButtonByID(CREATE_USER_BUTTON)
-        )
+        attendooSidebarButtons.clear()
         
-        if (buttons.contains(null))
-        {
-            showErrorPage("One or more buttons not found")
-            throw IllegalStateException("One or more buttons not found")
+        val sidebar = getDivByID(SIDEBAR) ?: run {
+            showErrorPage("Sidebar not found")
+            throw IllegalStateException("Sidebar not found")
         }
         
-        attendooSidebarButtons.addAll(buttons.map { it!! })
+        while (sidebar.firstChild != null)
+        {
+            sidebar.removeChild(sidebar.firstChild!!)
+        }
+        
+        val dashboardButton = createButton(id = DASHBOARD_BUTTON, clazz = stylesOf(SIDEBAR_BUTTON), text = "Dashboard")
+        val requestsButton = createButton(id = REQUESTS_BUTTON, clazz = stylesOf(SIDEBAR_BUTTON), text = "Requests")
+        
+        sidebar.appendChild(dashboardButton)
+        sidebar.appendChild(requestsButton)
+        
+        attendooSidebarButtons.add(dashboardButton)
+        attendooSidebarButtons.add(requestsButton)
+        
+        if (authStatus == AuthenticationStatus.AUTHENTICATED_ADMIN)
+        {
+            val usersButton = createButton(id = USERS_BUTTON, clazz = stylesOf(SIDEBAR_BUTTON), text = "Users")
+            val createUserButton =
+                createButton(id = CREATE_USER_BUTTON, clazz = stylesOf(SIDEBAR_BUTTON), text = "Create user")
+            
+            sidebar.appendChild(usersButton)
+            sidebar.appendChild(createUserButton)
+            
+            attendooSidebarButtons.add(usersButton)
+            attendooSidebarButtons.add(createUserButton)
+        }
         
         attendooSidebarButtons.forEach { button ->
             button.addEventListener("click", {

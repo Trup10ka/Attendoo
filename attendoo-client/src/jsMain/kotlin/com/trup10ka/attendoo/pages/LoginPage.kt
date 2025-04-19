@@ -1,6 +1,8 @@
 package com.trup10ka.attendoo.pages
 
+import com.trup10ka.attendoo.AttendooClient
 import com.trup10ka.attendoo.AttendooPageManager
+import com.trup10ka.attendoo.auth.AuthenticationStatus
 import com.trup10ka.attendoo.auth.Authenticator
 import com.trup10ka.attendoo.pages.builders.LoginPageBuilder
 import com.trup10ka.attendoo.pages.constant.PageType
@@ -13,7 +15,8 @@ import kotlinx.browser.window
 class LoginPage(
     override val pageType: PageType,
     override val pageManager: AttendooPageManager,
-    private val jwtAuthenticator: Authenticator
+    private val jwtAuthenticator: Authenticator,
+    private val attendooClient: AttendooClient
 ) : Page
 {
     override val pageBuilder = LoginPageBuilder()
@@ -36,16 +39,17 @@ class LoginPage(
                 return@addEventListener
             }
             launchDefaultCoroutine {
-                val isSuccessful = jwtAuthenticator.login(username, password)
-                if (isSuccessful)
-                {
-                    pageManager.uriHandler.updateURI(PageType.DASHBOARD_PAGE.pageRoute)
-                    pageManager.switchToPage(pageManager.getCurrentPage())
-                }
-                else
+                jwtAuthenticator.login(username, password)
+                
+                val isSuccessful = jwtAuthenticator.isAuthenticated()
+                
+                if (isSuccessful == AuthenticationStatus.NOT_AUTHENTICATED)
                 {
                     window.alert("Login failed. Please check your credentials and try again.")
                 }
+                attendooClient.createAndInitButtons(isSuccessful)
+                pageManager.uriHandler.updateURI(PageType.DASHBOARD_PAGE.pageRoute)
+                pageManager.switchToPage(pageManager.getCurrentPage())
             }
         })
     }
