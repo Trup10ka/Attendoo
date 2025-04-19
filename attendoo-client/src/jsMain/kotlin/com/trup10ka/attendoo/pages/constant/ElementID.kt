@@ -7,6 +7,7 @@ enum class ElementID
 
     /* === Sidebar buttons === */
     SIDEBAR_CONTAINER,
+    SIDEBAR,
     DASHBOARD_BUTTON,
     USERS_BUTTON,
     REQUESTS_BUTTON,
