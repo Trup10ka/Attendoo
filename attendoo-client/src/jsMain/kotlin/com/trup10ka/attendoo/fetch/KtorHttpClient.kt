@@ -23,7 +23,7 @@ import kotlinx.serialization.json.JsonElement
 class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
 {
     private val client = HttpClient(Js)
-    
+
     override suspend fun getVia(path: String): HttpResponse
     {
         return client.request {
@@ -35,11 +35,11 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
             headers {
                 header(HttpHeaders.Authorization, "Bearer ${window.localStorage.getItem(TOKEN_NAME)}")
             }
-            
+
             method = HttpMethod.Get
         }
     }
-    
+
     override suspend fun postJSONVia(path: String, body: String): HttpResponse
     {
         return client.request {
@@ -50,16 +50,17 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
             headers {
                 header(HttpHeaders.Authorization, "Bearer ${window.localStorage.getItem(TOKEN_NAME)}")
             }
-            
+
             method = HttpMethod.Post
-            
+            contentType(ContentType.Application.Json)
+
             setBody(
                 body,
                 typeInfo<JSON>()
             )
         }
     }
-    
+
     override suspend fun postJSONViaUnauthorized(path: String, body: String): JsonElement
     {
         val response = client.request {
@@ -67,7 +68,7 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
                 host = CLIENT_HOST_VAL
                 path(path)
             }
-            
+
             method = HttpMethod.Post
             contentType(ContentType.Application.Json)
             setBody(
@@ -75,7 +76,7 @@ class KtorHttpClient : com.trup10ka.attendoo.fetch.HttpClient
                 typeInfo<JSON>()
             )
         }.bodyAsText()
-        
+
         return Json.decodeFromString(response)
     }
 }
