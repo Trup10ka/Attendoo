@@ -29,6 +29,10 @@ fun getInputByID(id: String) = getElementByID(id) as HTMLInputElement?
 
 fun getInputByID(id: ElementID) = getInputByID(id.toString())
 
+fun getSelectById(id: String) = getElementByID(id) as HTMLSelectElement?
+
+fun getSelectById(id: ElementID) = getSelectById(id.toString())
+
 /**
  * Creates an element of the given type with the given ID and class.
  *
