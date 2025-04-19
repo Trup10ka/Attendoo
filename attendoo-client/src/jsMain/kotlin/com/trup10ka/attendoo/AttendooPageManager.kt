@@ -6,6 +6,7 @@ import com.trup10ka.attendoo.fetch.KtorHttpClient
 import com.trup10ka.attendoo.pages.CreateUserPage
 import com.trup10ka.attendoo.pages.DashboardPage
 import com.trup10ka.attendoo.pages.LoginPage
+import com.trup10ka.attendoo.pages.NotFoundPage
 import com.trup10ka.attendoo.pages.Page
 import com.trup10ka.attendoo.pages.RequestsPage
 import com.trup10ka.attendoo.pages.UsersPage
@@ -61,13 +62,15 @@ class AttendooPageManager(
         val usersPage = UsersPage(USERS_PAGE, this, ktorClient)
         val requestsPage = RequestsPage(REQUESTS_PAGE, this, ktorClient)
         val createUserPage = CreateUserPage(CREATE_USER_PAGE, this, ktorClient)
+        val notFoundPage = NotFoundPage(NOT_FOUND_PAGE, this)
         
         pages.addAll(
             loginPage.pageType to loginPage,
             dashboardPage.pageType to dashboardPage,
             usersPage.pageType to usersPage,
             requestsPage.pageType to requestsPage,
-            createUserPage.pageType to createUserPage
+            createUserPage.pageType to createUserPage,
+            notFoundPage.pageType to notFoundPage
         )
     }
     
@@ -80,6 +83,7 @@ class AttendooPageManager(
             DASHBOARD_PAGE.pageRoute -> pages[DASHBOARD_PAGE]!!
             USERS_PAGE.pageRoute     -> pages[USERS_PAGE]!!
             REQUESTS_PAGE.pageRoute  -> pages[REQUESTS_PAGE]!!
+            CREATE_USER_PAGE.pageRoute -> pages[CREATE_USER_PAGE]!!
             else                     -> pages[NOT_FOUND_PAGE]!!
         }
     }
