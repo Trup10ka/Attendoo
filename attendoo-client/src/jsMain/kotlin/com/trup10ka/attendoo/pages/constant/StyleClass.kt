@@ -3,6 +3,7 @@ package com.trup10ka.attendoo.pages.constant
 enum class StyleClass
 {
     ATTENDOO,
+    SIDEBAR_BUTTON,
 
     /* === Global === */
     FORM_FIELD,
