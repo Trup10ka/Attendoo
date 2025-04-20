@@ -27,16 +27,16 @@ CREATE TABLE IF NOT EXISTS user_department
 
 CREATE TABLE IF NOT EXISTS user
 (
-    id                       INT PRIMARY KEY AUTO_INCREMENT,
-    first_name               VARCHAR(255) NOT NULL,
-    last_name                VARCHAR(255) NOT NULL,
-    attendoo_username        VARCHAR(255) NOT NULL,
-    attendoo_password        VARCHAR(255) NOT NULL,
-    email                    VARCHAR(255) NOT NULL,
-    phone_number             VARCHAR(255) NOT NULL,
-    role_id                  INT          NOT NULL,
-    default_user_status_id   INT          NOT NULL,
-    user_department_id       INT          NOT NULL,
+    id                     INT PRIMARY KEY AUTO_INCREMENT,
+    first_name             VARCHAR(255) NOT NULL,
+    last_name              VARCHAR(255) NOT NULL,
+    attendoo_username      VARCHAR(255) NOT NULL,
+    attendoo_password      VARCHAR(255) NOT NULL,
+    email                  VARCHAR(255) NOT NULL,
+    phone_number           VARCHAR(255) NOT NULL,
+    role_id                INT          NOT NULL,
+    default_user_status_id INT          NOT NULL,
+    user_department_id     INT          NOT NULL,
 
     FOREIGN KEY (role_id) REFERENCES role (id),
     FOREIGN KEY (default_user_status_id) REFERENCES user_status (id),
@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS user
 
 CREATE TABLE IF NOT EXISTS user_department_mapping
 (
-    id                INT PRIMARY KEY AUTO_INCREMENT,
-    user_id           INT NOT NULL,
+    id                 INT PRIMARY KEY AUTO_INCREMENT,
+    user_id            INT NOT NULL,
     user_department_id INT NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES user (id),
@@ -57,11 +57,11 @@ CREATE TABLE IF NOT EXISTS user_department_mapping
 
 CREATE TABLE IF NOT EXISTS user_attendances
 (
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    user_status_id INT NOT NULL,
-    start_date        DATE NOT NULL,
-    end_date        DATE,
+    id             INT PRIMARY KEY AUTO_INCREMENT,
+    user_id        INT  NOT NULL,
+    user_status_id INT  NOT NULL,
+    start_date     DATE NOT NULL,
+    end_date       DATE,
 
     FOREIGN KEY (user_id) REFERENCES user (id),
     FOREIGN KEY (user_status_id) REFERENCES user_status (id)
@@ -69,12 +69,12 @@ CREATE TABLE IF NOT EXISTS user_attendances
 
 CREATE TABLE IF NOT EXISTS proposal
 (
-    id                        INT PRIMARY KEY AUTO_INCREMENT,
-    name                      VARCHAR(255) NOT NULL,
-    attendoo_proposal_id      INT          NOT NULL,
-    description               TEXT,
-    created_at                DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    resolved_at               DATETIME,
+    id                      INT PRIMARY KEY AUTO_INCREMENT,
+    name                    VARCHAR(255) NOT NULL,
+    attendoo_proposal_id    INT          NOT NULL DEFAULT UUID(),
+    description             TEXT,
+    created_at              DATETIME              DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    resolved_at             DATETIME,
     current_user_status_id  INT          NOT NULL,
     proposed_user_status_id INT          NOT NULL,
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS proposal
 
 CREATE TABLE IF NOT EXISTS proposal_tag
 (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id          INT PRIMARY KEY AUTO_INCREMENT,
     proposal_id INT NOT NULL,
     tag_id      INT NOT NULL,
 
