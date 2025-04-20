@@ -100,6 +100,13 @@ button:hover {
     display: none;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(232, 114, 66, 0.93);
+}
+
 .sidebar {
     height: 90vh;
     background-color: rgba(177, 102, 255, 0.18);
