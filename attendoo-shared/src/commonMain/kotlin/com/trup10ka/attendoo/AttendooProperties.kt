@@ -36,6 +36,7 @@ const val USER_ATTENDANCE_ENDPOINT = "/user"
 
 /* === Requests Endpoints === */
 const val GET_ALL_REQUESTS_ENDPOINT = "/all"
+const val CREATE_REQUEST_ENDPOINT = "/create"
 const val FULL_ALL_REQUESTS_ENDPOINT = "$API_ROOT_ENDPOINT$REQUESTS_ENDPOINT$GET_ALL_REQUESTS_ENDPOINT"
 
 /* === Roles Endpoints === */
