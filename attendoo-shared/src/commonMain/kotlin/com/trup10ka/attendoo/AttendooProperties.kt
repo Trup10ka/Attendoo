@@ -7,6 +7,7 @@ const val SUCCESS_JSON_FIELD_NAME = "success"
 const val ERROR_JSON_FIELD_NAME = "error"
 const val USERNAME_JSON_FIELD = "username"
 const val ROLE_JSON_FIELD = "role"
+const val DEPARTMENT_JSON_FIELD = "department"
 
 /* === API Endpoints === */
 const val API_ROOT_ENDPOINT = "/api"
@@ -33,6 +34,7 @@ const val FULL_ALL_USERS_ENDPOINT = "$API_ROOT_ENDPOINT$USERS_ENDPOINT$GET_ALL_U
 /* === Attendances Endpoints === */
 const val ALL_ATTENDANCE_ENDPOINT = "/all"
 const val USER_ATTENDANCE_ENDPOINT = "/user"
+const val FULL_ALL_ATTENDANCES_ENDPOINT = "$API_ROOT_ENDPOINT$ATTENDANCES_ENDPOINT$ALL_ATTENDANCE_ENDPOINT"
 
 /* === Requests Endpoints === */
 const val GET_ALL_REQUESTS_ENDPOINT = "/all"
