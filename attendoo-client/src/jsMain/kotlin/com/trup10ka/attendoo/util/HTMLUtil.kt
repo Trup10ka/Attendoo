@@ -77,6 +77,13 @@ fun createDiv(id: ElementID? = null, clazz: Array<String>? = null, text: String)
     return div
 }
 
+fun createDiv(id: String? = null, clazz: Array<String>? = null, text: String): HTMLDivElement
+{
+    val div = createElement<HTMLDivElement>("div", id, clazz)
+    div.innerText = text
+    return div
+}
+
 fun createSpan(id: ElementID? = null, clazz: Array<String>? = null, text: String): HTMLSpanElement
 {
     val span = createElement<HTMLSpanElement>("span", id, clazz)
