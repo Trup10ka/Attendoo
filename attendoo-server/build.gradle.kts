@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.ktor.content.negotiation)
     implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.websockets)
+    implementation(libs.jakarta.mail.service)
 
     /* ### Config - Hoplite ### */
     implementation(libs.hoplite.core)
