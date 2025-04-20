@@ -13,6 +13,7 @@ import com.trup10ka.attendoo.util.getDivByID
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createDiv
+import com.trup10ka.attendoo.util.createHeader
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
@@ -41,8 +42,7 @@ class RequestsPage(
                 val mainContainer = getDivByID(MAIN)
 
                 if (requests.isEmpty()) {
-                    val messageContainer = createDiv(
-                        id = "no-requests-message",
+                    val messageContainer = createHeader(
                         clazz = stylesOf(INNER_CONTAINER, CENTER),
                         text = "No requests found"
                     )
