@@ -400,6 +400,9 @@ option {
     color: #333;
 }
 
+/* ==== Request containers ==== */
+
+
 /* ==== NOT LOGGED IN container ==== */
 .not-logged-in-container {
     display: flex;
