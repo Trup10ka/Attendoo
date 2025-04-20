@@ -138,15 +138,17 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
                 userStatus = userDTO.userStatus ?: "active",
                 userDepartment = userDTO.userDepartment!!
             )
-            
-            val emailSent = emailService.sendWelcomeEmail(newUser)
-            if (emailSent)
+            try
             {
-                logger.info { "Welcome email sent to ${newUser.email}" }
+                val emailSent = emailService.sendWelcomeEmail(newUser)
+                if (!emailSent)
+                {
+                    logger.warn { "Failed to send welcome email to ${newUser.email}" }
+                }
             }
-            else
+            catch (e: Exception)
             {
-                logger.warn { "Failed to send welcome email to ${newUser.email}" }
+                logger.error(e) { "Failed to send welcome email to ${newUser.email}" }
             }
             
             call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
