@@ -30,6 +30,7 @@ class RequestPageBuildImp : RequestPageBuilder
         )
 
         appender?.appendChild(requestsContainer)
+        currentlyActiveHTMLElements.add(requestsContainer)
     }
 
     override fun buildNoRequestsFoundMessage(appender: HTMLElement?)
