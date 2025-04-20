@@ -5,7 +5,8 @@ import kotlinx.datetime.LocalDateTime
 data class Proposal(
     val id: Int,
     val name: String,
-    val attendooCustomProposalId: Int,
+    val proposerId: Int,
+    val proposedId: Int,
     val description: String?,
     val createdAt: LocalDateTime,
     val resolvedAt: LocalDateTime?
