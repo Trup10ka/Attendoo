@@ -16,6 +16,7 @@ enum class StyleClass
     ONE_LINE_CONTAINER,
     EMPLOYEE_NAME_CONTAINER,
     AVATAR,
+    CENTER,
     ACTIONS_CONTAINER,
 
     /* === Login ===  */

@@ -40,7 +40,8 @@ enum class ElementID
 
     /* === Users page === */
     MAIN_USERS_CONTAINER,
-
+    
+    NOT_FOUND_DIV,
     MAIN;
 
     override fun toString() = this.name.lowercase().replace('_', '-')

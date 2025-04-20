@@ -4,6 +4,8 @@ import com.trup10ka.attendoo.AttendooPageManager
 import com.trup10ka.attendoo.pages.builders.NotFoundPageBuilderImp
 import com.trup10ka.attendoo.pages.builders.PageBuilder
 import com.trup10ka.attendoo.pages.constant.PageType
+import com.trup10ka.attendoo.util.getDivByID
+import com.trup10ka.attendoo.pages.constant.ElementID.MAIN
 
 class NotFoundPage(
     override val pageType: PageType,
@@ -11,19 +13,19 @@ class NotFoundPage(
 ) : Page
 {
     override val pageBuilder: PageBuilder = NotFoundPageBuilderImp()
-    
+
     override fun init()
     {
-        TODO("Not yet implemented")
+        // No initialization needed for this page
     }
-    
+
     override fun show()
     {
-        TODO("Not yet implemented")
+        pageBuilder.buildDynamicElement(getDivByID(MAIN))
     }
-    
+
     override fun hide()
     {
-        TODO("Not yet implemented")
+        pageBuilder.eraseDynamicElement()
     }
 }
