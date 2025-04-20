@@ -12,26 +12,26 @@ import org.w3c.dom.HTMLDivElement
 class RequestPageBuildImp : RequestPageBuilder
 {
     override val currentlyActiveHTMLElements = mutableSetOf<HTMLElement>()
-    
+
     override fun buildRequestContainer(appender: HTMLElement?, request: Request)
     {
         val requestsContainer = createDiv(
-            id = "${request.user.attendooUsername}-request",
+            id = "${request.proposer.attendooUsername}-request",
             clazz = stylesOf(INNER_CONTAINER, REQUEST_CONTAINER),
             child = createDiv(
-                id = request.user.attendooUsername,
+                id = request.proposer.attendooUsername,
                 clazz = stylesOf(CONTAINER_TAB, REQUEST),
                 children = arrayOf(
-                    createContainerHeader(request.user),
+                    createContainerHeader(request.proposer, request.proposed),
                     createInfoContainer(request),
                     createActionsContainer(request)
                 )
             )
         )
-        
+
         appender?.appendChild(requestsContainer)
     }
-    
+
     override fun buildNoRequestsFoundMessage(appender: HTMLElement?)
     {
         val messageContainer = createDiv(
@@ -39,63 +39,68 @@ class RequestPageBuildImp : RequestPageBuilder
             clazz = stylesOf(INNER_CONTAINER, CENTER),
             text = "No requests found"
         )
-        
+
         currentlyActiveHTMLElements.add(messageContainer)
         appender?.appendChild(messageContainer)
     }
-    
-    private fun createContainerHeader(user: User): HTMLDivElement
+
+    private fun createContainerHeader(proposer: User, proposed: User): HTMLDivElement
     {
         return createDiv(
-            id = "${user.attendooUsername}-header",
+            id = "${proposer.attendooUsername}-header",
             clazz = stylesOf(MINI_CONTAINER_HEADER),
             children = arrayOf(
                 createDiv(
-                    id = "${user.attendooUsername}-name",
+                    id = "${proposer.attendooUsername}-from",
                     clazz = stylesOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
-                    text = "${user.firstName} ${user.lastName}"
+                    text = "From: ${proposer.firstName} ${proposer.lastName}"
                 ),
                 createDiv(
-                    clazz = stylesOf(ONE_LINE_CONTAINER, AVATAR),
-                    // add avatar somehow
+                    id = "${proposer.attendooUsername}-to",
+                    clazz = stylesOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
+                    text = "To: ${proposed.firstName} ${proposed.lastName}"
                 )
             )
         )
     }
-    
+
     private fun createInfoContainer(request: Request): HTMLDivElement
     {
         return createDiv(
-            id = "${request.user.attendooUsername}-info",
+            id = "${request.proposer.attendooUsername}-info",
             clazz = arrayOf("request-info"),
             children = arrayOf(
                 createDiv(
-                    id = "${request.user.attendooUsername}-company",
+                    id = "${request.proposer.attendooUsername}-department",
                     clazz = stylesOf(ONE_LINE_CONTAINER),
-                    text = request.company
+                    text = "Proposing for department: ${request.proposedDepartment}"
                 ),
                 createDiv(
-                    id = "${request.user.attendooUsername}-note",
+                    id = "${request.proposer.attendooUsername}-current-status",
                     clazz = stylesOf(ONE_LINE_CONTAINER),
-                    text = request.note
+                    text = "Current status: ${request.currentStatus}"
+                ),
+                createDiv(
+                    id = "${request.proposer.attendooUsername}-proposed-status",
+                    clazz = stylesOf(ONE_LINE_CONTAINER),
+                    text = "Proposed status: ${request.proposedStatus}"
                 )
             )
         )
     }
-    
+
     private fun createActionsContainer(request: Request): HTMLDivElement
     {
         return createDiv(
-            id = "${request.user.attendooUsername}-actions",
+            id = "${request.proposer.attendooUsername}-actions",
             clazz = stylesOf(ACTIONS_CONTAINER),
             children = arrayOf(
-                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "open_in_full"),
-                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "edit"),
-                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "delete")
+                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "check_circle"),
+                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "cancel")
             )
         )
     }
-    
+
     override fun eraseDynamicElement()
     {
         currentlyActiveHTMLElements.forEach {
