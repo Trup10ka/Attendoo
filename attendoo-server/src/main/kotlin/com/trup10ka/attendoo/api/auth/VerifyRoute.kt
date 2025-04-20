@@ -1,6 +1,8 @@
 package com.trup10ka.attendoo.api.auth
 
+import com.trup10ka.attendoo.DEPARTMENT_JSON_FIELD
 import com.trup10ka.attendoo.ERROR_JSON_FIELD_NAME
+import com.trup10ka.attendoo.JWT_DEPARTMENT_FIELD
 import com.trup10ka.attendoo.JWT_ROLE_FIELD
 import com.trup10ka.attendoo.JWT_USERNAME_FIELD
 import com.trup10ka.attendoo.ROLE_JSON_FIELD
@@ -18,14 +20,25 @@ fun Route.routeVerify()
     get("/verify")
     {
         logger.info { "Received request for VERIFY from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
-        
+
         val principal = call.principal<JWTPrincipal>()
         val username = principal?.payload?.getClaim(JWT_USERNAME_FIELD)?.asString()
         val role = principal?.payload?.getClaim(JWT_ROLE_FIELD)?.asString()
-        
+        val department = principal?.payload?.getClaim(JWT_DEPARTMENT_FIELD)?.asString()
+
         if (username != null && role != null)
         {
-            call.respond(HttpStatusCode.OK, mapOf(USERNAME_JSON_FIELD to username, ROLE_JSON_FIELD to role))
+            val responseMap = mutableMapOf(
+                USERNAME_JSON_FIELD to username,
+                ROLE_JSON_FIELD to role
+            )
+
+            // Add department if available
+            if (department != null) {
+                responseMap[DEPARTMENT_JSON_FIELD] = department
+            }
+
+            call.respond(HttpStatusCode.OK, responseMap)
         }
         else
         {
