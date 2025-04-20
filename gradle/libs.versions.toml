@@ -12,6 +12,7 @@ h2 = "2.1.214"
 hoplite = "2.8.2"
 mariadb-driver = "3.3.1"
 mysql-driver = "8.0.33"
+jakarta-mail = "2.0.1"
 
 [libraries]
 
@@ -36,6 +37,7 @@ ktor-default-headers = { module = "io.ktor:ktor-server-default-headers-jvm", ver
 ktor-http-redirect = { module = "io.ktor:ktor-server-http-redirect-jvm", version.ref = "ktor" }
 ktor-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm", version.ref = "ktor" }
+jakarta-mail-service = { module = "com.sun.mail:jakarta.mail", version.ref = "jakarta-mail" }
 
 ### Shared libraries ###
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
