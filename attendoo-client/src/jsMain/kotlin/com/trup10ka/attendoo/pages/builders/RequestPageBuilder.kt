@@ -7,6 +7,8 @@ interface RequestPageBuilder : PageBuilder
 {
     fun buildRequestContainer(appender: HTMLElement? = null, request: Request)
     
+    fun buildNoRequestsFoundMessage(appender: HTMLElement? = null)
+
     override fun buildDynamicElement(appender: HTMLElement?)
     {
         throw UnsupportedOperationException("This should not be a reachable part of a program. Contact the developer.")

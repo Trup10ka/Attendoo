@@ -32,6 +32,18 @@ class RequestPageBuildImp : RequestPageBuilder
         appender?.appendChild(requestsContainer)
     }
     
+    override fun buildNoRequestsFoundMessage(appender: HTMLElement?)
+    {
+        val messageContainer = createDiv(
+            id = "no-requests-message",
+            clazz = stylesOf(INNER_CONTAINER, CENTER),
+            text = "No requests found"
+        )
+        
+        currentlyActiveHTMLElements.add(messageContainer)
+        appender?.appendChild(messageContainer)
+    }
+    
     private fun createContainerHeader(user: User): HTMLDivElement
     {
         return createDiv(
@@ -39,6 +51,7 @@ class RequestPageBuildImp : RequestPageBuilder
             clazz = stylesOf(MINI_CONTAINER_HEADER),
             children = arrayOf(
                 createDiv(
+                    id = "${user.attendooUsername}-name",
                     clazz = stylesOf(ONE_LINE_CONTAINER, EMPLOYEE_NAME_CONTAINER),
                     text = "${user.firstName} ${user.lastName}"
                 ),
@@ -56,8 +69,16 @@ class RequestPageBuildImp : RequestPageBuilder
             id = "${request.user.attendooUsername}-info",
             clazz = arrayOf("request-info"),
             children = arrayOf(
-                createDiv(clazz = stylesOf(ONE_LINE_CONTAINER), text = request.company),
-                createDiv(clazz = stylesOf(ONE_LINE_CONTAINER), text = request.note)
+                createDiv(
+                    id = "${request.user.attendooUsername}-company",
+                    clazz = stylesOf(ONE_LINE_CONTAINER),
+                    text = request.company
+                ),
+                createDiv(
+                    id = "${request.user.attendooUsername}-note",
+                    clazz = stylesOf(ONE_LINE_CONTAINER),
+                    text = request.note
+                )
             )
         )
     }
