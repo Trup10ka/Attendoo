@@ -179,12 +179,17 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
 }
 
 .container-tab {
-    width: 35rem;
+    width: 32rem;
     height: fit-content;
     padding: 15px;
     background-color: rgb(255, 160, 94);
     border-radius: 8px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container-field {
+    font-size:  1.1rem;
+    padding: 0.5rem;
 }
 
 .mini-container-header {
@@ -411,6 +416,66 @@ option {
     justify-content: center;
     gap: 2rem;
     font-size: 1.6rem;
+}
+
+.header-margin {
+    margin: 1rem 0 2rem 0;
+}
+
+.dashboard-container {
+    display: flex;
+    margin: 0 auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.section {
+    flex: 1;
+    padding: 24px;
+}
+
+.left {
+    flex: 1;
+    border-right: 4px solid #d38349
+}
+
+.right {
+    flex: 1;
+}
+
+
+.section h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.status-dot {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    font-size: 1rem;
+}
+
+.available { background-color: green; }
+.busy { background-color: red; }
+.offline { background-color: gray; }
+.away { background-color: orange; }
+
+.user-details p {
+    margin: 0;
+}
+
+.user-details small {
+    color: #515150;
+}
+
+.orange {
+    color: #dc751f;
 }
 
 
