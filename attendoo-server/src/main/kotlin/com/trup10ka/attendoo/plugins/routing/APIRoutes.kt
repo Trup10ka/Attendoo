@@ -18,7 +18,7 @@ fun Route.routeAPICalls(dbClient: DbClient, emailService: EmailService)
     // TODO: Add ATTENDANCES, CREATE_USER, REQUESTS api routes
     authenticate {
         routeUsers(dbClient.userService)
-        routeAttendances(dbClient.attendanceService, dbClient.userService)
+        routeAttendances(dbClient.attendanceService, dbClient.userService, dbClient.userDepartmentService)
         routeRequests(dbClient, emailService)
         routeRoles(dbClient)
         routeDepartments(dbClient.userDepartmentService)
