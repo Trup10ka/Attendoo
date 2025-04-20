@@ -12,12 +12,15 @@ enum class StyleClass
     INNER_CONTAINER,
     CONTAINER_HEADER,
     CONTAINER_TAB,
+    CONTAINER_FIELD,
     MINI_CONTAINER_HEADER,
     ONE_LINE_CONTAINER,
     EMPLOYEE_NAME_CONTAINER,
     AVATAR,
     CENTER,
     ACTIONS_CONTAINER,
+    ORANGE,
+    HEADER_MARGIN,
 
     /* === Login ===  */
     LOGIN_PANE,
@@ -28,6 +31,7 @@ enum class StyleClass
     /* === Request === */
     REQUEST_CONTAINER,
     REQUEST,
+    REQUEST_INFO,
 
     /* === Create user === */
     CREATE_USER_CONTAINER,
@@ -35,9 +39,14 @@ enum class StyleClass
     CREATE_USER_FORM,
 
     /* === Dashboard === */
+    DASHBOARD_CONTAINER,
+    SECTION,
+    LEFT,
+    RIGHT,
+    USER_DETAILS,
+    USERS_CONTAINER,
 
     /* === Users === */
-    USERS_CONTAINER,
     USER,
     USER_INFO,
     USER_CREDENTIALS,
