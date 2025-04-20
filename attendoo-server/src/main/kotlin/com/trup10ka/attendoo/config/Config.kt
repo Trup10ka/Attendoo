@@ -5,7 +5,8 @@ data class Config(
     val host: String,
     val isSecureConnection: Boolean,
     val database: Database,
-    val jwt: JWT
+    val jwt: JWT,
+    val email: Email
 )
 {
     data class Database(
@@ -16,11 +17,20 @@ data class Config(
         val password: String,
         val driver: String
     )
-    
+
     data class JWT(
         val secret: String,
         val issuer: String,
         val audience: String,
         val realm: String
+    )
+
+    data class Email(
+        val host: String,
+        val port: Int,
+        val username: String,
+        val password: String,
+        val fromEmail: String,
+        val fromName: String
     )
 }
