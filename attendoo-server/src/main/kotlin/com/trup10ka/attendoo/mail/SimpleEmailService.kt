@@ -18,20 +18,20 @@ private val logger = KotlinLogging.logger {}
 
 class SimpleEmailService() : EmailService
 {
-    
+
     private lateinit var hostMail: String
-    
+
     private lateinit var emailServiceProperties: Properties
-    
+
     private lateinit var emailSession: Session
-    
+
     override fun init()
     {
         loadHostMail()
         setupProperties()
         setupSession()
     }
-    
+
     override suspend fun sendEmail(to: String, subject: String, body: String): Boolean
     {
         val message = MimeMessage(emailSession).apply {
@@ -40,11 +40,11 @@ class SimpleEmailService() : EmailService
             setSubject(subject)
             setContent(body, "text/html; charset=utf-8")
         }
-        
+
         Transport.send(message)
         return true
     }
-    
+
     override suspend fun sendWelcomeEmail(user: User): Boolean
     {
         val subject = "Welcome to Attendoo!"
@@ -64,10 +64,10 @@ class SimpleEmailService() : EmailService
                 </body>
             </html>
         """.trimIndent()
-        
+
         return sendEmail(user.email, subject, body)
     }
-    
+
     override suspend fun sendRequestCreatedEmail(request: Request): Boolean
     {
         val subject = "New Request Created"
@@ -75,21 +75,22 @@ class SimpleEmailService() : EmailService
             <html>
                 <body>
                     <h1>New Request Created</h1>
-                    <p>A new request has been created by ${request.user.firstName} ${request.user.lastName}.</p>
+                    <p>A new request has been created by ${request.proposer.firstName} ${request.proposer.lastName} for ${request.proposed.firstName} ${request.proposed.lastName}.</p>
                     <p>Request details:</p>
                     <ul>
-                        <li><strong>Company:</strong> ${request.company}</li>
+                        <li><strong>Department:</strong> ${request.proposedDepartment}</li>
                         <li><strong>Note:</strong> ${request.note}</li>
-                        <li><strong>Status:</strong> ${request.status}</li>
+                        <li><strong>Current Status:</strong> ${request.currentStatus}</li>
+                        <li><strong>Proposed Status:</strong> ${request.proposedStatus}</li>
                     </ul>
                     <p>Best regards,<br>The Attendoo Team</p>
                 </body>
             </html>
         """.trimIndent()
-        
-        return sendEmail(request.user.email, subject, body)
+
+        return sendEmail(request.proposer.email, subject, body)
     }
-    
+
     private fun loadHostMail()
     {
         hostMail = ConfigDistributor.config.email.fromEmail
@@ -98,10 +99,10 @@ class SimpleEmailService() : EmailService
             logger.error { "Host mail is empty" }
             throw IllegalStateException("Host mail is empty")
         }
-        
+
         logger.info { "Host mail: $hostMail" }
     }
-    
+
     private fun setupSession()
     {
         emailSession = Session.getInstance(emailServiceProperties, object : Authenticator()
@@ -115,7 +116,7 @@ class SimpleEmailService() : EmailService
             }
         })
     }
-    
+
     private fun setupProperties()
     {
         emailServiceProperties = Properties().apply {
