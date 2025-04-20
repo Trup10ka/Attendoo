@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS proposal
 (
     id                      INT PRIMARY KEY AUTO_INCREMENT,
     name                    VARCHAR(255) NOT NULL,
-    attendoo_proposal_id    INT          NOT NULL DEFAULT UUID(),
+    proposer_id             INT          NOT NULL,
+    proposed_id             INT          NOT NULL,
     description             TEXT,
     created_at              DATETIME              DEFAULT CURRENT_TIMESTAMP NOT NULL,
     resolved_at             DATETIME,
@@ -79,6 +80,8 @@ CREATE TABLE IF NOT EXISTS proposal
     proposed_user_status_id INT          NOT NULL,
 
 
+    FOREIGN KEY (proposer_id) REFERENCES user (id),
+    FOREIGN KEY (proposed_id) REFERENCES user (id),
     FOREIGN KEY (current_user_status_id) REFERENCES user_status (id),
     FOREIGN KEY (proposed_user_status_id) REFERENCES user_status (id)
 );
