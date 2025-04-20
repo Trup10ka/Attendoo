@@ -25,8 +25,9 @@ import io.ktor.server.routing.post
 private val logger = KotlinLogging.logger {}
 
 data class RequestDTO(
-    val company: String,
-    val note: String
+    val proposedDepartment: String,
+    val note: String,
+    val proposedUsername: String
 )
 
 fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
@@ -54,7 +55,7 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
             logger.warn { "Received invalid request data from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-        
+
 
         val user = dbQuery {
             dbClient.userService.getUserByUsername(username)
@@ -67,9 +68,21 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
             return@post
         }
 
-        // Create a Request object from the DTO and user
+        // Get the proposed user
+        val proposedUser = dbQuery {
+            dbClient.userService.getUserByUsername(requestDTO.proposedUsername)
+        }
+
+        if (proposedUser == null)
+        {
+            call.respond(HttpStatusCode.NotFound, mapOf(ERROR_JSON_FIELD_NAME to "Proposed user not found"))
+            logger.warn { "Proposed user not found for username ${requestDTO.proposedUsername} from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+            return@post
+        }
+
+        // Create a Request object from the DTO and users
         val request = Request(
-            user = User(
+            proposer = User(
                 firstName = user.name,
                 lastName = user.surname,
                 attendooUsername = user.attendooUsername,
@@ -80,18 +93,31 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
                 userStatus = user.defaultStatus.toString(),
                 userDepartment = user.department.toString()
             ),
-            company = requestDTO.company,
+            proposed = User(
+                firstName = proposedUser.name,
+                lastName = proposedUser.surname,
+                attendooUsername = proposedUser.attendooUsername,
+                attendooPassword = "",
+                email = proposedUser.email,
+                phoneNumber = proposedUser.phone,
+                role = proposedUser.role.toString(),
+                userStatus = proposedUser.defaultStatus.toString(),
+                userDepartment = proposedUser.department.toString()
+            ),
+            proposedDepartment = proposedUser.department.toString(),
             note = requestDTO.note,
-            status = "pending"
+            currentStatus = user.defaultStatus.toString(),
+            proposedStatus = "pending"
         )
 
-        // Save the request to the database as a proposal
-        try {
+        try
+        {
             val currentTime = LocalDateTime.now().convertToKotlinxDateTime()
             val proposalDTO = ProposalDTO(
                 name = "Request from ${user.name} ${user.surname}",
-                description = "Company: ${requestDTO.company}, Note: ${requestDTO.note}",
-                attendooProposalId = user.id.value,
+                description = "Department: ${proposedUser.department}, Note: ${requestDTO.note}",
+                proposerId = user.id.value,
+                proposedId = proposedUser.id.value,
                 createdAt = currentTime,
                 resolvedAt = null,
                 currentStatus = user.defaultStatus.toString(),
@@ -103,7 +129,9 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
             }
 
             logger.info { "Successfully saved request to database as proposal for user ${user.attendooUsername}" }
-        } catch (e: Exception) {
+        }
+        catch (e: Exception)
+        {
             logger.error(e) { "Failed to save request to database as proposal for user ${user.attendooUsername}" }
             call.respond(HttpStatusCode.InternalServerError, mapOf(ERROR_JSON_FIELD_NAME to "Failed to save request"))
             return@post
@@ -113,11 +141,11 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
         val emailSent = emailService.sendRequestCreatedEmail(request)
         if (emailSent)
         {
-            logger.info { "Request creation email sent to ${request.user.email}" }
+            logger.info { "Request creation email sent to ${request.proposer.email}" }
         }
         else
         {
-            logger.warn { "Failed to send request creation email to ${request.user.email}" }
+            logger.warn { "Failed to send request creation email to ${request.proposer.email}" }
         }
 
         call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
