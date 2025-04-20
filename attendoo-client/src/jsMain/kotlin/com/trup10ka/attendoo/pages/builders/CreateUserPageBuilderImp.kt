@@ -3,6 +3,7 @@ package com.trup10ka.attendoo.pages.builders
 import com.trup10ka.attendoo.data.SelectOption
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
+import com.trup10ka.attendoo.pages.constant.ElementID.CREATE_USER_CONTAINER_SPLITTER as CREATE_USER_CONTAINER_SPLITTER_ID
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createButton
@@ -27,7 +28,7 @@ class CreateUserPageBuilderImp : CreateUserPageBuilder
                 ),
                 children = arrayOf(
                     createHeader(text = "Create user", clazz = stylesOf(CONTAINER_HEADER)),
-                    createDiv(id = "create-user-container-splitter", clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
+                    createDiv(id = CREATE_USER_CONTAINER_SPLITTER_ID, clazz = stylesOf(CREATE_USER_CONTAINER_SPLITTER),
                         children = arrayOf(
                             createCredentialsForm(),
                             createUserAttributesForm(groupOptions, roleOptions),

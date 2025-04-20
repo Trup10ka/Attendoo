@@ -37,7 +37,7 @@ class RequestPageBuildImp : RequestPageBuilder
     {
         val messageContainer = createDiv(
             id = "no-requests-message",
-            clazz = stylesOf(INNER_CONTAINER, CENTER),
+            clazz = stylesOf(INNER_CONTAINER, CENTER, CONTAINER_FIELD),
             text = "No requests found"
         )
 
@@ -69,7 +69,7 @@ class RequestPageBuildImp : RequestPageBuilder
     {
         return createDiv(
             id = "${request.proposer.attendooUsername}-info",
-            clazz = arrayOf("request-info"),
+            clazz = stylesOf(REQUEST_INFO),
             children = arrayOf(
                 createDiv(
                     id = "${request.proposer.attendooUsername}-department",
