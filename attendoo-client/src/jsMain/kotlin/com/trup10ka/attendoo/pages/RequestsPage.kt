@@ -22,6 +22,7 @@ import com.trup10ka.attendoo.util.getButtonByID
 import com.trup10ka.attendoo.util.getSelectById
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import kotlinx.browser.window
 import kotlinx.serialization.json.Json
 
 class RequestsPage(
@@ -84,7 +85,7 @@ class RequestsPage(
                             userSelect.value = ""
                             statusSelect.value = ""
                             
-                            buildPage()
+                            window.location.href = "/requests"
                         }
                         else
                         {
