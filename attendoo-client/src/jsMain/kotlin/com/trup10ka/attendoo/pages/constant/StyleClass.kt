@@ -21,6 +21,7 @@ enum class StyleClass
     ACTIONS_CONTAINER,
     ORANGE,
     HEADER_MARGIN,
+    FULL_WIDTH,
 
     /* === Login ===  */
     LOGIN_PANE,
@@ -29,9 +30,10 @@ enum class StyleClass
     LOGIN_REGISTER_ACTION,
 
     /* === Request === */
-    REQUEST_CONTAINER,
+    REQUESTS_CONTAINER,
     REQUEST,
     REQUEST_INFO,
+    REQUEST_FORM,
 
     /* === Create user === */
     CREATE_USER_CONTAINER,

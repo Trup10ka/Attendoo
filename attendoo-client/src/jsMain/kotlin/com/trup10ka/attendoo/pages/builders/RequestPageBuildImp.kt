@@ -1,31 +1,55 @@
 package com.trup10ka.attendoo.pages.builders
 
 import com.trup10ka.attendoo.data.Request
+import com.trup10ka.attendoo.data.SelectOption
 import com.trup10ka.attendoo.data.User
 import com.trup10ka.attendoo.util.stylesOf
+import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.createDiv
+import com.trup10ka.attendoo.util.createForm
+import com.trup10ka.attendoo.util.createHeader
+import com.trup10ka.attendoo.util.createSelectWithOptions
+import com.trup10ka.attendoo.util.createSpan
+import com.trup10ka.attendoo.util.createWrappedInput
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
-import com.trup10ka.attendoo.util.createSpan
+import com.trup10ka.attendoo.pages.constant.ElementID.*
 import org.w3c.dom.HTMLDivElement
 
 class RequestPageBuildImp : RequestPageBuilder
 {
     override val currentlyActiveHTMLElements = mutableSetOf<HTMLElement>()
+    
+    override fun buildDynamicElement(appender: HTMLElement?)
+    {
+        val requestsContainer = createDiv(
+            id = REQUESTS_CONTAINER_ID,
+            clazz = stylesOf( INNER_CONTAINER, REQUESTS_CONTAINER),
+            children = arrayOf(
+                createDiv(
+                    id = REQUESTS_CONTAINER_LEFT,
+                    clazz = stylesOf(SECTION, LEFT)
+                ),
+                createDiv(
+                    id = REQUESTS_CONTAINER_RIGHT,
+                    clazz = stylesOf( SECTION, RIGHT)
+                )
+            )
+        )
+
+        appender?.appendChild(requestsContainer)
+        currentlyActiveHTMLElements.add(requestsContainer)
+    }
 
     override fun buildRequestContainer(appender: HTMLElement?, request: Request)
     {
         val requestsContainer = createDiv(
-            id = "${request.proposer.attendooUsername}-request",
-            clazz = stylesOf(INNER_CONTAINER, REQUEST_CONTAINER),
-            child = createDiv(
-                id = request.proposer.attendooUsername,
-                clazz = stylesOf(CONTAINER_TAB, REQUEST),
-                children = arrayOf(
-                    createContainerHeader(request.proposer, request.proposed),
-                    createInfoContainer(request),
-                    createActionsContainer(request)
-                )
+            id = request.proposer.attendooUsername,
+            clazz = stylesOf(CONTAINER_TAB),
+            children = arrayOf(
+                createContainerHeader(request.proposer, request.proposed),
+                createInfoContainer(request),
+                createActionsContainer(request)
             )
         )
 
@@ -37,14 +61,47 @@ class RequestPageBuildImp : RequestPageBuilder
     {
         val messageContainer = createDiv(
             id = "no-requests-message",
-            clazz = stylesOf(INNER_CONTAINER, CENTER, CONTAINER_FIELD),
+            clazz = stylesOf( CENTER, CONTAINER_FIELD),
             text = "No requests found"
         )
 
         currentlyActiveHTMLElements.add(messageContainer)
         appender?.appendChild(messageContainer)
     }
+    
+    override fun buildRequestCreationForm(appender: HTMLElement?, usernames: List<String>, statuses: List<String>)
+    {
+        val formContainer = createDiv(
+            id = "request-form-container",
+            clazz = stylesOf( CENTER, CONTAINER_FIELD, FULL_WIDTH),
+            child = createForm(
+                id = CREATE_REQUEST_FORM,
+                clazz = stylesOf(CONTAINER_TAB, CREATE_USER_FORM),
+                children = arrayOf(
+                    createHeader(text = "Create Request"),
+                    createSelectWithOptions(
+                        id = REQUEST_FORM_USERNAMES,
+                        clazz = stylesOf(ONE_LINE_CONTAINER),
+                        options = usernames.map { SelectOption(it, it) }.toTypedArray()
+                    ),
+                    createSelectWithOptions(
+                        id = REQUEST_FORM_STATUS,
+                        clazz = stylesOf(ONE_LINE_CONTAINER),
+                        options = statuses.map { SelectOption(it, it) }.toTypedArray()
+                    ),
+                    createButton(
+                        id = REQUEST_FORM_SUBMIT,
+                        clazz = stylesOf(SUBMIT_BUTTON),
+                        text = "Submit"
+                    )
+                )
+            )
+        )
 
+        appender?.appendChild(formContainer)
+        currentlyActiveHTMLElements.add(formContainer)
+    }
+    
     private fun createContainerHeader(proposer: User, proposed: User): HTMLDivElement
     {
         return createDiv(

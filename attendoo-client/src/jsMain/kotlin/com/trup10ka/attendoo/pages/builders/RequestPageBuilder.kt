@@ -6,11 +6,8 @@ import org.w3c.dom.HTMLElement
 interface RequestPageBuilder : PageBuilder
 {
     fun buildRequestContainer(appender: HTMLElement? = null, request: Request)
-    
+
     fun buildNoRequestsFoundMessage(appender: HTMLElement? = null)
 
-    override fun buildDynamicElement(appender: HTMLElement?)
-    {
-        throw UnsupportedOperationException("This should not be a reachable part of a program. Contact the developer.")
-    }
+    fun buildRequestCreationForm(appender: HTMLElement? = null, usernames: List<String>, statuses: List<String>)
 }
