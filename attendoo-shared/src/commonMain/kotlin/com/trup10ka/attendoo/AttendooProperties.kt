@@ -17,6 +17,7 @@ const val REQUESTS_ENDPOINT = "/requests"
 const val ROLES_ENDPOINT = "/roles"
 const val AUTH_ENDPOINT = "/auth"
 const val DEPARTMENTS_ENDPOINT = "/departments"
+const val STATUSES_ENDPOINT = "/statuses"
 
 /* === Auth Endpoints === */
 const val LOGIN_ENDPOINT = "/login"
@@ -40,6 +41,7 @@ const val FULL_ALL_ATTENDANCES_ENDPOINT = "$API_ROOT_ENDPOINT$ATTENDANCES_ENDPOI
 const val GET_ALL_REQUESTS_ENDPOINT = "/all"
 const val CREATE_REQUEST_ENDPOINT = "/create"
 const val FULL_ALL_REQUESTS_ENDPOINT = "$API_ROOT_ENDPOINT$REQUESTS_ENDPOINT$GET_ALL_REQUESTS_ENDPOINT"
+const val FULL_CREATE_REQUEST_ENDPOINT = "$API_ROOT_ENDPOINT$REQUESTS_ENDPOINT$CREATE_REQUEST_ENDPOINT"
 
 /* === Roles Endpoints === */
 const val ALL_ROLES_ENDPOINT = "/all"
@@ -48,6 +50,10 @@ const val FULL_ALL_ROLES_ENDPOINT = "$API_ROOT_ENDPOINT$ROLES_ENDPOINT$ALL_ROLES
 /* === Departments Endpoints === */
 const val ALL_DEPARTMENTS_ENDPOINT = "/all"
 const val FULL_ALL_DEPARTMENTS_ENDPOINT = "$API_ROOT_ENDPOINT$DEPARTMENTS_ENDPOINT$ALL_DEPARTMENTS_ENDPOINT"
+
+/* === Statuses Endpoints === */
+const val ALL_STATUSES_ENDPOINT = "/all"
+const val FULL_STATUSES_ENDPOINT = "$API_ROOT_ENDPOINT$STATUSES_ENDPOINT$ALL_STATUSES_ENDPOINT"
 
 /* === JWT field names */
 const val JWT_USERNAME_FIELD = "attendoo-username"
