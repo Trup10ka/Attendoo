@@ -4,6 +4,7 @@ enum class ElementID
 {
     ATTENDOO,
     BURGER_BUTTON,
+    LOGGED_IN_USER,
 
     /* === Sidebar buttons === */
     SIDEBAR_CONTAINER,

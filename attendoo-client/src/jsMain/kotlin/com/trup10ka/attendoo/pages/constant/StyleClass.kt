@@ -33,7 +33,7 @@ enum class StyleClass
     REQUESTS_CONTAINER,
     REQUEST,
     REQUEST_INFO,
-    REQUEST_FORM,
+    REQUESTS_FORM,
 
     /* === Create user === */
     CREATE_USER_CONTAINER,
@@ -45,6 +45,8 @@ enum class StyleClass
     SECTION,
     LEFT,
     RIGHT,
+    LEFT_R,
+    RIGHT_R,
     USER_DETAILS,
     USERS_CONTAINER,
 
