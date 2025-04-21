@@ -1,8 +1,12 @@
 package com.trup10ka.attendoo.pages.builders
 
+import com.trup10ka.attendoo.FULL_USER_ATTENDANCE_APPROVE_ENDPOINT
+import com.trup10ka.attendoo.FULL_USER_ATTENDANCE_REJECT_ENDPOINT
 import com.trup10ka.attendoo.data.Request
+import com.trup10ka.attendoo.data.RequestApproval
 import com.trup10ka.attendoo.data.SelectOption
 import com.trup10ka.attendoo.data.User
+import com.trup10ka.attendoo.fetch.HttpClient
 import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createButton
 import com.trup10ka.attendoo.util.createDiv
@@ -10,13 +14,19 @@ import com.trup10ka.attendoo.util.createForm
 import com.trup10ka.attendoo.util.createHeader
 import com.trup10ka.attendoo.util.createSelectWithOptions
 import com.trup10ka.attendoo.util.createSpan
-import com.trup10ka.attendoo.util.createWrappedInput
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
 import com.trup10ka.attendoo.pages.constant.ElementID.*
+import com.trup10ka.attendoo.util.launchDefaultCoroutine
+import io.ktor.client.statement.HttpResponse
+import kotlinx.browser.window
+import kotlinx.serialization.json.Json
 import org.w3c.dom.HTMLDivElement
+import org.w3c.dom.HTMLSpanElement
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
-class RequestPageBuildImp : RequestPageBuilder
+class RequestPageBuildImp(private val httpClient: HttpClient) : RequestPageBuilder
 {
     override val currentlyActiveHTMLElements = mutableSetOf<HTMLElement>()
     
@@ -28,11 +38,11 @@ class RequestPageBuildImp : RequestPageBuilder
             children = arrayOf(
                 createDiv(
                     id = REQUESTS_CONTAINER_LEFT,
-                    clazz = stylesOf(SECTION, LEFT)
+                    clazz = stylesOf(SECTION, LEFT_R)
                 ),
                 createDiv(
                     id = REQUESTS_CONTAINER_RIGHT,
-                    clazz = stylesOf( SECTION, RIGHT)
+                    clazz = stylesOf( SECTION, RIGHT_R)
                 )
             )
         )
@@ -41,10 +51,11 @@ class RequestPageBuildImp : RequestPageBuilder
         currentlyActiveHTMLElements.add(requestsContainer)
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     override fun buildRequestContainer(appender: HTMLElement?, request: Request)
     {
         val requestsContainer = createDiv(
-            id = request.proposer.attendooUsername,
+            id = "${request.proposer.attendooUsername}-${Uuid.random()}",
             clazz = stylesOf(CONTAINER_TAB),
             children = arrayOf(
                 createContainerHeader(request.proposer, request.proposed),
@@ -76,7 +87,7 @@ class RequestPageBuildImp : RequestPageBuilder
             clazz = stylesOf( CENTER, CONTAINER_FIELD, FULL_WIDTH),
             child = createForm(
                 id = CREATE_REQUEST_FORM,
-                clazz = stylesOf(CONTAINER_TAB, CREATE_USER_FORM),
+                clazz = stylesOf(CONTAINER_TAB, REQUESTS_FORM),
                 children = arrayOf(
                     createHeader(text = "Create Request"),
                     createSelectWithOptions(
@@ -149,14 +160,59 @@ class RequestPageBuildImp : RequestPageBuilder
 
     private fun createActionsContainer(request: Request): HTMLDivElement
     {
+        val checkCircleAction = createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "check_circle")
+        val cancelAction = createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "cancel")
+        
+        setupListenersForActions(request,checkCircleAction, cancelAction)
+        
         return createDiv(
-            id = "${request.proposer.attendooUsername}-actions",
+            id = "${request.proposer.attendooUsername}-actions-${request.currentStatus}-${request.proposedStatus}",
             clazz = stylesOf(ACTIONS_CONTAINER),
             children = arrayOf(
-                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "check_circle"),
-                createSpan(clazz = stylesOf(MATERIAL_SYMBOLS_OUTLINED, ICON), text = "cancel")
+                checkCircleAction,
+                cancelAction
             )
         )
+    }
+    
+    private fun setupListenersForActions(currentlyCreatedRequest: Request, approveAction: HTMLSpanElement, cancelAction: HTMLSpanElement)
+    {
+        val requestApproval = RequestApproval(
+            userProposing = currentlyCreatedRequest.proposer.attendooUsername,
+            currentStatus = currentlyCreatedRequest.currentStatus,
+            proposedStatus = currentlyCreatedRequest.proposedStatus
+        )
+        approveAction.addEventListener("click", {
+            launchDefaultCoroutine {
+                val response = httpClient.postJSONVia(FULL_USER_ATTENDANCE_APPROVE_ENDPOINT, Json.encodeToString(requestApproval)) as HttpResponse
+                
+                if (response.status.value == 200)
+                {
+                    window.alert("Successfully approved request")
+                    window.location.reload()
+                }
+                else
+                {
+                    window.alert("Failed to approve request")
+                }
+            }
+        })
+        
+        cancelAction.addEventListener("click", {
+            launchDefaultCoroutine {
+                val response = httpClient.postJSONVia(FULL_USER_ATTENDANCE_REJECT_ENDPOINT, Json.encodeToString(requestApproval)) as HttpResponse
+                
+                if (response.status.value == 200)
+                {
+                    window.alert("Successfully cancelled request")
+                    window.location.reload()
+                }
+                else
+                {
+                    window.alert("Failed to cancel request")
+                }
+            }
+        })
     }
 
     override fun eraseDynamicElement()

@@ -30,7 +30,7 @@ class RequestsPage(
     private val httpClient: HttpClient
 ) : Page
 {
-    override val pageBuilder = RequestPageBuildImp()
+    override val pageBuilder = RequestPageBuildImp(httpClient)
     
     private val requests = mutableListOf<Request>()
     
