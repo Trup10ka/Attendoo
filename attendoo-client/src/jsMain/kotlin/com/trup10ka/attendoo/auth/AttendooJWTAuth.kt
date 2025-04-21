@@ -148,7 +148,7 @@ class AttendooJWTAuth(
     {
         val loggedInUser = getDivByID(ElementID.LOGGED_IN_USER)!!
         
-        
+        refreshStyleAndTextContent(loggedInUser, username)
         loggedInUser.addEventListener("click", {
             window.localStorage.removeItem(TOKEN_NAME)
             window.location.href = "/login"
