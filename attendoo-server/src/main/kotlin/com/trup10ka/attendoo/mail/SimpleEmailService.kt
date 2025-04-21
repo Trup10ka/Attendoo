@@ -58,6 +58,7 @@ class SimpleEmailService() : EmailService
                         <li><strong>Username:</strong> ${user.attendooUsername}</li>
                         <li><strong>Department:</strong> ${user.userDepartment}</li>
                         <li><strong>Role:</strong> ${user.role}</li>
+                        <li><strong>Password:</strong> ${user.attendooPassword}</li>
                     </ul>
                     <p>You can now log in to the Attendoo application.</p>
                     <p>Best regards,<br>The Attendoo Team</p>
@@ -88,7 +89,7 @@ class SimpleEmailService() : EmailService
             </html>
         """.trimIndent()
 
-        return sendEmail(request.proposer.email, subject, body)
+        return sendEmail(request.proposed.email, subject, body)
     }
 
     private fun loadHostMail()
