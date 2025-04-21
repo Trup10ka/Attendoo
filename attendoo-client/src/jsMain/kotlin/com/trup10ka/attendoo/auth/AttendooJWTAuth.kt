@@ -17,6 +17,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import org.w3c.dom.HTMLDivElement
 
 class AttendooJWTAuth(
     private val ktorClient: HttpClient
@@ -142,15 +143,33 @@ class AttendooJWTAuth(
         return true
     }
     
+    // TODO: Style in CSS
     private fun setupUserNameAtTopBar(username: String)
     {
         val loggedInUser = getDivByID(ElementID.LOGGED_IN_USER)!!
         
-        loggedInUser.textContent = username
+        
         loggedInUser.addEventListener("click", {
             window.localStorage.removeItem(TOKEN_NAME)
             window.location.href = "/login"
         })
+    }
+    
+    private fun refreshStyleAndTextContent(loggedInDiv: HTMLDivElement, username: String)
+    {
+        loggedInDiv.textContent = ""
+        loggedInDiv.style.removeProperty("color")
+        loggedInDiv.style.removeProperty("font-size")
+        loggedInDiv.style.removeProperty("font-weight")
+        loggedInDiv.style.removeProperty("cursor")
+        loggedInDiv.style.removeProperty("margin-left")
+        
+        loggedInDiv.textContent = "Logged in as: $username"
+        loggedInDiv.style.color = "orange"
+        loggedInDiv.style.fontSize = "18px"
+        loggedInDiv.style.fontWeight = "bold"
+        loggedInDiv.style.cursor = "pointer"
+        loggedInDiv.style.marginLeft = "10px"
     }
     
     private fun setToken(token: String) = window.localStorage.setItem(TOKEN_NAME, token)
