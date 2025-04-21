@@ -18,7 +18,13 @@ fun Route.routeAPICalls(dbClient: DbClient, emailService: EmailService)
     
     authenticate {
         routeUsers(dbClient.userService)
-        routeAttendances(dbClient.attendanceService, dbClient.userService, dbClient.userDepartmentService)
+        routeAttendances(
+            dbClient.attendanceService,
+            dbClient.userService,
+            dbClient.userDepartmentService,
+            dbClient.proposalService,
+            emailService
+        )
         routeRequests(dbClient, emailService)
         routeRoles(dbClient)
         routeDepartments(dbClient.userDepartmentService)
