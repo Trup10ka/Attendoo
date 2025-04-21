@@ -2,6 +2,7 @@ package com.trup10ka.attendoo.pages
 
 import com.trup10ka.attendoo.AttendooClient
 import com.trup10ka.attendoo.AttendooPageManager
+import com.trup10ka.attendoo.TOKEN_NAME
 import com.trup10ka.attendoo.auth.AuthenticationStatus
 import com.trup10ka.attendoo.auth.Authenticator
 import com.trup10ka.attendoo.pages.builders.LoginPageBuilder
@@ -9,6 +10,7 @@ import com.trup10ka.attendoo.pages.constant.PageType
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.pages.constant.ElementID.*
 import com.trup10ka.attendoo.util.getButtonByID
+import com.trup10ka.attendoo.util.getDivByID
 import com.trup10ka.attendoo.util.getInputByID
 import kotlinx.browser.window
 
@@ -46,12 +48,33 @@ class LoginPage(
                 if (isSuccessful == AuthenticationStatus.NOT_AUTHENTICATED)
                 {
                     window.alert("Login failed. Please check your credentials and try again.")
+                    return@launchDefaultCoroutine
                 }
+                setupUserNameAtTopBar(username)
                 attendooClient.createAndInitButtons(isSuccessful)
                 pageManager.uriHandler.updateURI(PageType.DASHBOARD_PAGE.pageRoute)
                 pageManager.switchToPage(pageManager.getCurrentPage())
             }
         })
+    }
+    
+    private fun setupUserNameAtTopBar(username: String)
+    {
+        val loggedInUser = getDivByID(LOGGED_IN_USER)!!
+        
+        loggedInUser.textContent = username
+        loggedInUser.addEventListener("click", {
+            logOut()
+        })
+    }
+    
+    private fun logOut()
+    {
+        launchDefaultCoroutine {
+            jwtAuthenticator.logout()
+            window.localStorage.removeItem(TOKEN_NAME)
+            pageManager.showLoginPage()
+        }
     }
     
     override fun show()
