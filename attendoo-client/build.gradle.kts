@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.js)
             implementation(libs.kotlinx.serializable.json)
+            implementation(libs.kotlinx.datetime)
         }
     }
 }
