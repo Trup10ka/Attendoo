@@ -136,7 +136,7 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
                 email = userDTO.email ?: "",
                 phoneNumber = userDTO.phoneNumber ?: "",
                 role = userDTO.role ?: "user",
-                userStatus = userDTO.userStatus ?: "active",
+                userStatus = userDTO.userStatus ?: "In Office",
                 userDepartment = userDTO.userDepartment!!
             )
             try
