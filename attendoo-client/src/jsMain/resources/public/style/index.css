@@ -47,6 +47,9 @@ button:hover {
     padding: 0;
 }
 
+.full-width {
+    width: 100%;
+}
 
 .submit-button {
     background-color: rgba(241, 91, 29, 1);
@@ -406,7 +409,9 @@ option {
 }
 
 /* ==== Request containers ==== */
-
+.requests-container {
+    display: flex;
+}
 
 /* ==== NOT LOGGED IN container ==== */
 .not-logged-in-container {
@@ -433,6 +438,8 @@ option {
 .section {
     flex: 1;
     padding: 24px;
+    display: flex;
+    gap: 30px;
 }
 
 .left {
