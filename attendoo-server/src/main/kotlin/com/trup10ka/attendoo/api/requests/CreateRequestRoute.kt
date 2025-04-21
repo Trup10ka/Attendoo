@@ -22,6 +22,8 @@ import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.atTime
 
 private val logger = KotlinLogging.logger {}
 
@@ -114,7 +116,7 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
                 proposerId = user.id,
                 proposedId = proposedUser.id,
                 createdAt = currentTime,
-                resolvedAt = null,
+                resolvedAt = requestDTO.endDate.atTime(LocalTime(0, 0)),
                 currentStatus = user.userStatus.toString(),
                 proposedStatus = requestDTO.proposedStatus
             )

@@ -19,10 +19,12 @@ import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import com.trup10ka.attendoo.util.stylesOf
 import com.trup10ka.attendoo.util.createHeader
 import com.trup10ka.attendoo.util.getButtonByID
+import com.trup10ka.attendoo.util.getInputByID
 import com.trup10ka.attendoo.util.getSelectById
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import kotlinx.browser.window
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.json.Json
 
 class RequestsPage(
@@ -60,9 +62,11 @@ class RequestsPage(
             
             val userSelect = getSelectById(REQUEST_FORM_USERNAMES)!!
             val statusSelect = getSelectById(REQUEST_FORM_STATUS)!!
+            val endDate = getInputByID(REQUEST_FORM_DATE)!!
             
             val selectedUsername = userSelect.value
             val selectedStatus = statusSelect.value
+            val selectedEndDate = LocalDate.parse(endDate.value)
             
             if (selectedUsername.isNotEmpty() && selectedStatus.isNotEmpty())
             {
@@ -72,6 +76,7 @@ class RequestsPage(
                         val newRequest = RequestDTONoProposer(
                             proposed = selectedUsername,
                             proposedStatus = selectedStatus,
+                            endDate = selectedEndDate
                         )
                         
                         val response = httpClient.postJSONVia(
@@ -84,6 +89,7 @@ class RequestsPage(
                             console.log("Request submitted successfully")
                             userSelect.value = ""
                             statusSelect.value = ""
+                            endDate.value = ""
                             
                             window.location.href = "/requests"
                         }

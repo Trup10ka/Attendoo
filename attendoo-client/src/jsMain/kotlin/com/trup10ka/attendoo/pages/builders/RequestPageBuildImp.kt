@@ -17,6 +17,7 @@ import com.trup10ka.attendoo.util.createSpan
 import org.w3c.dom.HTMLElement
 import com.trup10ka.attendoo.pages.constant.StyleClass.*
 import com.trup10ka.attendoo.pages.constant.ElementID.*
+import com.trup10ka.attendoo.util.createDatepicker
 import com.trup10ka.attendoo.util.launchDefaultCoroutine
 import io.ktor.client.statement.HttpResponse
 import kotlinx.browser.window
@@ -99,6 +100,10 @@ class RequestPageBuildImp(private val httpClient: HttpClient) : RequestPageBuild
                         id = REQUEST_FORM_STATUS,
                         clazz = stylesOf(ONE_LINE_CONTAINER),
                         options = statuses.map { SelectOption(it, it) }.toTypedArray()
+                    ),
+                    createDatepicker(
+                        id = REQUEST_FORM_DATE,
+                        clazz = stylesOf(ONE_LINE_CONTAINER),
                     ),
                     createButton(
                         id = REQUEST_FORM_SUBMIT,

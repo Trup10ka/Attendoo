@@ -370,6 +370,23 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
     font-weight: bold;
 }
 
+input[type="date"] {
+    width: 25rem;
+    padding: 10px;
+    font-size: 1.3rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: #6f37a6;
+    color: #f0f8ffa1;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
 
 /* Style the select element */
 select {
