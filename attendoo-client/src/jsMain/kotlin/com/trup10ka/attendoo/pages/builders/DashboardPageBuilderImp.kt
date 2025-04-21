@@ -14,43 +14,43 @@ import kotlinx.browser.document
 class DashboardPageBuilderImp() : DashboardPageBuilder
 {
     override val currentlyActiveHTMLElements = mutableSetOf<HTMLElement>()
-
+    
     override fun buildAttendanceBox()
     {
         // Find the main element to append to
         val mainElement = document.getElementById(ElementID.MAIN.toString()) as HTMLElement
-
+        
         // Create the dashboard container
         val dashboardContainer = createDiv(
             id = ElementID.DASHBOARD_CONTAINER.toString(),
             clazz = stylesOf(INNER_CONTAINER, DASHBOARD_CONTAINER)
         )
-
+        
         // Add the dashboard container to the main element
         mainElement.appendChild(dashboardContainer)
         currentlyActiveHTMLElements.add(dashboardContainer)
     }
-
+    
     override fun buildDepartmentUsers(currentUser: User?, departmentUsers: List<User>)
     {
         val dashboardContainer =
             document.getElementById(ElementID.DASHBOARD_CONTAINER.toString()) as HTMLElement? ?: return
-
+        
         val leftSection = createLeftSection(departmentUsers)
         dashboardContainer.appendChild(leftSection)
         currentlyActiveHTMLElements.add(leftSection)
     }
-
+    
     override fun buildDynamicAttendances(attendances: List<UserAttendanceWithInfoDTO>, users: List<User>)
     {
         val dashboardContainer =
             document.getElementById(ElementID.DASHBOARD_CONTAINER.toString()) as HTMLElement? ?: return
-
+        
         val rightSection = createRightSection(attendances)
         dashboardContainer.appendChild(rightSection)
         currentlyActiveHTMLElements.add(rightSection)
     }
-
+    
     private fun createLeftSection(departmentUsers: List<User>): HTMLDivElement
     {
         // Create header for the left section
@@ -61,7 +61,7 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
             level = 1
         )
         header.id = ElementID.YOUR_STATUS_HEADER.toString()
-
+        
         // If no users are available, show a message
         if (departmentUsers.isEmpty())
         {
@@ -78,26 +78,26 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
                 )
             )
         }
-
+        
         // Create user containers for department users
         val userContainers = departmentUsers.map { user ->
             createUserContainer(user)
         }.toTypedArray()
-
+        
         // Create users container
         val usersContainer = createDiv(
             id = ElementID.USERS_CONTAINER.toString(),
             clazz = stylesOf(USERS_CONTAINER),
             children = userContainers
         )
-
+        
         return createDiv(
             id = ElementID.LEFT_SECTION.toString(),
             clazz = stylesOf(SECTION, LEFT),
             children = arrayOf(header, usersContainer)
         )
     }
-
+    
     private fun createRightSection(attendances: List<UserAttendanceWithInfoDTO>): HTMLDivElement
     {
         // Create header for the right section
@@ -108,7 +108,7 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
             level = 1
         )
         header.id = ElementID.AVAILABLE_USERS_HEADER.toString()
-
+        
         // If no attendances are available, show a message
         if (attendances.isEmpty())
         {
@@ -125,26 +125,26 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
                 )
             )
         }
-
+        
         // Create attendance containers
         val attendanceContainers = attendances.map { attendance ->
             createAttendanceContainer(attendance)
         }.toTypedArray()
-
+        
         // Create attendances container
         val attendancesContainer = createDiv(
             id = "dynamic-attendances-container",
             clazz = stylesOf(USERS_CONTAINER),
             children = attendanceContainers
         )
-
+        
         return createDiv(
             id = ElementID.RIGHT_SECTION.toString(),
             clazz = stylesOf(SECTION, RIGHT),
             children = arrayOf(header, attendancesContainer)
         )
     }
-
+    
     private fun createUserContainer(user: User): HTMLDivElement
     {
         val userNameHeader = createHeader(
@@ -153,7 +153,7 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
             level = 2
         )
         userNameHeader.id = "${user.attendooUsername}-name"
-
+        
         val userDetails = createDiv(
             id = "${user.attendooUsername}-details",
             clazz = stylesOf(USER_DETAILS),
@@ -176,14 +176,14 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
                 )
             )
         )
-
+        
         return createDiv(
             id = "${user.attendooUsername}-container",
             clazz = stylesOf(CONTAINER_TAB, USER),
             child = userDetails
         )
     }
-
+    
     private fun createAttendanceContainer(attendance: UserAttendanceWithInfoDTO): HTMLDivElement
     {
         val userNameHeader = createHeader(
@@ -192,11 +192,26 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
             level = 2
         )
         userNameHeader.id = "${attendance.attendooUsername}-attendance-name"
-
-        // Use placeholder dates for now - to avoid LocalDate reference issues
-        val startDateFormatted = "[start date]"
-        val endDateFormatted = "[end date]"
-
+        
+        
+        val startDate = attendance.startDate
+        val endDate = attendance.endDate
+        
+        val startDateFormatted = "${startDate.dayOfMonth.toString().padStart(2, '0')}." +
+                "${startDate.monthNumber.toString().padStart(2, '0')}." +
+                "${startDate.year}"
+        
+        val endDateFormatted = if (endDate != null)
+        {
+            "${endDate.dayOfMonth.toString().padStart(2, '0')}." +
+                    "${endDate.monthNumber.toString().padStart(2, '0')}." +
+                    "${endDate.year}"
+        }
+        else
+        {
+            "TBD"
+        }
+        
         val userDetails = createDiv(
             id = "${attendance.attendooUsername}-attendance-details",
             clazz = stylesOf(USER_DETAILS),
@@ -224,14 +239,14 @@ class DashboardPageBuilderImp() : DashboardPageBuilder
                 )
             )
         )
-
+        
         return createDiv(
             id = "${attendance.attendooUsername}-attendance-container",
             clazz = stylesOf(CONTAINER_TAB, USER),
             child = userDetails
         )
     }
-
+    
     override fun eraseDynamicElement()
     {
         currentlyActiveHTMLElements.forEach {
