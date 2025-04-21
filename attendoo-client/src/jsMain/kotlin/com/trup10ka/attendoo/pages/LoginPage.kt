@@ -50,31 +50,11 @@ class LoginPage(
                     window.alert("Login failed. Please check your credentials and try again.")
                     return@launchDefaultCoroutine
                 }
-                setupUserNameAtTopBar(username)
                 attendooClient.createAndInitButtons(isSuccessful)
                 pageManager.uriHandler.updateURI(PageType.DASHBOARD_PAGE.pageRoute)
                 pageManager.switchToPage(pageManager.getCurrentPage())
             }
         })
-    }
-    
-    private fun setupUserNameAtTopBar(username: String)
-    {
-        val loggedInUser = getDivByID(LOGGED_IN_USER)!!
-        
-        loggedInUser.textContent = username
-        loggedInUser.addEventListener("click", {
-            logOut()
-        })
-    }
-    
-    private fun logOut()
-    {
-        launchDefaultCoroutine {
-            jwtAuthenticator.logout()
-            window.localStorage.removeItem(TOKEN_NAME)
-            pageManager.showLoginPage()
-        }
     }
     
     override fun show()

@@ -6,6 +6,8 @@ import com.trup10ka.attendoo.FULL_VERIFY_ENDPOINT
 import com.trup10ka.attendoo.STATUS_NAME
 import com.trup10ka.attendoo.TOKEN_NAME
 import com.trup10ka.attendoo.fetch.HttpClient
+import com.trup10ka.attendoo.pages.constant.ElementID
+import com.trup10ka.attendoo.util.getDivByID
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
@@ -31,7 +33,7 @@ class AttendooJWTAuth(
             
             val response = ktorClient.postJSONViaUnauthorized(FULL_LOGIN_ENDPOINT, jsonBody) as JsonElement
             
-            return handleTokenResponse(response)
+            return handleTokenResponse(response, username)
         }
         catch (e: Exception)
         {
@@ -119,7 +121,7 @@ class AttendooJWTAuth(
         return Json.encodeToString(body)
     }
     
-    private fun handleTokenResponse(response: JsonElement): Boolean
+    private fun handleTokenResponse(response: JsonElement, username: String): Boolean
     {
         val keys = response.jsonObject.keys
         if (keys.contains(ERROR_JSON_FIELD_NAME))
@@ -136,7 +138,19 @@ class AttendooJWTAuth(
             return false
         
         setToken(token)
+        setupUserNameAtTopBar(username)
         return true
+    }
+    
+    private fun setupUserNameAtTopBar(username: String)
+    {
+        val loggedInUser = getDivByID(ElementID.LOGGED_IN_USER)!!
+        
+        loggedInUser.textContent = username
+        loggedInUser.addEventListener("click", {
+            window.localStorage.removeItem(TOKEN_NAME)
+            window.location.href = "/login"
+        })
     }
     
     private fun setToken(token: String) = window.localStorage.setItem(TOKEN_NAME, token)
