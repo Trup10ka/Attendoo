@@ -3,6 +3,7 @@ package com.trup10ka.attendoo.db.dao
 import com.trup10ka.attendoo.db.tables.UserDepartmentMappings
 import com.trup10ka.attendoo.db.tables.Users
 import com.trup10ka.attendoo.dto.UserDTO
+import com.trup10ka.attendoo.dto.UserDTOWithID
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -53,16 +54,32 @@ class User(id: EntityID<Int>) : IntEntity(id)
         }
         
         return UserDTO(
-            name,
-            surname,
-            attendooUsername,
-            attendooPassword,
-            email,
-            phone,
-            role.name,
-            defaultStatus.name,
-            department.name,
-            departmentNames
+            firstName = name,
+            lastName = surname,
+            attendooUsername = attendooUsername,
+            attendooPassword = attendooPassword,
+            email = email,
+            phoneNumber = phone,
+            role = role.name,
+            userStatus = defaultStatus.name,
+            userDepartment = department.name,
+            userDepartments = departmentNames
+        )
+    }
+    
+    fun toDTOWithID(): UserDTOWithID
+    {
+        return UserDTOWithID(
+            id.value,
+            firstName = name,
+            lastName = surname,
+            attendooUsername = attendooUsername,
+            attendooPassword = attendooPassword,
+            email = email,
+            phoneNumber = phone,
+            role = role.name,
+            userStatus = defaultStatus.name,
+            userDepartment = department.name
         )
     }
 }
