@@ -9,6 +9,7 @@ import com.trup10ka.attendoo.data.User
 import com.trup10ka.attendoo.db.client.DbClient
 import com.trup10ka.attendoo.db.dbQuery
 import com.trup10ka.attendoo.dto.ProposalDTO
+import com.trup10ka.attendoo.dto.RequestDTONoProposer
 import com.trup10ka.attendoo.mail.EmailService
 import com.trup10ka.attendoo.util.convertToKotlinxDateTime
 import java.time.LocalDateTime
@@ -24,17 +25,11 @@ import io.ktor.server.routing.post
 
 private val logger = KotlinLogging.logger {}
 
-data class RequestDTO(
-    val proposedDepartment: String,
-    val note: String,
-    val proposedUsername: String
-)
-
 fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
 {
     post(CREATE_REQUEST_ENDPOINT) {
         logger.info { "Received request for CREATE_REQUEST from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
-
+        
         val principal = call.principal<JWTPrincipal>()
         if (principal == null)
         {
@@ -42,92 +37,92 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
             logger.warn { "Unauthenticated user tried to create a request from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-
+        
         val username = principal.attendooUsername
-
+        
         val requestDTO = try
         {
-            call.receive<RequestDTO>()
+            call.receive<RequestDTONoProposer>()
         }
-        catch (e: Exception)
+        catch (_: Exception)
         {
             call.respond(HttpStatusCode.BadRequest, mapOf(ERROR_JSON_FIELD_NAME to "Invalid request data"))
             logger.warn { "Received invalid request data from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-
-
+        
+        
         val user = dbQuery {
-            dbClient.userService.getUserByUsername(username)
+            dbClient.userService.getUserByUsername(username)?.toDTOWithID()
         }
-
+        
         if (user == null)
         {
             call.respond(HttpStatusCode.NotFound, mapOf(ERROR_JSON_FIELD_NAME to "User not found"))
             logger.warn { "User not found for username $username from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-
+        
         // Get the proposed user
         val proposedUser = dbQuery {
-            dbClient.userService.getUserByUsername(requestDTO.proposedUsername)
+            dbClient.userService.getUserByUsername(requestDTO.proposed)?.toDTOWithID()
         }
-
+        
         if (proposedUser == null)
         {
             call.respond(HttpStatusCode.NotFound, mapOf(ERROR_JSON_FIELD_NAME to "Proposed user not found"))
-            logger.warn { "Proposed user not found for username ${requestDTO.proposedUsername} from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
+            logger.warn { "Proposed user not found for username ${requestDTO.proposed} from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
             return@post
         }
-
+        
         // Create a Request object from the DTO and users
         val request = Request(
             proposer = User(
-                firstName = user.name,
-                lastName = user.surname,
-                attendooUsername = user.attendooUsername,
+                firstName = user.firstName!!,
+                lastName = user.lastName!!,
+                attendooUsername = user.attendooUsername!!,
                 attendooPassword = "",
-                email = user.email,
-                phoneNumber = user.phone,
+                email = user.email!!,
+                phoneNumber = user.phoneNumber!!,
                 role = user.role.toString(),
-                userStatus = user.defaultStatus.toString(),
-                userDepartment = user.department.toString()
+                userStatus = user.userStatus.toString(),
+                userDepartment = user.userDepartment.toString()
             ),
             proposed = User(
-                firstName = proposedUser.name,
-                lastName = proposedUser.surname,
-                attendooUsername = proposedUser.attendooUsername,
+                firstName = proposedUser.firstName!!,
+                lastName = proposedUser.lastName!!,
+                attendooUsername = proposedUser.attendooUsername!!,
                 attendooPassword = "",
-                email = proposedUser.email,
-                phoneNumber = proposedUser.phone,
+                email = proposedUser.email!!,
+                phoneNumber = proposedUser.phoneNumber!!,
                 role = proposedUser.role.toString(),
-                userStatus = proposedUser.defaultStatus.toString(),
-                userDepartment = proposedUser.department.toString()
+                userStatus = proposedUser.userStatus.toString(),
+                userDepartment = proposedUser.userDepartment.toString()
             ),
-            proposedDepartment = proposedUser.department.toString(),
-            note = requestDTO.note,
-            currentStatus = user.defaultStatus.toString(),
-            proposedStatus = "pending"
+            proposedDepartment = proposedUser.userDepartment.toString(),
+            note = "",
+            currentStatus = user.userStatus.toString(),
+            proposedStatus = requestDTO.proposedStatus,
         )
-
+        
         try
         {
             val currentTime = LocalDateTime.now().convertToKotlinxDateTime()
             val proposalDTO = ProposalDTO(
-                name = "Request from ${user.name} ${user.surname}",
-                description = "Department: ${proposedUser.department}, Note: ${requestDTO.note}",
-                proposerId = user.id.value,
-                proposedId = proposedUser.id.value,
+                name = "Request from ${user.firstName} ${user.lastName}",
+                description = "Department: ${proposedUser.userDepartment}",
+                proposerId = user.id,
+                proposedId = proposedUser.id,
                 createdAt = currentTime,
                 resolvedAt = null,
-                currentStatus = user.defaultStatus.toString(),
-                proposedStatus = "pending"
+                currentStatus = user.userStatus.toString(),
+                proposedStatus = requestDTO.proposedStatus
             )
-
+            
             dbQuery {
                 dbClient.proposalService.createProposal(proposalDTO)
             }
-
+            
             logger.info { "Successfully saved request to database as proposal for user ${user.attendooUsername}" }
         }
         catch (e: Exception)
@@ -136,7 +131,7 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
             call.respond(HttpStatusCode.InternalServerError, mapOf(ERROR_JSON_FIELD_NAME to "Failed to save request"))
             return@post
         }
-
+        call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
         // Send email notification
         val emailSent = emailService.sendRequestCreatedEmail(request)
         if (emailSent)
@@ -147,8 +142,6 @@ fun Route.routeCreateRequest(dbClient: DbClient, emailService: EmailService)
         {
             logger.warn { "Failed to send request creation email to ${request.proposer.email}" }
         }
-
-        call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
         logger.info { "Successfully created request from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
     }
 }
