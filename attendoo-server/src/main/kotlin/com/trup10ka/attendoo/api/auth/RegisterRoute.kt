@@ -127,11 +127,12 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
         logger.info { "User was created: $wasCreated" }
         if (wasCreated)
         {
+            call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
             val newUser = SharedUser(
                 firstName = userDTO.firstName ?: "",
                 lastName = userDTO.lastName ?: "",
                 attendooUsername = userDTO.attendooUsername!!,
-                attendooPassword = "",
+                attendooPassword = userDTO.attendooPassword!!,
                 email = userDTO.email ?: "",
                 phoneNumber = userDTO.phoneNumber ?: "",
                 role = userDTO.role ?: "user",
@@ -151,7 +152,6 @@ fun Route.routeRegister(dbClient: DbClient, passwordEncryptor: PasswordEncryptor
                 logger.error(e) { "Failed to send welcome email to ${newUser.email}" }
             }
             
-            call.respond(HttpStatusCode.Created, mapOf(SUCCESS_JSON_FIELD_NAME to true))
             logger.info { "Successfully created user from ${call.request.origin.remoteHost}:${call.request.origin.remotePort}" }
         }
         else
