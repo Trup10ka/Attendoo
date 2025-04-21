@@ -60,7 +60,7 @@ CREATE TABLE `user` (
                         CONSTRAINT `fk_user_user_department_id__id` FOREIGN KEY (`user_department_id`) REFERENCES `user_department` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES (1,'Lukáš','Friedl','lukasfriedl','b9b676b...','lukys3036@gmail.com','604414555',1,6,6);
+INSERT INTO `user` VALUES (1,'Lukáš','Friedl','lukasfriedl','b9b676b941e81ea27a5e636e6c64580814a069394d8b3f3764bef535f1dd82f0e7010a47ac93253088e95790e1eadf2c','lukys3036@gmail.com','604414555',1,6,6);
 UNLOCK TABLES;
 
 
