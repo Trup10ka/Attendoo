@@ -130,6 +130,13 @@ fun createSelectWithOptions(id: ElementID? = null, clazz: Array<String>, options
     return select
 }
 
+fun createDatepicker(id: ElementID? = null, clazz: Array<String>? = null): HTMLInputElement
+{
+    val datepicker = createElement<HTMLInputElement>("input", id, clazz)
+    datepicker.type = "date"
+    return datepicker
+}
+
 fun toggleElementVisibility(element: HTMLElement)
 {
     element.style.display = if (element.style.display == "none") "block" else "none"
